@@ -22,7 +22,7 @@ export class FooterInfo extends Component {
   };
   render() {
     return (
-      <div class="footer_info">
+      <div className="footer_info">
         <h3>Informations</h3>
         {this.state.links.map(link => (
           <div key={link.id}>

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export class FooterContact extends Component {
     render() {
         return (
-        <div class="footer_contact">
+        <div className="footer_contact">
             <p>
               Find all restaurants in town here! If you have problems using this
               app please contact us
