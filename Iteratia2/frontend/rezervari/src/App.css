@@ -1,13 +1,84 @@
-* {
-  box-sizing: border-box;
+html{
+  width: 100%;
+  height: 100%;
   margin: 0;
-  padding: 0;
 }
 
 body {
-  font-family: "Roboto", sans-serif;
-  font-size: 1rem;
-  line-height: 1.6;
-  background-color: #fff;
-  color: #333;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.App{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main{
+  width: 80%;
+  height: 100%;
+  margin: 10vh 0 10vh 0;
+  border: 3px solid #E88D72;
+  border-radius: 8px;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10vh 0 10vh 0;
+}
+
+.restaurant_div{
+  width: 80%;
+  height: auto;
+  align-self: center;
+  margin: 4vh 0 4vh 0;
+  border-bottom: 1px solid #E88D72;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.restaurant_info{
+  width: 40%;
+  height: 100%;
+  align-self: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  color: #FF8F62;
+  font-family: Novecentosanswide;
+}
+
+.restaurant_info h2{
+  margin: 3vh 0 3vh 0;
+  font-size: 1.8rem;
+}
+
+
+.restaurant_buttons{
+  width: 40%;
+  height: 100%;
+  align-self: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.button{
+  width: 10vw;
+  height: 8vh;
+  background-color: #E88D72;
+  opacity: 1;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-family: Novecentosanswide;
+  font-size: 1.2rem;
+}
+.button:hover{
+  opacity: 0.5;
 }
