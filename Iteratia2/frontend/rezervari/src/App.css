@@ -1,4 +1,4 @@
-html{
+html {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -10,7 +10,7 @@ body {
   margin: 0;
 }
 
-.App{
+.App {
   width: 100%;
   height: auto;
   display: flex;
@@ -18,11 +18,11 @@ body {
   justify-content: space-between;
 }
 
-main{
+main {
   width: 70%;
   height: 100%;
   margin: 10vh 0 10vh 0;
-  border: 3px solid #E88D72;
+  border: 3px solid #e88d72;
   border-radius: 8px;
   align-self: center;
   display: flex;
@@ -31,35 +31,34 @@ main{
   padding: 10vh 0 10vh 0;
 }
 
-.restaurant_div{
+.restaurant_div {
   width: 80%;
   height: auto;
   align-self: center;
   margin: 4vh 0 4vh 0;
-  border-bottom: 1px solid #E88D72;
+  border-bottom: 1px solid #e88d72;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.restaurant_info{
+.restaurant_info {
   width: 40%;
   height: 100%;
   align-self: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  color: #FF8F62;
+  color: #ff8f62;
   font-family: Novecentosanswide;
 }
 
-.restaurant_info h2{
+.restaurant_info h2 {
   margin: 3vh 0 3vh 0;
   font-size: 1.8rem;
 }
 
-
-.restaurant_buttons{
+.restaurant_buttons {
   width: 40%;
   height: 100%;
   align-self: auto;
@@ -69,10 +68,10 @@ main{
   margin: 2vh 3vw 0 0;
 }
 
-.button{
+.button {
   width: 8vw;
   height: 7vh;
-  background-color: #E88D72;
+  background-color: #e88d72;
   opacity: 1;
   border: none;
   border-radius: 8px;
@@ -81,25 +80,43 @@ main{
   font-size: 1.2rem;
   cursor: pointer;
 }
-.button:hover{
+.button:hover {
   opacity: 0.5;
 }
 
-ul {
+.header {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #a45c40;
-}
-header {
+  background-color: #e88d72;
+  display: flex;
+  flex-direction: row;
   width: 100%;
 }
-header li {
-  float: left;
+.header .header-left {
+  width: 50%;
+  flex-direction: row;
+}
+.header .header-center {
+  width: 35%;
+}
+.header .header-right {
+  width: 15%;
+  flex-direction: row;
 }
 
-header li a {
+.header-ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #e88d72;
+}
+.header-li {
+  float: left;
+}
+.header-li a {
   display: block;
   color: white;
   text-align: center;
@@ -107,25 +124,33 @@ header li a {
   text-decoration: none;
 }
 
-header li a:hover:not(.active) {
-  background-color: #c38370;
+.header-li a:hover:not(.active) {
+  background-color: #ffa384;
+}
+.active-home {
+  background-color: #543855;
 }
 
-header .active {
-  background-color: #e4b7a0;
+.header-right .cont-logo img {
+  position: absolute;
+  height: 50px;
+  margin-left: 10px;
+}
+.header-right .cont-logo a {
+  margin-left: 65px;
 }
 
 footer .line {
   display: block;
   height: 1px;
   background-color: #c38370;
-  content: " ";
+  content: ' ';
   width: 70%;
   margin-bottom: 30px;
   margin: 0 auto;
 }
 
-footer{
+footer {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
