@@ -79,6 +79,7 @@ main{
   color: white;
   font-family: Novecentosanswide;
   font-size: 1.2rem;
+  cursor: pointer;
 }
 .button:hover{
   opacity: 0.5;
