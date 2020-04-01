@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export class HeaderComp extends Component {
   render() {
     return (
-      <div>
+      <header>
         <ul>
           <li>
             <a className="active" href="#home">
@@ -20,7 +20,7 @@ export class HeaderComp extends Component {
             <a href="#about">About</a>
           </li>
         </ul>
-      </div>
+      </header>
     );
   }
 }
