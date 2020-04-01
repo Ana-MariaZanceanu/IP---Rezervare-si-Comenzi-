@@ -3,7 +3,7 @@ import React, { Component } from "react";
 export class MainComp extends Component {
   render() {
     return (
-      <div className="main">
+      <main>
         <div className="restaurant_div">
             <div className="restaurant_info">
                 <h2>Restaurant 1</h2>
@@ -42,7 +42,7 @@ export class MainComp extends Component {
                 <button className="button" id="comanda_button">Comandă</button>
             </div>
         </div>
-      </div>
+      </main>
     );
   }
 }
