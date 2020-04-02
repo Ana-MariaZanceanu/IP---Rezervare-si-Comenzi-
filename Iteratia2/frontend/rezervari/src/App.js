@@ -3,7 +3,6 @@ import "./App.css";
 import Header from "./components/Header";
 import Main from "./components/main/Main";
 import Footer from "./components/footer/Footer";
-import UserForm from "./components/form/UserForm";
 
 function App() {
   return (
@@ -11,9 +10,9 @@ function App() {
       <Header />
       <Main />
       <Footer />
-      <div className="App">
-        <UserForm />
-      </div>
+      {/*<div className="App">*/}
+      {/*  <UserForm />*/}
+      {/*</div>*/}
     </div>
 
   );
