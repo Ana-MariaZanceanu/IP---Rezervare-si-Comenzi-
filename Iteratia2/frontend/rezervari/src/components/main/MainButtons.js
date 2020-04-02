@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import ButtonDemo from "./ButtonDemo";
 
 export default class MainButtons extends Component{
     render() {
         return(
             <div className="restaurant_buttons">
-                <button className="button">Reserve</button>
-                <button className="button">Order</button>
+                <ButtonDemo name="Reserve"/>
+                <ButtonDemo name="Order"/>
             </div>
         )
     }
