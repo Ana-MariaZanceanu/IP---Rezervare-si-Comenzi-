@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import {MuiThemeProvider,createMuiTheme }from "material-ui/styles";
 import AppBar from "material-ui/AppBar";
 import TextField from "material-ui/TextField";
-import RaisedButton from "material-ui/RaisedButton";
 import Button from '@material-ui/core/Button';
-import { green, purple} from '@material-ui/core/colors';
 
 export class FormUserDetails extends Component {
   continue = e => {

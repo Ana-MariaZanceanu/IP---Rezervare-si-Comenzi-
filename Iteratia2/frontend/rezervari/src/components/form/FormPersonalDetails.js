@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AppBar from "material-ui/AppBar";
-import TextField from "material-ui/TextField";
 import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
 export class FormPersonalDetails extends Component {
   continue = e => {
@@ -22,30 +22,28 @@ export class FormPersonalDetails extends Component {
         <div>
           <AppBar style={styles.bar} title="Enter User Details" />
           <TextField
-            hintText="Enter date occupation"
-            floatingLabelText="Occupation"
-            onChange={handleChange("occupation")}
-            defaultValue={values.occupation}
-            floatingLabelStyle={{ color: "#a8a8a8" }}
-            underlineStyle={{ display: "none" }}
+            style={styles.textField}
+            id="date"
+            label="Reservation date"
+            type="datetime-local"
+            defaultValue={values.date ? values.date : "2017-05-24T10:30"}
+            onChange={handleChange("date")}
           />
           <br />
           <TextField
-            hintText="Enter your city"
-            floatingLabelText="City"
-            onChange={handleChange("city")}
-            defaultValue={values.city}
-            floatingLabelStyle={{ color: "#a8a8a8" }}
-            underlineStyle={{ display: "none" }}
+            style={styles.textField}
+            id="number of People"
+            label="Number of people"
+            defaultValue={values.nrPeople}
+            onChange={handleChange("nrPeople")}
           />
           <br />
           <TextField
-            hintText="Enter your bio"
-            floatingLabelText="Bio"
-            onChange={handleChange("bio")}
-            defaultValue={values.bio}
-            floatingLabelStyle={{ color: "#a8a8a8" }}
-            underlineStyle={{ display: "none" }}
+            style={styles.textField}
+            id="observation"
+            label="Observation"
+            defaultValue={values.observation}
+            onChange={handleChange("observation")}
           />
           <br />
           <Button
@@ -72,6 +70,9 @@ const styles = {
   },
   bar: {
     backgroundColor: "#e88d72"
+  },
+  textField: {
+    margin: 15
   }
 };
 
