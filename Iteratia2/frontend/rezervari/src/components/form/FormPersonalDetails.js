@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import AppBar from "material-ui/AppBar";
-import TextField from "material-ui/TextField";
-import Button from "@material-ui/core/Button";
+import React, { Component } from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+import TextField from 'material-ui/TextField';
+import Button from '@material-ui/core/Button';
 
 export class FormPersonalDetails extends Component {
   continue = e => {
@@ -23,29 +23,37 @@ export class FormPersonalDetails extends Component {
           <AppBar style={styles.bar} title="Enter User Details" />
           <TextField
             hintText="Enter date occupation"
-            floatingLabelText="Occupation"
-            onChange={handleChange("occupation")}
+            floatingLabelText="Numarul de locuri"
+            onChange={handleChange('occupation')}
             defaultValue={values.occupation}
-            floatingLabelStyle={{ color: "#a8a8a8" }}
-            underlineStyle={{ display: "none" }}
+            floatingLabelStyle={{ color: '#a8a8a8' }}
+            underlineStyle={{ display: 'none' }}
           />
           <br />
           <TextField
             hintText="Enter your city"
-            floatingLabelText="City"
-            onChange={handleChange("city")}
+            floatingLabelText="Data"
+            onChange={handleChange('city')}
             defaultValue={values.city}
-            floatingLabelStyle={{ color: "#a8a8a8" }}
-            underlineStyle={{ display: "none" }}
+            floatingLabelStyle={{ color: '#a8a8a8' }}
+            underlineStyle={{ display: 'none' }}
           />
           <br />
           <TextField
             hintText="Enter your bio"
-            floatingLabelText="Bio"
-            onChange={handleChange("bio")}
+            floatingLabelText="Ora"
+            onChange={handleChange('bio')}
             defaultValue={values.bio}
-            floatingLabelStyle={{ color: "#a8a8a8" }}
-            underlineStyle={{ display: "none" }}
+            floatingLabelStyle={{ color: '#a8a8a8' }}
+            underlineStyle={{ display: 'none' }}
+          />
+          <TextField
+            hintText="Enter your bio"
+            floatingLabelText="Observatii"
+            onChange={handleChange('bio')}
+            defaultValue={values.bio}
+            floatingLabelStyle={{ color: '#a8a8a8' }}
+            underlineStyle={{ display: 'none' }}
           />
           <br />
           <Button
@@ -66,12 +74,12 @@ export class FormPersonalDetails extends Component {
 
 const styles = {
   button: {
-    backgroundColor: "#e88d72",
-    color: "white",
+    backgroundColor: '#e88d72',
+    color: 'white',
     margin: 15
   },
   bar: {
-    backgroundColor: "#e88d72"
+    backgroundColor: '#e88d72'
   }
 };
 
