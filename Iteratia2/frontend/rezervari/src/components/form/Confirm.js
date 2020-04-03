@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AppBar from "material-ui/AppBar";
 import { List, ListItem } from "material-ui/List";
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
 
 export class Confirm extends Component {
   continue = e => {
@@ -17,7 +17,7 @@ export class Confirm extends Component {
 
   render() {
     const {
-      values: { firstName, lastName, email, occupation, city, bio }
+      values: { firstName, lastName, email, date, nrPeople, observation }
     } = this.props;
     return (
       <MuiThemeProvider>
@@ -27,19 +27,18 @@ export class Confirm extends Component {
             <ListItem primaryText="First Name" secondaryText={firstName} />
             <ListItem primaryText="Last Name" secondaryText={lastName} />
             <ListItem primaryText="Email" secondaryText={email} />
-            <ListItem primaryText="Occupation" secondaryText={occupation} />
-            <ListItem primaryText="City" secondaryText={city} />
-            <ListItem primaryText="Bio" secondaryText={bio} />
+            <ListItem primaryText="Date" secondaryText={date} />
+            <ListItem primaryText="Number of people" secondaryText={nrPeople} />
+            <ListItem primaryText="Observation" secondaryText={observation} />
           </List>
           <Button
             variant="outlined"
             style={styles.button}
-            onClick={this.continue}>
-            Continue
+            onClick={this.continue}
+          >
+            Confirm
           </Button>
-          <Button
-            variant="outlined"
-            onClick={this.back}>
+          <Button variant="outlined" onClick={this.back}>
             Back
           </Button>
         </div>
@@ -51,8 +50,8 @@ export class Confirm extends Component {
 const styles = {
   button: {
     backgroundColor: "#e88d72",
-    color:"white",
-    margin:15
+    color: "white",
+    margin: 15
   },
   bar: {
     backgroundColor: "#e88d72"
