@@ -1,15 +1,14 @@
-import React, { Component } from "react";
-import {MuiThemeProvider,createMuiTheme }from "material-ui/styles";
-import AppBar from "material-ui/AppBar";
-import TextField from "material-ui/TextField";
+import React, { Component } from 'react';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import AppBar from 'material-ui/AppBar';
+import TextField from 'material-ui/TextField';
 import Button from '@material-ui/core/Button';
 
 export class FormUserDetails extends Component {
-  continue = e => {
+  continue = (e) => {
     e.preventDefault();
     this.props.nextStep();
   };
-
 
   render() {
     const { values, handleChange } = this.props;
@@ -20,34 +19,44 @@ export class FormUserDetails extends Component {
           <TextField
             hintText="Enter your First Name"
             floatingLabelText="First Name"
-            onChange={handleChange("firstName")}
+            onChange={handleChange('firstName')}
             defaultValue={values.firstName}
-            floatingLabelStyle={{ color: "#a8a8a8" }}
-            underlineStyle={{display:"none"}}
+            floatingLabelStyle={{ color: '#a8a8a8' }}
+            underlineStyle={{ display: 'none' }}
           />
           <br />
           <TextField
             hintText="Enter your Last Name"
             floatingLabelText="Last Name"
-            onChange={handleChange("lastName")}
+            onChange={handleChange('lastName')}
             defaultValue={values.lastName}
-            floatingLabelStyle={{ color: "#a8a8a8" }}
-            underlineStyle={{display:"none"}}
+            floatingLabelStyle={{ color: '#a8a8a8' }}
+            underlineStyle={{ display: 'none' }}
           />
           <br />
           <TextField
             hintText="Enter your email"
             floatingLabelText="Email"
-            onChange={handleChange("email")}
+            onChange={handleChange('email')}
             defaultValue={values.email}
-            floatingLabelStyle={{ color: "#a8a8a8" }}
-            underlineStyle={{display:"none"}}
+            floatingLabelStyle={{ color: '#a8a8a8' }}
+            underlineStyle={{ display: 'none' }}
+          />
+          <br />
+          <TextField
+            hintText="Enter your phone number"
+            floatingLabelText="Phone number"
+            onChange={handleChange('nrphone')}
+            defaultValue={values.nrphone}
+            floatingLabelStyle={{ color: '#a8a8a8' }}
+            underlineStyle={{ display: 'none' }}
           />
           <br />
           <Button
             variant="outlined"
             style={styles.button}
-            onClick={this.continue}>
+            onClick={this.continue}
+          >
             Continue
           </Button>
         </div>
@@ -58,12 +67,12 @@ export class FormUserDetails extends Component {
 
 const styles = {
   button: {
-    backgroundColor: "#e88d72",
-    color: "white"
+    backgroundColor: '#e88d72',
+    color: 'white',
   },
   bar: {
-    backgroundColor: "#e88d72"
-  }
+    backgroundColor: '#e88d72',
+  },
 };
 
 export default FormUserDetails;
