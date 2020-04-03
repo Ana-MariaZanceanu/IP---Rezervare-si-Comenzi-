@@ -13,7 +13,7 @@ const findByCredentials = async function (email, password) {
 	if (!isMatch) {
 		throw new Error('Unable to login');
 	}
-	return user
+	return user;
 };
 module.exports = {
 	findByCredentials,

@@ -9,14 +9,32 @@ const reservationSchema = mongoose.Schema({
 	userFirstName: {
 		type: String,
 		required: true,
+		min: 2,
 	},
 	userLastName: {
 		type: String,
 		required: true,
+		min: 2,
 	},
 	reservationDate: {
 		type: Date,
 		required: true,
+	},
+	phoneNumber: {
+		type: String,
+		required: true,
+		min: 7,
+		max: 10,
+	},
+	numberOfSeats: {
+		type: Number,
+		required: true,
+		min: 1,
+	},
+	restaurantName: {
+		type: String,
+		required: true,
+		min: 2,
 	},
 });
 
