@@ -26,6 +26,7 @@ export class FormPersonalDetails extends Component {
             floatingLabelText="Occupation"
             onChange={handleChange("occupation")}
             defaultValue={values.occupation}
+            floatingLabelStyle={{ color: "#a8a8a8" }}
             underlineStyle={{ display: "none" }}
           />
           <br />
@@ -34,6 +35,7 @@ export class FormPersonalDetails extends Component {
             floatingLabelText="City"
             onChange={handleChange("city")}
             defaultValue={values.city}
+            floatingLabelStyle={{ color: "#a8a8a8" }}
             underlineStyle={{ display: "none" }}
           />
           <br />
@@ -42,6 +44,7 @@ export class FormPersonalDetails extends Component {
             floatingLabelText="Bio"
             onChange={handleChange("bio")}
             defaultValue={values.bio}
+            floatingLabelStyle={{ color: "#a8a8a8" }}
             underlineStyle={{ display: "none" }}
           />
           <br />
