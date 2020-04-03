@@ -62,7 +62,7 @@ export class UserForm extends Component {
           />
         );
       case 4:
-        return <Succes />
+        return <Succes />;
       default:
         return null;
     }

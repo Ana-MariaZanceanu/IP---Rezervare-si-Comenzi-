@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AppBar from "material-ui/AppBar";
 import { List, ListItem } from "material-ui/List";
-import RaisedButton from "material-ui/RaisedButton";
+import Button from '@material-ui/core/Button';
 
 export class Confirm extends Component {
   continue = e => {
@@ -21,8 +21,8 @@ export class Confirm extends Component {
     } = this.props;
     return (
       <MuiThemeProvider>
-        <React.Fragment>
-          <AppBar title="Confirm User Data" />
+        <div>
+          <AppBar style={styles.bar} title="Confirm User Data" />
           <List>
             <ListItem primaryText="First Name" secondaryText={firstName} />
             <ListItem primaryText="Last Name" secondaryText={lastName} />
@@ -31,19 +31,18 @@ export class Confirm extends Component {
             <ListItem primaryText="City" secondaryText={city} />
             <ListItem primaryText="Bio" secondaryText={bio} />
           </List>
-          <RaisedButton
-            label="Confirm & Continue"
-            primary={true}
+          <Button
+            variant="outlined"
             style={styles.button}
-            onClick={this.continue}
-          />
-          <RaisedButton
-            label="Back"
-            primary={false}
-            style={styles.button}
-            onClick={this.back}
-          />
-        </React.Fragment>
+            onClick={this.continue}>
+            Continue
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={this.back}>
+            Back
+          </Button>
+        </div>
       </MuiThemeProvider>
     );
   }
@@ -51,7 +50,12 @@ export class Confirm extends Component {
 
 const styles = {
   button: {
-    margin: 15
+    backgroundColor: "#e88d72",
+    color:"white",
+    margin:15
+  },
+  bar: {
+    backgroundColor: "#e88d72"
   }
 };
 

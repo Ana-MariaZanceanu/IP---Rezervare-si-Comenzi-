@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AppBar from "material-ui/AppBar";
 import TextField from "material-ui/TextField";
-import RaisedButton from "material-ui/RaisedButton";
+import Button from "@material-ui/core/Button";
 
 export class FormPersonalDetails extends Component {
   continue = e => {
@@ -19,13 +19,14 @@ export class FormPersonalDetails extends Component {
     const { values, handleChange } = this.props;
     return (
       <MuiThemeProvider>
-        <React.Fragment>
-          <AppBar title="Enter User Details" />
+        <div>
+          <AppBar style={styles.bar} title="Enter User Details" />
           <TextField
             hintText="Enter date occupation"
             floatingLabelText="Occupation"
             onChange={handleChange("occupation")}
             defaultValue={values.occupation}
+            underlineStyle={{ display: "none" }}
           />
           <br />
           <TextField
@@ -33,6 +34,7 @@ export class FormPersonalDetails extends Component {
             floatingLabelText="City"
             onChange={handleChange("city")}
             defaultValue={values.city}
+            underlineStyle={{ display: "none" }}
           />
           <br />
           <TextField
@@ -40,21 +42,20 @@ export class FormPersonalDetails extends Component {
             floatingLabelText="Bio"
             onChange={handleChange("bio")}
             defaultValue={values.bio}
+            underlineStyle={{ display: "none" }}
           />
           <br />
-          <RaisedButton
-            label="Continue"
-            primary={true}
+          <Button
+            variant="outlined"
             style={styles.button}
             onClick={this.continue}
-          />
-        <RaisedButton
-            label="Back"
-            primary={false}
-            style={styles.button}
-            onClick={this.back}
-          />
-        </React.Fragment>
+          >
+            Continue
+          </Button>
+          <Button variant="outlined" onClick={this.back}>
+            Back
+          </Button>
+        </div>
       </MuiThemeProvider>
     );
   }
@@ -62,7 +63,12 @@ export class FormPersonalDetails extends Component {
 
 const styles = {
   button: {
+    backgroundColor: "#e88d72",
+    color: "white",
     margin: 15
+  },
+  bar: {
+    backgroundColor: "#e88d72"
   }
 };
 
