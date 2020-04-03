@@ -3,7 +3,6 @@ const { celebrate } = require('celebrate');
 const { userService } = require('../../services/index');
 const { auth } = require('../middlewares/index');
 
-const Logger = require('../../loaders/logger');
 // validation schemas
 const { userValidationSchema } = require('../../models/index');
 

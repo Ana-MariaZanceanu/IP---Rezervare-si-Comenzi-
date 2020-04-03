@@ -1,6 +1,9 @@
 const { Router } = require('express');
+const { celebrate } = require('celebrate');
 const { reservationService } = require('../../services/index');
 const { auth } = require('../middlewares/index');
+
+const { reservationValidationSchema } = require('../../models/index');
 
 const router = Router();
 
@@ -21,12 +24,18 @@ router.get('/:idReservation', auth, async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
-router.post('/submit', async function (req, res) {
-	const result = await reservationService.submit(req.body);
-	const statusCode = result.success ? 201 : 400;
+router.post(
+	'/submit',
+	celebrate({
+		body: reservationValidationSchema,
+	}),
+	async function (req, res) {
+		const result = await reservationService.submit(req.body);
+		const statusCode = result.success ? 201 : 400;
 
-	res.status(statusCode).json(result);
-});
+		res.status(statusCode).json(result);
+	},
+);
 
 router.patch('/:idReservation', auth, async function (req, res) {
 	const result = await reservationService.update(

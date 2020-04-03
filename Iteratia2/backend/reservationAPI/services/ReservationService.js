@@ -40,17 +40,36 @@ class ReservationService {
 			userFirstName,
 			userLastName,
 			reservationDate,
+			phoneNumber,
+			numberOfSeats,
+			restaurantName,
 		} = payload;
 		const reservationData = {
 			email,
 			userFirstName,
 			userLastName,
 			reservationDate,
+			phoneNumber,
+			numberOfSeats,
+			restaurantName,
 		};
+
 		const reservation = new this.db.Reservation(reservationData);
 
 		try {
-			await reservation.save();
+			const existsReservation = await this.db.Reservation.findByData(
+				email,
+				userFirstName,
+				userLastName,
+				reservationDate,
+				phoneNumber,
+				numberOfSeats,
+				restaurantName,
+			);
+
+			if (!existsReservation) {
+				await reservation.save();
+			}
 
 			return { success: true, data: { reservation } };
 		} catch (error) {
