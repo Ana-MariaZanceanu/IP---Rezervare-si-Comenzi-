@@ -31,10 +31,9 @@ const reservationSchema = mongoose.Schema({
 		required: true,
 		min: 1,
 	},
-	restaurantName: {
+	restaurantId: {
 		type: String,
 		required: true,
-		min: 2,
 	},
 });
 

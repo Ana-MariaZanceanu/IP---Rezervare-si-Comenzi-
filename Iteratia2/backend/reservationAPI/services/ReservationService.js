@@ -42,7 +42,7 @@ class ReservationService {
 			reservationDate,
 			phoneNumber,
 			numberOfSeats,
-			restaurantName,
+			restaurantId,
 		} = payload;
 		const reservationData = {
 			email,
@@ -51,7 +51,7 @@ class ReservationService {
 			reservationDate,
 			phoneNumber,
 			numberOfSeats,
-			restaurantName,
+			restaurantId,
 		};
 
 		const reservation = new this.db.Reservation(reservationData);
@@ -64,7 +64,7 @@ class ReservationService {
 				reservationDate,
 				phoneNumber,
 				numberOfSeats,
-				restaurantName,
+				restaurantId,
 			);
 
 			if (!existsReservation) {

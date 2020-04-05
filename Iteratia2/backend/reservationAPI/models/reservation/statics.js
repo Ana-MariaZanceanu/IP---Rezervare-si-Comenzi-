@@ -5,7 +5,7 @@ const findByData = async function (
 	reservationDate,
 	phoneNumber,
 	numberOfSeats,
-	restaurantName,
+	restaurantId,
 ) {
 	const reservation = await this.findOne({
 		email,
@@ -14,7 +14,7 @@ const findByData = async function (
 		reservationDate,
 		phoneNumber,
 		numberOfSeats,
-		restaurantName,
+		restaurantId,
 	});
 
 	if (reservation) {

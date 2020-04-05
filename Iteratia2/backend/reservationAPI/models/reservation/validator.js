@@ -30,8 +30,7 @@ const reservationSchema = Joi.object().keys({
 		.min(1)
 		.required()
 		.error(new Error('Number of Seats required')),
-	restaurantName: Joi.string()
-		.min(2)
+	restaurantId: Joi.string()
 		.required()
 		.error(new Error('Restaurant name required')),
 });
