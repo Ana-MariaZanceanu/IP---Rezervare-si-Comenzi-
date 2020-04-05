@@ -1,40 +1,57 @@
-import React, { Component } from "react";
-import FormUserDetails from "./FormUserDetails";
-import FormPersonalDetails from "./FormPersonalDetails";
-import Confirm from "./Confirm";
-import Succes from "./Succes";
+import React, { Component } from 'react';
+import FormUserDetails from './FormUserDetails';
+import FormPersonalDetails from './FormPersonalDetails';
+import Confirm from './Confirm';
+import Succes from './Succes';
 export class UserForm extends Component {
   state = {
     step: 1,
-    firstName: "",
-    lastName: "",
-    email: "",
-    occupation: "",
-    city: "",
-    bio: ""
+    firstName: '',
+    lastName: '',
+    email: '',
+    nrphone: '',
+    date: '',
+    nrPeople: '',
+    observation: '',
   };
 
   nextStep = () => {
     const { step } = this.state;
     this.setState({
-      step: step + 1
+      step: step + 1,
     });
   };
 
   prevStep = () => {
     const { step } = this.state;
     this.setState({
-      step: step - 1
+      step: step - 1,
     });
   };
 
-  handleChange = input => e => {
+  handleChange = (input) => (e) => {
     this.setState({ [input]: e.target.value });
   };
   render() {
     const { step } = this.state;
-    const { firstName, lastName, email, occupation, city, bio } = this.state;
-    const values = { firstName, lastName, email, occupation, city, bio };
+    const {
+      firstName,
+      lastName,
+      email,
+      nrphone,
+      date,
+      nrPeople,
+      observation,
+    } = this.state;
+    const values = {
+      firstName,
+      lastName,
+      email,
+      nrphone,
+      date,
+      nrPeople,
+      observation,
+    };
     switch (step) {
       case 1:
         return (
@@ -62,7 +79,7 @@ export class UserForm extends Component {
           />
         );
       case 4:
-        return <Succes />
+        return <Succes />;
       default:
         return null;
     }
