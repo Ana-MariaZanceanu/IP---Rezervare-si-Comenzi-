@@ -1,6 +1,18 @@
 const mongoose = require('mongoose');
 
 const orderSchema = mongoose.Schema({
+	userId: {
+		type: mongoose.Types.ObjectId,
+		required: false,
+		validate: {
+			validator(value) {
+				// verificam daca user-ul chiar exista
+				console.log(value);
+				return true;
+			},
+			message: 'User id not valid',
+		},
+	},
 	email: {
 		type: String,
 		required: true,
@@ -23,8 +35,16 @@ const orderSchema = mongoose.Schema({
 		max: 10,
 	},
 	restaurantId: {
-		type: String,
+		type: mongoose.Types.ObjectId,
 		required: true,
+		validate: {
+			validator(value) {
+				// verificam daca restaurantul chiar exista
+				console.log(value);
+				return true;
+			},
+			message: 'Restaurant id not valid',
+		},
 	},
 	orderDate: {
 		type: Date,
@@ -45,9 +65,14 @@ const orderSchema = mongoose.Schema({
 	guest: {
 		type: Boolean,
 		required: true,
-		default: 'false',
+		default: 'true',
 	},
-	dishes: {},
+	dishes: [
+		{
+			dishId: mongoose.Types.ObjectId,
+			quantity: Number,
+		},
+	],
 });
 
 module.exports = orderSchema;

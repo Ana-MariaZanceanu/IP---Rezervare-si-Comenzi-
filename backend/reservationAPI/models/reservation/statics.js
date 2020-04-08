@@ -1,20 +1,7 @@
-const findByData = async function (
-	email,
-	userFirstName,
-	userLastName,
-	reservationDate,
-	phoneNumber,
-	numberOfSeats,
-	restaurantId,
-) {
+const findByData = async function (email, reservationDate) {
 	const reservation = await this.findOne({
 		email,
-		userFirstName,
-		userLastName,
 		reservationDate,
-		phoneNumber,
-		numberOfSeats,
-		restaurantId,
 	});
 
 	if (reservation) {
@@ -24,15 +11,6 @@ const findByData = async function (
 	return reservation;
 };
 
-const validateDate = async function (reservationDate) {
-	const date = new Date();
-	date.setHours(date.getHours() + 3);
-	if (reservationDate < date) {
-		throw new Error('Reservation date invalid.');
-	}
-};
-
 module.exports = {
 	findByData,
-	validateDate,
 };

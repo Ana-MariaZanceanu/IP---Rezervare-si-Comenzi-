@@ -36,6 +36,7 @@ class OrderService {
 
 	async submit(payload) {
 		const {
+			userId,
 			email,
 			userFirstName,
 			userLastName,
@@ -46,10 +47,9 @@ class OrderService {
 			amount,
 			dishes,
 		} = payload;
-		const date = new Date();
-		// set Romania hour
-		date.setHours(date.getHours() + 3);
+
 		const orderData = {
+			userId,
 			email,
 			userFirstName,
 			userLastName,
@@ -60,16 +60,18 @@ class OrderService {
 			amount,
 			dishes,
 		};
+		const date = new Date();
+		date.setHours(date.getHours() + 3);
 		orderData.orderDate = date;
+		if (payload.userId) {
+			orderData.guest = false;
+		}
+
 		const order = new this.db.Order(orderData);
 
 		try {
 			const existsOrder = await this.db.Order.findByData(
 				email,
-				userFirstName,
-				userLastName,
-				phoneNumber,
-				restaurantId,
 				date,
 			);
 
