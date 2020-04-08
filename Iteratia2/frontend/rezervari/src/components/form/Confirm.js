@@ -47,7 +47,7 @@ export class Confirm extends Component {
           >
             Confirm
           </Button>
-          <Button variant="outlined" onClick={this.back}>
+          <Button variant="outlined" onClick={this.back} >
             Back
           </Button>
         </div>
