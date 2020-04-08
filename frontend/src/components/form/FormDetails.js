@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 //import { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 //import DatePicker from "react-datepicker";
 //import "react-datepicker/dist/react-datepicker.css";
 
@@ -30,7 +30,7 @@ export class FormDetails extends Component {
               type="text"
               placeholder="Enter your name"
               defaultValue={values.name}
-              onChange={handleChange("name")}
+              onChange={handleChange('name')}
             />
           </Form.Group>
 
@@ -40,7 +40,7 @@ export class FormDetails extends Component {
               type="phone"
               placeholder="Enter phone no."
               defaultValue={values.phone}
-              onChange={handleChange("phone")}
+              onChange={handleChange('phone')}
             />
           </Form.Group>
         </Form.Row>
@@ -52,7 +52,7 @@ export class FormDetails extends Component {
               type="date"
               placeholder="Enter date"
               defaultValue={values.date}
-              onChange={handleChange("date")}
+              onChange={handleChange('date')}
             />
           </Form.Group>
 
@@ -61,7 +61,7 @@ export class FormDetails extends Component {
             <Form.Control
               type="text"
               defaultValue={values.hour}
-              onChange={handleChange("hour")}
+              onChange={handleChange('hour')}
             />
           </Form.Group>
         </Form.Row>
@@ -74,7 +74,7 @@ export class FormDetails extends Component {
                 required
                 placeholder="Enter phone no."
                 defaultValue={values.phone}
-                onChange={handleChange("phone")}
+                onChange={handleChange('phone')}
               />
             </Form.Group>
           </Col>
@@ -85,7 +85,7 @@ export class FormDetails extends Component {
                 type="email"
                 placeholder="Enter your email"
                 defaultValue={values.email}
-                onChange={handleChange("email")}
+                onChange={handleChange('email')}
               />
             </Form.Group>
           </Col>
