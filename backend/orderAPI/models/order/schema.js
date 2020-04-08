@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const reservationSchema = mongoose.Schema({
+const orderSchema = mongoose.Schema({
 	email: {
 		type: String,
 		required: true,
@@ -16,23 +16,30 @@ const reservationSchema = mongoose.Schema({
 		required: true,
 		min: 2,
 	},
-	reservationDate: {
-		type: Date,
-		required: true,
-	},
 	phoneNumber: {
 		type: String,
 		required: true,
 		min: 7,
 		max: 10,
 	},
-	numberOfSeats: {
-		type: Number,
-		required: true,
-		min: 1,
-	},
 	restaurantId: {
 		type: String,
+		required: true,
+	},
+	orderDate: {
+		type: Date,
+		required: true,
+	},
+	userDeliveryAdress: {
+		type: String,
+		required: false,
+	},
+	userCreditCardId: {
+		type: String,
+		required: false,
+	},
+	amount: {
+		type: Number,
 		required: true,
 	},
 	guest: {
@@ -40,6 +47,7 @@ const reservationSchema = mongoose.Schema({
 		required: true,
 		default: 'false',
 	},
+	dishes: {},
 });
 
-module.exports = reservationSchema;
+module.exports = orderSchema;

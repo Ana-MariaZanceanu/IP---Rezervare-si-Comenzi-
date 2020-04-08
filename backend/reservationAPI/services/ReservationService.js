@@ -44,6 +44,7 @@ class ReservationService {
 			numberOfSeats,
 			restaurantId,
 		} = payload;
+
 		const reservationData = {
 			email,
 			userFirstName,
@@ -57,6 +58,9 @@ class ReservationService {
 		const reservation = new this.db.Reservation(reservationData);
 
 		try {
+			await this.db.Reservation.validateDate(
+				payload.reservationDate,
+			);
 			const existsReservation = await this.db.Reservation.findByData(
 				email,
 				userFirstName,
