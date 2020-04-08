@@ -1,64 +1,66 @@
 const { Router } = require('express');
 const { celebrate } = require('celebrate');
 const { reservationService } = require('../../services/index');
-const { auth } = require('../middlewares/index');
 
 const { reservationValidationSchema } = require('../../models/index');
 
 const router = Router();
 
+const BAD_REQUEST = 400;
+const OK = 200;
+const CREATED = 201;
 // Here we have all the controllers
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
 	const result = await reservationService.getAllReservations();
-	const statusCode = result.success ? 200 : 400;
+	const statusCode = result.success ? OK : BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
 
-router.get('/:idReservation', auth, async (req, res) => {
+router.get('/:idReservation', async (req, res) => {
 	const result = await reservationService.getReservation(
 		req.params.idReservation,
 	);
-	const statusCode = result.success ? 200 : 400;
+	const statusCode = result.success ? OK : BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
 
 router.post(
-	'/submit',
+	'/',
 	celebrate({
 		body: reservationValidationSchema,
 	}),
 	async function (req, res) {
 		const result = await reservationService.submit(req.body);
-		const statusCode = result.success ? 201 : 400;
+		const statusCode = result.success ? CREATED : BAD_REQUEST;
 
 		res.status(statusCode).json(result);
 	},
 );
 
-router.patch('/:idReservation', auth, async function (req, res) {
+router.patch('/:idReservation', async function (req, res) {
 	const result = await reservationService.update(
 		req.params.idReservation,
 		req.body,
 	);
-	const statusCode = result.success ? 200 : 400;
+	const statusCode = result.success ? OK : BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
 
-router.delete('/all', auth, async (req, res) => {
+router.delete('/all', async (req, res) => {
 	const result = await reservationService.deleteAll();
-	const statusCode = result.success ? 200 : 400;
+	const statusCode = result.success ? OK : BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
 
-router.delete('/:idReservation', auth, async (req, res) => {
+router.delete('/:idReservation', async (req, res) => {
 	const result = await reservationService.deleteReservation(
 		req.params.idReservation,
 	);
-	const statusCode = result.success ? 200 : 400;
+	const statusCode = result.success ? OK : BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
