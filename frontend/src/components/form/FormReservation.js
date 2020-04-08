@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import FormDetails from "./FormDetails";
 import FormConfirm from "./FormConfirm";
 import FormSucces from "./FormSucces";
+import FormFail from "./FormFail";
 export class UserForm extends Component {
   state = {
     step: 1,
+    success: true,
     name: "",
     email: "",
     phone: "",
@@ -33,6 +35,7 @@ export class UserForm extends Component {
   render() {
     const { step } = this.state;
     const { name, email, phone, date, hour, nrPeople } = this.state;
+    const { success } = this.state;
     const values = {
       name,
       email,
@@ -59,7 +62,7 @@ export class UserForm extends Component {
           />
         );
       case 3:
-        return <FormSucces />;
+        return success === true ? <FormSucces/> : <FormFail/>;
       default:
         return null;
     }
