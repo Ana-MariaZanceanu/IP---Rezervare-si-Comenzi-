@@ -1,9 +1,17 @@
 import React, { Component } from "react";
+import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
+const ReactCalendar = () => {
+  const [startDate, setStartDate] = useState(new Date());
+  return (
+    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+  );
+};
 
 export class FormDetails extends Component {
   continue = (e) => {
@@ -38,10 +46,10 @@ export class FormDetails extends Component {
         </Form.Row>
 
         <Form.Row>
-          <Form.Group as={Col} controlId="formGrid">
+          <Form.Group as={Col} controlId="formGridDate">
             <Form.Label>Date</Form.Label>
             <br />
-            <DatePicker />
+            <ReactCalendar></ReactCalendar>
           </Form.Group>
         </Form.Row>
 
