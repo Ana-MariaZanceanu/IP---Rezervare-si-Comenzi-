@@ -6,10 +6,18 @@ import Button from "react-bootstrap/Button";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const ReactCalendar = () => {
+const ReactTimePicker = () => {
   const [startDate, setStartDate] = useState(new Date());
   return (
-    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+    <DatePicker
+      selected={startDate}
+      onChange={(date) => setStartDate(date)}
+      showTimeSelect
+      timeFormat="HH:mm"
+      timeIntervals={15}
+      timeCaption="time"
+      dateFormat="MMMM d, yyyy h:mm aa"
+    />
   );
 };
 
@@ -47,12 +55,11 @@ export class FormDetails extends Component {
 
         <Form.Row>
           <Form.Group as={Col} controlId="formGridDate">
-            <Form.Label>Date</Form.Label>
+            <Form.Label>Select date</Form.Label>
             <br />
-            <ReactCalendar>
-              defaultValue={values.date ? values.date : new Date()}
-              onChange={handleChange("date")}
-            </ReactCalendar>
+            <ReactTimePicker>
+              defaultValue=values.date onChange={handleChange("dateHour")}
+            </ReactTimePicker>
           </Form.Group>
         </Form.Row>
 
