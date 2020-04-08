@@ -19,15 +19,15 @@ export class FormDetails extends Component {
           <Form.Group as={Col} controlId="formGridName">
             <Form.Label>Name</Form.Label>
             <Form.Control
-              type="Name"
+              type="text"
               placeholder="Enter your name"
               defaultValue={values.name}
               onChange={handleChange('name')}
             />
           </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridPhone">
-            <Form.Label>Phone</Form.Label>
+          <Form.Group as={Col} controlId="formGridPeople">
+            <Form.Label>Number of people</Form.Label>
             <Form.Control
               type="phone"
               placeholder="Enter phone no."
@@ -43,6 +43,31 @@ export class FormDetails extends Component {
             <br />
             <DatePicker />
           </Form.Group>
+        </Form.Row>
+
+        <Form.Row>
+          <Col>
+            <Form.Group controlId="formGridPhone">
+              <Form.Label>Phone</Form.Label>
+              <Form.Control
+                required
+                placeholder="Enter phone no."
+                defaultValue={values.phone}
+                onChange={handleChange('phone')}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="formGridEmail">
+              <Form.Label>Enter your email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter your email"
+                defaultValue={values.email}
+                onChange={handleChange('email')}
+              />
+            </Form.Group>
+          </Col>
         </Form.Row>
 
         <Button onClick={this.continue} variant="primary" type="submit">
