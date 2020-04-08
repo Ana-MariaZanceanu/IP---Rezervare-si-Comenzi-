@@ -37,29 +37,10 @@ export class FormDetails extends Component {
           <Form.Group as={Col} controlId="formGridPeople">
             <Form.Label>Number of people</Form.Label>
             <Form.Control
-              placeholder="Enter number of people"
-              defaultValue={values.nrPeople}
-              onChange={handleChange("nrPeople")}
-            />
-          </Form.Group>
-        </Form.Row>
-
-        <Form.Row>
-          <Form.Group as={Col} controlId="formGridDate">
-            <Form.Label>Select date</Form.Label>
-            <Form.Control
-              type="date"
-              defaultValue={values.date}
-              onChange={handleChange("date")}
-            />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridHour">
-            <Form.Label>Hour</Form.Label>
-            <Form.Control
-              placeholder="Enter hour. 10:00"
-              defaultValue={values.hour}
-              onChange={handleChange("hour")}
+              type="phone"
+              placeholder="Enter phone no."
+              defaultValue={values.phone}
+              onChange={handleChange("phone")}
             />
           </Form.Group>
         </Form.Row>
