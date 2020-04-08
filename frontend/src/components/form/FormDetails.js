@@ -49,7 +49,10 @@ export class FormDetails extends Component {
           <Form.Group as={Col} controlId="formGridDate">
             <Form.Label>Date</Form.Label>
             <br />
-            <ReactCalendar></ReactCalendar>
+            <ReactCalendar>
+              defaultValue={values.date ? values.date : new Date()}
+              onChange={handleChange("date")}
+            </ReactCalendar>
           </Form.Group>
         </Form.Row>
 
