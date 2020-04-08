@@ -9,7 +9,7 @@ export class UserForm extends Component {
     email: "",
     phone: "",
     date: "",
-    hour: "",
+    hour: "10:00",
     nrPeople: "",
   };
 
