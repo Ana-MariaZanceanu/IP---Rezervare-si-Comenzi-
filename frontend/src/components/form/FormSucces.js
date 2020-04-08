@@ -14,7 +14,7 @@ class FormSucces extends Component {
 
 const styles = {
   text: {
-    color: "#386150",
+    color: '#386150',
   },
 };
 

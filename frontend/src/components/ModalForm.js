@@ -30,13 +30,14 @@ export default function FormDialog() {
 
 const styles = {
   button: {
-    backgroundColor: ' rgb(64, 177, 203);',
+    backgroundColor: '#A71D31',
     width: '30%',
-    color: 'black',
+    color: '#F7E7D9',
     padding: '14px 10px',
     alignSelf: 'center',
     textAlign: 'center',
     marginLeft: '500px',
     marginTop: '200px',
+    border: 'none',
   },
 };

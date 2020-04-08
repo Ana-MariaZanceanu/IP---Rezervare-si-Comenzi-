@@ -6,7 +6,7 @@ import FormFail from "./FormFail";
 export class UserForm extends Component {
   state = {
     step: 1,
-    success: true,
+    success: false,
     name: "",
     email: "",
     phone: "",

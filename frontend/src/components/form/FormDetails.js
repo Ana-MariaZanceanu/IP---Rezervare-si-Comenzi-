@@ -13,7 +13,7 @@ import Button from 'react-bootstrap/Button';
   );
 };*/
 
-export class FormDetails extends Component {
+class FormDetails extends Component {
   continue = (e) => {
     e.preventDefault();
     this.props.nextStep();
@@ -38,9 +38,9 @@ export class FormDetails extends Component {
             <Form.Label>Number of people</Form.Label>
             <Form.Control
               type="phone"
-              placeholder="Enter phone no."
-              defaultValue={values.phone}
-              onChange={handleChange('phone')}
+              placeholder="Enter number of people"
+              defaultValue={values.nrPeople}
+              onChange={handleChange('nrPeople')}
             />
           </Form.Group>
         </Form.Row>
@@ -91,12 +91,24 @@ export class FormDetails extends Component {
           </Col>
         </Form.Row>
 
-        <Button onClick={this.continue} variant="primary" type="submit">
+        <Button onClick={this.continue} variant="primary" type="submit" style={styles.button}>
           Continue
         </Button>
       </Form>
     );
   }
 }
+
+const styles = {
+  button: {
+    backgroundColor: '#A71D31',
+    color: '#F7E7D9',
+    border: 'none',
+    marginRight: '1vw',
+    marginTop: '2vh',
+    width: '8vw',
+    height: '6vh',
+  },
+};
 
 export default FormDetails;

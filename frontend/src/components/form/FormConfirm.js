@@ -27,7 +27,7 @@ class FormConfirm extends Component {
           <ListGroup.Item>Phone no: {phone}</ListGroup.Item>
           <ListGroup.Item>Date: {date}</ListGroup.Item>
           <ListGroup.Item>Hour: {hour}</ListGroup.Item>
-          <ListGroup.Item>People no: {nrPeople}</ListGroup.Item>
+          <ListGroup.Item>Number of people: {nrPeople}</ListGroup.Item>
         </ListGroup>
         <Button
           onClick={this.continue}
@@ -52,16 +52,16 @@ class FormConfirm extends Component {
 
 const styles = {
   button: {
-    backgroundColor: "#A71D31",
-    color: "#F7E7D9",
-    border: "none",
-    marginRight: "1vw",
-    marginTop: "2vh",
-    width: "8vw",
-    height: "6vh",
+    backgroundColor: '#A71D31',
+    color: '#F7E7D9',
+    border: 'none',
+    marginRight: '1vw',
+    marginTop: '2vh',
+    width: '8vw',
+    height: '6vh',
   },
   text: {
-    color: "#2B2633",
+    color: '#2B2633',
   },
 };
 
