@@ -8,8 +8,7 @@ export class UserForm extends Component {
     name: "",
     email: "",
     phone: "",
-    date: "",
-    hour: "",
+    dateHour: "",
     nrPeople: "",
   };
 
@@ -32,13 +31,12 @@ export class UserForm extends Component {
   };
   render() {
     const { step } = this.state;
-    const { name, email, phone, date, hour, nrPeople } = this.state;
+    const { name, email, phone, dateHour, nrPeople } = this.state;
     const values = {
       name,
       email,
       phone,
-      date,
-      hour,
+      dateHour,
       nrPeople,
     };
     switch (step) {
