@@ -15,16 +15,14 @@ export default function FormDialog() {
         Book a table
       </Button>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Dialog>
-          <Modal.Header closeButton>
-            <Modal.Title>Book a table </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <FormReservation />
-          </Modal.Body>
+        <Modal.Header closeButton>
+          <Modal.Title>Book a table </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <FormReservation />
+        </Modal.Body>
 
-          <Modal.Footer></Modal.Footer>
-        </Modal.Dialog>
+        <Modal.Footer></Modal.Footer>
       </Modal>
     </>
   );
