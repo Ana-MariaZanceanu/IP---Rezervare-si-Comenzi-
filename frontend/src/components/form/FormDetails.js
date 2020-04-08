@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export class FormDetails extends Component {
   continue = (e) => {
@@ -14,24 +16,32 @@ export class FormDetails extends Component {
     return (
       <Form>
         <Form.Row>
-          <Form.Group as={Col} controlId="formGridFirstName">
-            <Form.Label>First Name</Form.Label>
+          <Form.Group as={Col} controlId="formGridName">
+            <Form.Label>Name</Form.Label>
             <Form.Control
-              type="firstName"
-              placeholder="Enter first name"
-              defaultValue={values.firstName}
-              onChange={handleChange("firstName")}
+              type="Name"
+              placeholder="Enter your name"
+              defaultValue={values.name}
+              onChange={handleChange("name")}
             />
           </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridLastName">
-            <Form.Label>Last Name</Form.Label>
+          <Form.Group as={Col} controlId="formGridPhone">
+            <Form.Label>Phone</Form.Label>
             <Form.Control
-              type="lastName"
-              placeholder="Enter last name"
-              defaultValue={values.lastName}
-              onChange={handleChange("lastName")}
+              type="phone"
+              placeholder="Enter phone no."
+              defaultValue={values.phone}
+              onChange={handleChange("phone")}
             />
+          </Form.Group>
+        </Form.Row>
+
+        <Form.Row>
+          <Form.Group as={Col} controlId="formGrid">
+            <Form.Label>Date</Form.Label>
+            <br />
+            <DatePicker />
           </Form.Group>
         </Form.Row>
 

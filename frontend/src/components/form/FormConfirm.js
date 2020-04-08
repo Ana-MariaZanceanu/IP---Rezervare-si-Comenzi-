@@ -12,9 +12,6 @@ export class FormConfirm extends Component {
   };
 
   render() {
-    const {
-      values: { firstName, lastName, email, nrphone, date, nrPeople },
-    } = this.props;
     return <h1>Confirm</h1>;
   }
 }

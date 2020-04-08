@@ -5,11 +5,11 @@ import FormSucces from "./FormSucces";
 export class UserForm extends Component {
   state = {
     step: 1,
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
-    nrphone: "",
+    phone: "",
     date: "",
+    hour: "",
     nrPeople: "",
   };
 
@@ -32,13 +32,13 @@ export class UserForm extends Component {
   };
   render() {
     const { step } = this.state;
-    const { firstName, lastName, email, nrphone, date, nrPeople } = this.state;
+    const { name, email, phone, date, hour, nrPeople } = this.state;
     const values = {
-      firstName,
-      lastName,
+      name,
       email,
-      nrphone,
+      phone,
       date,
+      hour,
       nrPeople,
     };
     switch (step) {
