@@ -1,17 +1,9 @@
-import React, { Component } from "react";
-import { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-
-const ReactCalendar = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  return (
-    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-  );
-};
+import React, { Component } from 'react';
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export class FormDetails extends Component {
   continue = (e) => {
@@ -30,7 +22,7 @@ export class FormDetails extends Component {
               type="Name"
               placeholder="Enter your name"
               defaultValue={values.name}
-              onChange={handleChange("name")}
+              onChange={handleChange('name')}
             />
           </Form.Group>
 
@@ -40,19 +32,16 @@ export class FormDetails extends Component {
               type="phone"
               placeholder="Enter phone no."
               defaultValue={values.phone}
-              onChange={handleChange("phone")}
+              onChange={handleChange('phone')}
             />
           </Form.Group>
         </Form.Row>
 
         <Form.Row>
-          <Form.Group as={Col} controlId="formGridDate">
+          <Form.Group as={Col} controlId="formGrid">
             <Form.Label>Date</Form.Label>
             <br />
-            <ReactCalendar>
-              defaultValue={values.date ? values.date : new Date()}
-              onChange={handleChange("date")}
-            </ReactCalendar>
+            <DatePicker />
           </Form.Group>
         </Form.Row>
 

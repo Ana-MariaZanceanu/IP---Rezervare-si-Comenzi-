@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import Modal from "react-bootstrap/Modal";
-import FormReservation from "./form/FormReservation";
+import React, { Component } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import FormReservation from './form/FormReservation';
 
 export class ModalForm extends Component {
   render() {
@@ -17,7 +17,6 @@ export class ModalForm extends Component {
 
           <Modal.Footer></Modal.Footer>
         </Modal.Dialog>
-        `
       </>
     );
   }

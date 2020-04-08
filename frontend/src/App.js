@@ -1,7 +1,6 @@
-import React from "react";
-import "./App.css";
-import ModalForm from "./components/ModalForm";
-
+import React from 'react';
+import './App.css';
+import ModalForm from './components/ModalForm';
 function App() {
   return (
     <div>
