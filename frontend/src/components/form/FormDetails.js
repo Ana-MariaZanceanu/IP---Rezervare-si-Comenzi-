@@ -27,6 +27,7 @@ export class FormDetails extends Component {
           <Form.Group as={Col} controlId="formGridName">
             <Form.Label>Name</Form.Label>
             <Form.Control
+              type="text"
               placeholder="Enter your name"
               defaultValue={values.name}
               onChange={handleChange("name")}
@@ -68,6 +69,7 @@ export class FormDetails extends Component {
             <Form.Group controlId="formGridPhone">
               <Form.Label>Phone</Form.Label>
               <Form.Control
+                required
                 placeholder="Enter phone no."
                 defaultValue={values.phone}
                 onChange={handleChange("phone")}
