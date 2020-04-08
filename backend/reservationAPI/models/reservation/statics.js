@@ -18,12 +18,21 @@ const findByData = async function (
 	});
 
 	if (reservation) {
-		throw new Error('Rezervation already exists.');
+		throw new Error('Reservation already exists.');
 	}
 
 	return reservation;
 };
 
+const validateDate = async function (reservationDate) {
+	const date = new Date();
+	date.setHours(date.getHours() + 3);
+	if (reservationDate < date) {
+		throw new Error('Reservation date invalid.');
+	}
+};
+
 module.exports = {
 	findByData,
+	validateDate,
 };
