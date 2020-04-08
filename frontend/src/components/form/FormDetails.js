@@ -2,7 +2,6 @@ import React, { Component } from "react";
 //import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 //import DatePicker from "react-datepicker";
 //import "react-datepicker/dist/react-datepicker.css";
@@ -13,6 +12,7 @@ import Button from "react-bootstrap/Button";
     <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
   );
 };*/
+
 export class FormDetails extends Component {
   continue = (e) => {
     e.preventDefault();
