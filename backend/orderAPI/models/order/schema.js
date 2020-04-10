@@ -69,7 +69,17 @@ const orderSchema = mongoose.Schema({
 	},
 	dishes: [
 		{
-			dishId: mongoose.Types.ObjectId,
+			dishId: {
+				type: mongoose.Types.ObjectId,
+				validate: {
+					validator(value) {
+						// verificam daca restaurantul chiar exista
+						console.log(value);
+						return true;
+					},
+					message: 'Dish id not valid',
+				},
+			},
 			quantity: Number,
 		},
 	],
