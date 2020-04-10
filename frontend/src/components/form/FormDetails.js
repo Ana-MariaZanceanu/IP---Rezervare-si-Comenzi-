@@ -14,9 +14,12 @@ import Button from 'react-bootstrap/Button';
 };*/
 
 class FormDetails extends Component {
+  constructor(props) {
+    super(props);
+  }
   continue = (e) => {
     e.preventDefault();
-    this.props.nextStep();
+    this.props.nextStep(false);
   };
 
   render() {
@@ -24,74 +27,87 @@ class FormDetails extends Component {
     return (
       <Form>
         <Form.Row>
-          <Form.Group as={Col} controlId="formGridName">
-            <Form.Label>Name</Form.Label>
+          <Form.Group as={Col} controlId="userFirstName">
+            <Form.Label>First Name</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter your name"
-              defaultValue={values.name}
-              onChange={handleChange('name')}
+              placeholder="First name"
+              value={values.userFirstName}
+              name="userFirstName"
+              onChange={handleChange('userFirstName')}
             />
           </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridPeople">
-            <Form.Label>Number of people</Form.Label>
+          <Form.Group as={Col} controlId="userLastName">
+            <Form.Label>Last Name</Form.Label>
             <Form.Control
-              type="phone"
-              placeholder="Enter number of people"
-              defaultValue={values.nrPeople}
-              onChange={handleChange('nrPeople')}
+                type="text"
+                placeholder="Last name"
+                value={values.userLastName}
+                name="userLastName"
+                onChange={handleChange('userLastName')}
             />
           </Form.Group>
         </Form.Row>
-
         <Form.Row>
-          <Form.Group as={Col} controlId="formGridDate">
+          <Form.Group as={Col} controlId="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+                type="email"
+                placeholder="Email"
+                value={values.email}
+                name="email"
+                onChange={handleChange('email')}
+            />
+          </Form.Group>
+
+          <Form.Group as={Col} controlId="phoneNumber">
+            <Form.Label>Phone Number</Form.Label>
+            <Form.Control
+                type="phone"
+                placeholder="Phone number"
+                value={values.phoneNumber}
+                name="phoneNumber"
+                onChange={handleChange('phoneNumber')}
+            />
+          </Form.Group>
+
+          <Form.Group as={Col} controlId="numberOfSeats">
+            <Form.Label>Number of Seats</Form.Label>
+            <Form.Control
+                type="number"
+                placeholder="Number of seats"
+                value={values.numberOfSeats}
+                name="numberOfSeats"
+                onChange={handleChange('numberOfSeats')}
+            />
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group as={Col} controlId="reservationDate">
             <Form.Label>Date</Form.Label>
             <Form.Control
-              type="date"
-              placeholder="Enter date"
-              defaultValue={values.date}
-              onChange={handleChange('date')}
+                type="date"
+                placeholder="Date"
+                value={values.reservationDate}
+                name="reservationDate"
+                onChange={handleChange('reservationDate')}
             />
           </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridHour">
-            <Form.Label>Enter hour. 10:00</Form.Label>
+          <Form.Group as={Col} controlId="hour">
+            <Form.Label>Hour</Form.Label>
             <Form.Control
-              type="text"
-              defaultValue={values.hour}
-              onChange={handleChange('hour')}
+                type="text"
+                placeholder="Hour"
+                value={values.hour}
+                name="hour"
+                onChange={handleChange('hour')}
             />
           </Form.Group>
         </Form.Row>
 
-        <Form.Row>
-          <Col>
-            <Form.Group controlId="formGridPhone">
-              <Form.Label>Phone</Form.Label>
-              <Form.Control
-                required
-                placeholder="Enter phone no."
-                defaultValue={values.phone}
-                onChange={handleChange('phone')}
-              />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group controlId="formGridEmail">
-              <Form.Label>Enter your email</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter your email"
-                defaultValue={values.email}
-                onChange={handleChange('email')}
-              />
-            </Form.Group>
-          </Col>
-        </Form.Row>
-
-        <Button onClick={this.continue} variant="primary" type="submit" style={styles.button}>
+        <Button onClick={this.continue} variant="primary" type="button" style={styles.button}>
           Continue
         </Button>
       </Form>
@@ -106,8 +122,8 @@ const styles = {
     border: 'none',
     marginRight: '1vw',
     marginTop: '2vh',
-    width: '8vw',
-    height: '6vh',
+    width: 'auto',
+    height: 'auto',
   },
 };
 
