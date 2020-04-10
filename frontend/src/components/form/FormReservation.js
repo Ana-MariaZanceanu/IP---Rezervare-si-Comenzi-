@@ -5,10 +5,10 @@ import FormSucces from "./FormSucces";
 import FormFail from "./FormFail";
 class UserForm extends Component {
   constructor(props){
+    let success = false;
     super(props);
     this.state = {
       step: 1,
-      success: false,
       userFirstName: "",
       userLastName: "",
       email: "",
@@ -19,19 +19,17 @@ class UserForm extends Component {
     };
   }
 
-  nextStep = (success) => {
+  nextStep = () => {
     const { step } = this.state;
     this.setState({
       step: step + 1,
-      success: success,
     });
   };
 
-  prevStep = (success) => {
+  prevStep = () => {
     const { step } = this.state;
     this.setState({
       step: step - 1,
-      success: success,
     });
   };
 //ascultam cand se produce un event pe state-ul nostru (pe fiecare input)
@@ -53,11 +51,14 @@ class UserForm extends Component {
   };
 
 
+  modifySuccess = (succes) => {
+    console.log('succes primit ' + succes)
+    this.success = succes;
+  }
 
   render() {
     const { step } = this.state;
     const { userFirstName, userLastName, email, phoneNumber, reservationDate, hour,numberOfSeats} = this.state;
-    const { success } = this.state;
     const values = {userFirstName, userLastName, email, phoneNumber, reservationDate, hour,numberOfSeats};
     switch (step) {
       case 1:
@@ -75,10 +76,11 @@ class UserForm extends Component {
             prevStep={this.prevStep}
             addFormDetails={this.addFormDetails}
             values={values}
+            modifySuccess={this.modifySuccess}
           />
         );
       case 3:
-        return success === true ? <FormSucces/> : <FormFail/>;
+        return this.success === true ? <FormSucces/> : <FormFail/>;
       default:
         return null;
     }

@@ -13,31 +13,39 @@ class FormConfirm extends Component {
     }
 
     continue = (e) => {
-        e.preventDefault();
-        this.props.nextStep(this.state.success);
+        //e.preventDefault();
+        this.props.modifySuccess(this.state.success);
+        this.props.nextStep();
     };
 
     back = (e) => {
         e.preventDefault();
-        this.props.prevStep(this.state.success);
+        this.props.prevStep();
     };
 
     addFormDetails = (e, data) => {
         this.props.addFormDetails(e);
         axios({
             method: 'post',
-            url: '',
+            url: 'http://localhost:3000/api/v1/reservations',
             data
         })
             .then(response => {
+                console.log(this.state.success)
+
               this.setState({
                   success: true,
-              });
+              },() => {
+                  console.log(this.state.success)
+                  this.continue(e);
+              })
             })
             .catch(error => {
                 this.setState({
                     success: false,
-                });
+                },() => {
+                    this.continue(e);
+                })
             });
     };
 
@@ -60,8 +68,9 @@ class FormConfirm extends Component {
             email: email,
             phoneNumber: phoneNumber,
             reservationDate: reservationDate,
-            hour: hour,
+            //hour: hour,
             numberOfSeats: numberOfSeats,
+            restaurantId: '5e8b6ecd5935d8350c6c2c2a',
         };
         return (
             <div>
@@ -77,7 +86,6 @@ class FormConfirm extends Component {
                 </ListGroup>
                 <Button
                     onClick={(event) => {
-                        this.continue(event);
                         this.addFormDetails(event, formValues);
                     }}
                     variant="primary"

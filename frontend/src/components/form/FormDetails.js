@@ -19,7 +19,7 @@ class FormDetails extends Component {
   }
   continue = (e) => {
     e.preventDefault();
-    this.props.nextStep(false);
+    this.props.nextStep();
   };
 
   render() {
