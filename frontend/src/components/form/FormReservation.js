@@ -3,7 +3,7 @@ import FormDetails from "./FormDetails";
 import FormConfirm from "./FormConfirm";
 import FormSucces from "./FormSucces";
 import FormFail from "./FormFail";
-export class UserForm extends Component {
+class UserForm extends Component {
   state = {
     step: 1,
     success: false,
