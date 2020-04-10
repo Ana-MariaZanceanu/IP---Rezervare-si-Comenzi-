@@ -5,6 +5,9 @@ const { Joi } = require('celebrate');
 // Joi.objectId = joiObjectId(Joi);
 
 const reservationSchema = Joi.object().keys({
+	userId: Joi.string()
+		.regex(/^[a-fA-F0-9]{24}$/)
+		.error(new Error('User id invalid')),
 	email: Joi.string()
 		.email()
 		.required()
@@ -31,8 +34,9 @@ const reservationSchema = Joi.object().keys({
 		.required()
 		.error(new Error('Number of Seats required')),
 	restaurantId: Joi.string()
+		.regex(/^[a-fA-F0-9]{24}$/)
 		.required()
-		.error(new Error('Restaurant name required')),
+		.error(new Error('Restaurant id invalid')),
 });
 
 module.exports = reservationSchema;

@@ -1,17 +1,6 @@
-const findByData = async function (
-	email,
-	userFirstName,
-	userLastName,
-	phoneNumber,
-	restaurantId,
-	date,
-) {
+const findByData = async function (email, date) {
 	const order = await this.findOne({
 		email,
-		userFirstName,
-		userLastName,
-		phoneNumber,
-		restaurantId,
 		date,
 	});
 

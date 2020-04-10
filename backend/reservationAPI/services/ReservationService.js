@@ -36,6 +36,7 @@ class ReservationService {
 
 	async submit(payload) {
 		const {
+			userId,
 			email,
 			userFirstName,
 			userLastName,
@@ -46,6 +47,7 @@ class ReservationService {
 		} = payload;
 
 		const reservationData = {
+			userId,
 			email,
 			userFirstName,
 			userLastName,
@@ -55,20 +57,16 @@ class ReservationService {
 			restaurantId,
 		};
 
+		if (payload.userId) {
+			reservationData.guest = false;
+		}
+
 		const reservation = new this.db.Reservation(reservationData);
 
 		try {
-			await this.db.Reservation.validateDate(
-				payload.reservationDate,
-			);
 			const existsReservation = await this.db.Reservation.findByData(
 				email,
-				userFirstName,
-				userLastName,
 				reservationDate,
-				phoneNumber,
-				numberOfSeats,
-				restaurantId,
 			);
 
 			if (!existsReservation) {

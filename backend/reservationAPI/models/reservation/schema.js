@@ -1,6 +1,18 @@
 const mongoose = require('mongoose');
 
 const reservationSchema = mongoose.Schema({
+	userId: {
+		type: mongoose.Types.ObjectId,
+		required: false,
+		validate: {
+			validator(value) {
+				// verificam daca user-ul chiar exista
+				console.log(value);
+				return true;
+			},
+			message: 'User id not valid',
+		},
+	},
 	email: {
 		type: String,
 		required: true,
@@ -19,6 +31,17 @@ const reservationSchema = mongoose.Schema({
 	reservationDate: {
 		type: Date,
 		required: true,
+		validate: {
+			validator(value) {
+				const date = new Date();
+				date.setHours(date.getHours() + 3);
+				if (value < date) {
+					return false;
+				}
+				return true;
+			},
+			message: 'Reservation date is invalid.',
+		},
 	},
 	phoneNumber: {
 		type: String,
@@ -32,13 +55,21 @@ const reservationSchema = mongoose.Schema({
 		min: 1,
 	},
 	restaurantId: {
-		type: String,
+		type: mongoose.Types.ObjectId,
 		required: true,
+		validate: {
+			validator(value) {
+				// verificam daca restaurantul chiar exista
+				console.log(value);
+				return true;
+			},
+			message: 'Restaurant id not valid',
+		},
 	},
 	guest: {
 		type: Boolean,
 		required: true,
-		default: 'false',
+		default: 'true',
 	},
 });
 
