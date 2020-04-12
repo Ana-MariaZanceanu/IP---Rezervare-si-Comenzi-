@@ -6,6 +6,7 @@ import FormFail from "./FormFail";
 class UserForm extends Component {
   constructor(props){
     let success = false;
+    let message = "";
     super(props);
     this.state = {
       step: 1,
@@ -51,9 +52,10 @@ class UserForm extends Component {
   };
 
 
-  modifySuccess = (succes) => {
+  modifySuccess = (succes,message) => {
     console.log('succes primit ' + succes)
     this.success = succes;
+    this.message = message;
   }
 
   render() {
@@ -80,7 +82,7 @@ class UserForm extends Component {
           />
         );
       case 3:
-        return this.success === true ? <FormSucces/> : <FormFail/>;
+        return this.success === true ? <FormSucces response={this.message}/> : <FormFail response={this.message}/>;
       default:
         return null;
     }

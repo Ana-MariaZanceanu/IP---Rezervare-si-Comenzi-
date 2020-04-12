@@ -8,7 +8,7 @@ class FormFail extends Component {
     render() {
         return (
             <div>
-                <Card.Title style={styles.text}>Reservation failed!</Card.Title>
+                <Card.Title style={styles.text}>{this.props.response}</Card.Title>
                 <p>Sorry, this reservation already exists.</p>
                 <p>You can try:</p>
             </div>

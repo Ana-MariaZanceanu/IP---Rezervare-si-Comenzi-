@@ -9,12 +9,13 @@ class FormConfirm extends Component {
         super(props);
         this.state= {
             success : false,
+            message : ""
         };
     }
 
     continue = (e) => {
-        //e.preventDefault();
-        this.props.modifySuccess(this.state.success);
+        e.preventDefault();
+        this.props.modifySuccess(this.state.success, this.state.message);
         this.props.nextStep();
     };
 
@@ -31,18 +32,17 @@ class FormConfirm extends Component {
             data
         })
             .then(response => {
-                console.log(this.state.success)
-
               this.setState({
                   success: true,
+                  message: response.statusText,
               },() => {
-                  console.log(this.state.success)
                   this.continue(e);
               })
             })
             .catch(error => {
                 this.setState({
                     success: false,
+                    message: error.message,
                 },() => {
                     this.continue(e);
                 })
