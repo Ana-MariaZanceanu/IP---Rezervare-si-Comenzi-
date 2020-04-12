@@ -38,16 +38,16 @@ class UserForm extends Component {
     this.setState({ [input]: e.target.value });
   };
 //schimbam valorile state-ului cu cele introduse in input
-  addFormDetails = e => {
+  addFormDetails = (e,data) => {
     e.preventDefault();
     this.setState({
-      userFirstName: e.target.value,
-      userLastName: e.target.value,
-      email: e.target.value,
-      phoneNumber: e.target.value,
-      reservationDate: e.target.value,
-      hour: e.target.value,
-      numberOfSeats: e.target.value,
+      userFirstName: data.userFirstName,
+      userLastName: data.userLastName,
+      email: data.email,
+      phoneNumber: data.phoneNumber,
+      reservationDate: data.reservationDate,
+      hour: e.target.value,//aici trebuie tot cu data.hour..dupa ce adauga si cei de la back hour
+      numberOfSeats: data.numberOfSeats,
     });
   };
 
@@ -82,7 +82,7 @@ class UserForm extends Component {
           />
         );
       case 3:
-        return this.success === true ? <FormSucces/> : <FormFail response={this.message}/>;
+        return this.success === true ? <FormSucces/> : <FormFail response={this.message} prevStep={this.prevStep}/>;
       default:
         return null;
     }

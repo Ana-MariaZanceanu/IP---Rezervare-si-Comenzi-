@@ -24,8 +24,10 @@ class FormConfirm extends Component {
         this.props.prevStep();
     };
 
+
     addFormDetails = (e, data) => {
-        this.props.addFormDetails(e);
+        e.preventDefault();
+        this.props.addFormDetails(e, data);
         axios({
             method: 'post',
             url: 'http://localhost:3000/api/v1/reservations',
