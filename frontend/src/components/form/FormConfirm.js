@@ -34,15 +34,14 @@ class FormConfirm extends Component {
             .then(response => {
               this.setState({
                   success: true,
-                  message: response.statusText,
               },() => {
                   this.continue(e);
               })
             })
-            .catch(error => {
+            .catch(err => {
                 this.setState({
                     success: false,
-                    message: error.message,
+                    message: err.response.data.error.message,
                 },() => {
                     this.continue(e);
                 })

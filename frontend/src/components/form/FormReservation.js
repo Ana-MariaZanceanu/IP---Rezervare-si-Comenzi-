@@ -82,7 +82,7 @@ class UserForm extends Component {
           />
         );
       case 3:
-        return this.success === true ? <FormSucces response={this.message}/> : <FormFail response={this.message}/>;
+        return this.success === true ? <FormSucces/> : <FormFail response={this.message}/>;
       default:
         return null;
     }
