@@ -39,11 +39,14 @@ module.exports = (app) => {
 
 	// Let's handle the celebrate errors
 	// All the errors thrown by the validation of body, params etc.
-	app.use((err, req, res, next) => {
-		if (isCelebrate(err)) {
+	app.use((error, req, res, next) => {
+		if (isCelebrate(error)) {
 			return res.status(400).json({
 				success: false,
-				err: { message: err.joi.message, meta: err.meta },
+				error: {
+					message: error.joi.message,
+					meta: error.meta,
+				},
 			});
 		}
 	});
