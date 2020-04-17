@@ -5,9 +5,9 @@ import FormSucces from "./FormSucces";
 import FormFail from "./FormFail";
 class UserForm extends Component {
   constructor(props) {
-    let success = false;
-    let message = "";
     super(props);
+    this.success = false;
+    this.message = "";
     this.state = {
       step: 1,
       userFirstName: "",

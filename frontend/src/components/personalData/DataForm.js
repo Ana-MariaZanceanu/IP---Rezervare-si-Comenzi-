@@ -4,6 +4,9 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
 class DataForm extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <>
@@ -14,6 +17,7 @@ class DataForm extends Component {
               type="text"
               placeholder="Enter your first name"
               style={styles.input}
+              disabled={this.props.disabled}
             />
           </Form.Group>
           <Form.Group controlId="lastName">
@@ -22,6 +26,7 @@ class DataForm extends Component {
               type="text"
               placeholder="Enter your last name"
               style={styles.input}
+              disabled={this.props.disabled}
             />
           </Form.Group>
           <Form.Group controlId="email">
@@ -30,6 +35,7 @@ class DataForm extends Component {
               type="email"
               placeholder="Enter email"
               style={styles.input}
+              disabled={this.props.disabled}
             />
           </Form.Group>
           <Form.Group controlId="phoneNumber">
@@ -38,6 +44,7 @@ class DataForm extends Component {
               type="text"
               placeholder="Phone number"
               style={styles.input}
+              disabled={this.props.disabled}
             />
           </Form.Group>
 
