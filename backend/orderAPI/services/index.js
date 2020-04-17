@@ -3,6 +3,7 @@ const db = require('../models/index');
 
 // Import all the service constructors
 const OrderService = require('./OrderService');
+const CartService = require('./CartService');
 
 // Create the service objects with dependencies
 const orderService = new OrderService({
@@ -12,7 +13,12 @@ const orderService = new OrderService({
 	services: {},
 });
 
+const cartService = new CartService({
+	services: {},
+});
+
 // Export the service object
 module.exports = {
 	orderService,
+	cartService,
 };
