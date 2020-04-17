@@ -40,13 +40,14 @@ class UserForm extends Component {
 //schimbam valorile state-ului cu cele introduse in input
   addFormDetails = (e,data) => {
     e.preventDefault();
+
     this.setState({
       userFirstName: data.userFirstName,
       userLastName: data.userLastName,
       email: data.email,
       phoneNumber: data.phoneNumber,
       reservationDate: data.reservationDate,
-      hour: e.target.value,//aici trebuie tot cu data.hour..dupa ce adauga si cei de la back hour
+      hour: e.target.value,
       numberOfSeats: data.numberOfSeats,
     });
   };
