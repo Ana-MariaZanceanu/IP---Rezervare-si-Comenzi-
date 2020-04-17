@@ -72,8 +72,7 @@ class FormConfirm extends Component {
       userLastName: userLastName,
       email: email,
       phoneNumber: phoneNumber,
-      reservationDate: reservationDate,
-      //hour: hour,
+      reservationDate: reservationDate + "T" + hour,//pe server apare cu 3 ore in urma!
       numberOfSeats: numberOfSeats,
       restaurantId: "5e8b6ecd5935d8350c6c2c2a",
     };
