@@ -11,9 +11,14 @@ export default function FormDialog() {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow} style={styles.button}>
+      <Button
+        variant="primary"
+        size="lg"
+        onClick={handleShow}
+        style={styles.button}
+      >
         Book a table
-      </Button>
+      </Button>{' '}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Book a table </Modal.Title>
@@ -36,8 +41,6 @@ const styles = {
     padding: '14px 10px',
     alignSelf: 'center',
     textAlign: 'center',
-    marginLeft: '500px',
-    marginTop: '200px',
     border: 'none',
   },
 };

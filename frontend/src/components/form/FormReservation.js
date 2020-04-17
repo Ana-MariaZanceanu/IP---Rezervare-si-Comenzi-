@@ -4,7 +4,7 @@ import FormConfirm from "./FormConfirm";
 import FormSucces from "./FormSucces";
 import FormFail from "./FormFail";
 class UserForm extends Component {
-  constructor(props){
+  constructor(props) {
     let success = false;
     let message = "";
     super(props);
@@ -15,7 +15,7 @@ class UserForm extends Component {
       email: "",
       phoneNumber: "",
       reservationDate: "",
-      hour: "10:00",//sa adauge si back-ul
+      hour: "", //sa adauge si back-ul
       numberOfSeats: "",
     };
   }
@@ -33,12 +33,13 @@ class UserForm extends Component {
       step: step - 1,
     });
   };
-//ascultam cand se produce un event pe state-ul nostru (pe fiecare input)
+  //ascultam cand se produce un event pe state-ul nostru (pe fiecare input)
   handleChange = (input) => (e) => {
     this.setState({ [input]: e.target.value });
   };
-//schimbam valorile state-ului cu cele introduse in input
-  addFormDetails = (e,data) => {
+
+  //schimbam valorile state-ului cu cele introduse in input
+  addFormDetails = (e, data) => {
     e.preventDefault();
     this.setState({
       userFirstName: data.userFirstName,
@@ -46,22 +47,37 @@ class UserForm extends Component {
       email: data.email,
       phoneNumber: data.phoneNumber,
       reservationDate: data.reservationDate,
-      hour: e.target.value,//aici trebuie tot cu data.hour..dupa ce adauga si cei de la back hour
+      hour: e.target.value, //aici trebuie tot cu data.hour..dupa ce adauga si cei de la back hour
       numberOfSeats: data.numberOfSeats,
     });
   };
 
-
-  modifySuccess = (succes,message) => {
-    console.log('succes primit ' + succes)
+  modifySuccess = (succes, message) => {
+    console.log("succes primit " + succes);
     this.success = succes;
     this.message = message;
-  }
+  };
 
   render() {
     const { step } = this.state;
-    const { userFirstName, userLastName, email, phoneNumber, reservationDate, hour,numberOfSeats} = this.state;
-    const values = {userFirstName, userLastName, email, phoneNumber, reservationDate, hour,numberOfSeats};
+    const {
+      userFirstName,
+      userLastName,
+      email,
+      phoneNumber,
+      reservationDate,
+      hour,
+      numberOfSeats,
+    } = this.state;
+    const values = {
+      userFirstName,
+      userLastName,
+      email,
+      phoneNumber,
+      reservationDate,
+      hour,
+      numberOfSeats,
+    };
     switch (step) {
       case 1:
         return (
@@ -82,7 +98,11 @@ class UserForm extends Component {
           />
         );
       case 3:
-        return this.success === true ? <FormSucces/> : <FormFail response={this.message} prevStep={this.prevStep}/>;
+        return this.success === true ? (
+          <FormSucces />
+        ) : (
+          <FormFail response={this.message} prevStep={this.prevStep} />
+        );
       default:
         return null;
     }
