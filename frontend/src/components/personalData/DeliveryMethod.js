@@ -25,6 +25,7 @@ class DeliveryMethod extends Component {
                                         <Form.Check type="checkbox" label="Pick up from restaurant" onChange={handleChange('restaurantDelivery')}/>
                                     </Form.Group>
                                 </Form>
+                                <Card.Text>{this.props.checkMessage}</Card.Text>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>

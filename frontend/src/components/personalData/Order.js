@@ -18,14 +18,17 @@ class Order extends Component {
     }
 
     changeStep = () =>{
-        if(this.state.homeDelivery || this.state.restaurantDelivery){
-            const {step} = this.state;
+        if((this.state.homeDelivery && !this.state.restaurantDelivery) || (!this.state.homeDelivery && this.state.restaurantDelivery)){
+            this.checkMessage = ''
             this.setState({
                 step: 2,
             },() => {
                 console.log(this.state.step)
             });
         }else{
+            if(this.state.homeDelivery && this.state.restaurantDelivery){
+                this.checkMessage = 'You have to choose just one delivery method!'
+            }
             this.setState({
                 step: 1,
             },() => {
@@ -69,14 +72,14 @@ class Order extends Component {
             case 1:
                 return (
                     <div>
-                        <DeliveryMethod values={values} handleChange={this.handleChange}/>
+                        <DeliveryMethod values={values} handleChange={this.handleChange} checkMessage={this.checkMessage}/>
                         <PersonalData values={values} handleChange={this.handleChange} addFormDetails={this.addFormDetails} disabled={"disabled"}/>
                     </div>
                 );
             case 2:
                 return (
                     <div>
-                        <DeliveryMethod values={values} handleChange={this.handleChange}/>
+                        <DeliveryMethod values={values} handleChange={this.handleChange} checkMessage={this.checkMessage}/>
                         <PersonalData values={values} handleChange={this.handleChange} addFormDetails={this.addFormDetails} disabled={''}/>
                     </div>
                 );
