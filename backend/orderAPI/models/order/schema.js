@@ -54,12 +54,15 @@ const orderSchema = mongoose.Schema({
 		type: String,
 		required: false,
 	},
-	userCreditCardId: {
+	paymentMethod: {
 		type: String,
-		required: false,
+		required: true,
+		enum: ['card', 'cash'],
+		default: 'cash',
 	},
 	amount: {
 		type: Number,
+		min: 1,
 		required: true,
 	},
 	guest: {
@@ -67,20 +70,25 @@ const orderSchema = mongoose.Schema({
 		required: true,
 		default: 'true',
 	},
-	dishes: [
+	items: [
 		{
-			dishId: {
+			id: {
 				type: mongoose.Types.ObjectId,
+				required: true,
 				validate: {
 					validator(value) {
 						// verificam daca restaurantul chiar exista
 						console.log(value);
 						return true;
 					},
-					message: 'Dish id not valid',
+					message: 'Item id not valid',
 				},
 			},
-			quantity: Number,
+			item: {
+				price: { type: Number, required: true, min: 1 },
+				quantity: { type: Number, required: true, min: 1 },
+				product: { type: String, required: true },
+			},
 		},
 	],
 });

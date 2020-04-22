@@ -1,6 +1,6 @@
 const { Joi } = require('celebrate');
 
-const orderSchema = Joi.object().keys({
+const orderValidationSchema = Joi.object().keys({
 	userId: Joi.string()
 		.regex(/^[a-fA-F0-9]{24}$/)
 		.error(new Error('User id invalid')),
@@ -28,28 +28,9 @@ const orderSchema = Joi.object().keys({
 	userDeliveryAdress: Joi.string().error(
 		new Error('Adress invalid'),
 	),
-	userCreditCardId: Joi.string()
-		.creditCard()
-		.error(new Error('Credit Card invalid')),
-	amount: Joi.number()
-		.positive()
-		.greater(1)
-		.precision(2)
-		.required()
-		.error(new Error('Amount invalid')),
-	dishes: Joi.array()
-		.items(
-			Joi.object()
-				.keys({
-					dishId: Joi.string()
-						.required()
-						.regex(/^[a-fA-F0-9]{24}$/),
-					quantity: Joi.number().positive().min(1),
-				})
-				.required(),
-		)
-		.required()
-		.error(new Error('Dished invalid')),
+	paymentMethod: Joi.string()
+		.regex(/^(cash|card)$/)
+		.error(new Error('Payment Method invalid')),
 });
 
-module.exports = orderSchema;
+module.exports = { orderValidationSchema };

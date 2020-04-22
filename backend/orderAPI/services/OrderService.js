@@ -1,3 +1,6 @@
+const stripe = require('stripe')(
+	'sk_test_6Qtc8kKAPJVEFZ69mObgzgSA00Sej2WCK9',
+);
 const Logger = require('../loaders/logger');
 
 class OrderService {
@@ -34,7 +37,9 @@ class OrderService {
 		}
 	}
 
-	async submit(payload) {
+	async submit(req) {
+		const payload = req.body;
+		const { cart } = req.session;
 		const {
 			userId,
 			email,
@@ -43,9 +48,7 @@ class OrderService {
 			phoneNumber,
 			restaurantId,
 			userDeliveryAdress,
-			userCreditCardId,
-			amount,
-			dishes,
+			paymentMethod,
 		} = payload;
 
 		const orderData = {
@@ -56,9 +59,7 @@ class OrderService {
 			phoneNumber,
 			restaurantId,
 			userDeliveryAdress,
-			userCreditCardId,
-			amount,
-			dishes,
+			paymentMethod,
 		};
 		const date = new Date();
 		date.setHours(date.getHours() + 3);
@@ -66,6 +67,8 @@ class OrderService {
 		if (payload.userId) {
 			orderData.guest = false;
 		}
+		orderData.items = cart.items;
+		orderData.amount = cart.totalPrice;
 
 		const order = new this.db.Order(orderData);
 
@@ -76,6 +79,9 @@ class OrderService {
 			);
 
 			if (!existsOrder) {
+				if (req.body.paymentMethod === 'card') {
+					await this.cardPayment(req.session.cart);
+				}
 				await order.save();
 			}
 
@@ -87,6 +93,42 @@ class OrderService {
 				error: { message: error.message },
 			};
 		}
+	}
+
+	async cardPayment(cart) {
+		stripe.tokens.create(
+			{
+				card: {
+					number: '4242424242424242',
+					exp_month: 4,
+					exp_year: 2021,
+					cvc: '314',
+				},
+			},
+			function (err, token) {
+				if (err) {
+					Logger.error(err);
+				} else {
+					stripe.charges.create(
+						{
+							amount: cart.totalPrice * 100,
+							currency: 'usd',
+							source: token.id, // obtained with Stripe.js
+							description: 'Test Charge',
+						},
+						function (error) {
+							if (error) {
+								Logger.error(error);
+							} else {
+								Logger.info(
+									'Payment successfully made.',
+								);
+							}
+						},
+					);
+				}
+			},
+		);
 	}
 
 	async deleteAll() {

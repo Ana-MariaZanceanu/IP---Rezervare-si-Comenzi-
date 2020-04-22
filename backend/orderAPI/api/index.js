@@ -20,7 +20,7 @@ app.use(
 		store: new MongoStore({
 			mongooseConnection: mongoose.connection,
 		}),
-		cookie: { maxAge: 120 * 60 * 1000 },
+		cookie: { maxAge: 24 * 60 * 60 * 1000 },
 	}),
 );
 app.use('/cart', cartRouter);

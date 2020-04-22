@@ -30,7 +30,7 @@ router.post(
 		body: orderValidationSchema,
 	}),
 	async function (req, res) {
-		const result = await orderService.submit(req.body);
+		const result = await orderService.submit(req);
 		const statusCode = result.success ? CREATED : BAD_REQUEST;
 
 		res.status(statusCode).json(result);
