@@ -33,67 +33,67 @@ export class PaymentMethod extends Component {
     if (this.state.checkedPayOnlineBox === false)
       return (
         <>
-            <Accordion>
-              <Card>
-                <Accordion.Toggle as={Card.Header} eventKey="0">
-                  3. Select payment method
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey="0">
-                  <Card.Body>
-                    <Form>
-                      <Form.Check
-                        type="checkbox"
-                        label="Pay online"
-                        onClick={this.handleClickPayOnline}
-                        onChange={handleChange("onlinePayment")}
-                        disabled={this.state.checkedOnDeliveryBox}
-                      />
-                      <Form.Check
-                        type="checkbox"
-                        label="Cash on delivery"
-                        onChange={handleChange("payOnDelivery")}
-                        onClick={this.handleClickOnDelivery}
-                        disabled={this.state.checkedPayOnlineBox}
-                      />
-                    </Form>
-                  </Card.Body>
-                </Accordion.Collapse>
-              </Card>
-            </Accordion>
+          <Accordion>
+            <Card>
+              <Accordion.Toggle as={Card.Header} eventKey="0">
+                3. Select payment method
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body>
+                  <Form>
+                    <Form.Check
+                      type="checkbox"
+                      label="Pay online"
+                      onClick={this.handleClickPayOnline}
+                      onChange={handleChange("onlinePayment")}
+                      disabled={this.state.checkedOnDeliveryBox}
+                    />
+                    <Form.Check
+                      type="checkbox"
+                      label="Cash on delivery"
+                      onChange={handleChange("payOnDelivery")}
+                      onClick={this.handleClickOnDelivery}
+                      disabled={this.state.checkedPayOnlineBox}
+                    />
+                  </Form>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
         </>
       );
     else
       return (
         <>
-            <Accordion>
-              <Card>
-                <Accordion.Toggle as={Card.Header} eventKey="0">
-                  3. Select payment method
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey="0">
-                  <Card.Body>
-                    <Form>
-                      <Form.Check
-                        type="checkbox"
-                        label="Pay online"
-                        onClick={this.handleClickPayOnline}
-                        onChange={handleChange("onlinePayment")}
-                        disabled={this.state.checkedOnDeliveryBox}
-                      />
-                      <Form.Check
-                        type="checkbox"
-                        label="Cash on delivery"
-                        onChange={handleChange("payOnDelivery")}
-                        onClick={this.handleClickOnDelivery}
-                        disabled={this.state.checkedPayOnlineBox}
-                      />
-                    </Form>
-                    <br />
-                    <PaymentForm handleChange={handleChange} values={values} />
-                  </Card.Body>
-                </Accordion.Collapse>
-              </Card>
-            </Accordion>
+          <Accordion>
+            <Card>
+              <Accordion.Toggle as={Card.Header} eventKey="0">
+                3. Select payment method
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body>
+                  <Form>
+                    <Form.Check
+                      type="checkbox"
+                      label="Pay online"
+                      onClick={this.handleClickPayOnline}
+                      onChange={handleChange("onlinePayment")}
+                      disabled={this.state.checkedOnDeliveryBox}
+                    />
+                    <Form.Check
+                      type="checkbox"
+                      label="Cash on delivery"
+                      onChange={handleChange("payOnDelivery")}
+                      onClick={this.handleClickOnDelivery}
+                      disabled={this.state.checkedPayOnlineBox}
+                    />
+                  </Form>
+                  <br />
+                  <PaymentForm handleChange={handleChange} values={values} />
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
         </>
       );
   }

@@ -137,13 +137,12 @@ class Order extends Component {
               values={values}
               handleChange={this.handleChange}
               addFormDetails={this.addFormDetails}
-              disabled={""}
+              disabled={"disabled"}
             />
             <PaymentMethod
               values={values}
               handleChange={this.handleChange}
               addFormDetails={this.addFormDetails}
-              disabled={"disabled"}
             />
           </div>
         );
@@ -160,6 +159,11 @@ class Order extends Component {
               handleChange={this.handleChange}
               addFormDetails={this.addFormDetails}
               disabled={""}
+            />
+            <PaymentMethod
+              values={values}
+              handleChange={this.handleChange}
+              addFormDetails={this.addFormDetails}
             />
           </div>
         );
