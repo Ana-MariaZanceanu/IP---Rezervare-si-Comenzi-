@@ -22,25 +22,34 @@ class Order extends Component {
       securityCode: "",
     };
   }
-    changeStep = () => {
-        if ((this.state.homeDelivery && !this.state.restaurantDelivery) || (!this.state.homeDelivery && this.state.restaurantDelivery)) {
-            this.checkMessage = ''
-            this.setState({
-                step: 2,
-            }, () => {
-                console.log(this.state.step)
-            });
-        } else {
-            if (this.state.homeDelivery && this.state.restaurantDelivery) {
-                this.checkMessage = 'You have to choose just one delivery method!'
-            }
-            this.setState({
-                step: 1,
-            }, () => {
-                console.log(this.state.step)
-            })
+  changeStep = () => {
+    if (
+      (this.state.homeDelivery && !this.state.restaurantDelivery) ||
+      (!this.state.homeDelivery && this.state.restaurantDelivery)
+    ) {
+      this.checkMessage = "";
+      this.setState(
+        {
+          step: 2,
+        },
+        () => {
+          console.log(this.state.step);
         }
+      );
+    } else {
+      if (this.state.homeDelivery && this.state.restaurantDelivery) {
+        this.checkMessage = "You have to choose just one delivery method!";
+      }
+      this.setState(
+        {
+          step: 1,
+        },
+        () => {
+          console.log(this.state.step);
+        }
+      );
     }
+  };
   handleChange = (input) => (e) => {
     if (input === "homeDelivery" || input === "restaurantDelivery") {
       this.setState({ [input]: e.target.checked }, () => {
@@ -86,51 +95,75 @@ class Order extends Component {
     );
   };
 
-    render() {
-        const {
-            homeDelivery,
-            restaurantDelivery,
-            onlinePayment,
-            userFirstName,
-            userLastName,
-            email,
-            phoneNumber,
-            cardNumber,
-            nameOnCard,
-            expiryDate,
-            securityCode,
-        } = this.state;
-        const values = {
-            homeDelivery,
-            onlinePayment,
-            restaurantDelivery,
-            userFirstName,
-            userLastName,
-            email,
-            phoneNumber,
-            cardNumber,
-            nameOnCard,
-            expiryDate,
-            securityCode,
-        };
-        const {step} = this.state;
-        console.log('step ' + step)
-        switch (step) {
-            case 1:
-                return (
-                    <div>
-                        <DeliveryMethod values={values} handleChange={this.handleChange} checkMessage={this.checkMessage}/>
-                        <PersonalData values={values} handleChange={this.handleChange} addFormDetails={this.addFormDetails} disabled={"disabled"}/>
-                    </div>
-                );
-            case 2:
-                return (
-                    <div>
-                        <DeliveryMethod values={values} handleChange={this.handleChange} checkMessage={this.checkMessage}/>
-                        <PersonalData values={values} handleChange={this.handleChange} addFormDetails={this.addFormDetails} disabled={''}/>
-                    </div>
-                );
-        }
+  render() {
+    const {
+      homeDelivery,
+      restaurantDelivery,
+      onlinePayment,
+      userFirstName,
+      userLastName,
+      email,
+      phoneNumber,
+      cardNumber,
+      nameOnCard,
+      expiryDate,
+      securityCode,
+    } = this.state;
+    const values = {
+      homeDelivery,
+      onlinePayment,
+      restaurantDelivery,
+      userFirstName,
+      userLastName,
+      email,
+      phoneNumber,
+      cardNumber,
+      nameOnCard,
+      expiryDate,
+      securityCode,
+    };
+    const { step } = this.state;
+    console.log("step " + step);
+    switch (step) {
+      case 1:
+        return (
+          <div>
+            <DeliveryMethod
+              values={values}
+              handleChange={this.handleChange}
+              checkMessage={this.checkMessage}
+            />
+            <PersonalData
+              values={values}
+              handleChange={this.handleChange}
+              addFormDetails={this.addFormDetails}
+              disabled={""}
+            />
+            <PaymentMethod
+              values={values}
+              handleChange={this.handleChange}
+              addFormDetails={this.addFormDetails}
+              disabled={"disabled"}
+            />
+          </div>
+        );
+      case 2:
+        return (
+          <div>
+            <DeliveryMethod
+              values={values}
+              handleChange={this.handleChange}
+              checkMessage={this.checkMessage}
+            />
+            <PersonalData
+              values={values}
+              handleChange={this.handleChange}
+              addFormDetails={this.addFormDetails}
+              disabled={""}
+            />
+          </div>
+        );
+    }
   }
 }
 
