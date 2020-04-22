@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import InputGroup from "react-bootstrap/InputGroup";
+
 //import DatePicker from "react-datepicker";
 //import "react-datepicker/dist/react-datepicker.css";
 
@@ -36,9 +36,7 @@ class FormDetails extends Component {
   };
 
   handleClick = (e) => {
-    console.log(this.validated);
     this.setState({ validated: true });
-    console.log(this.validated);
   };
   render() {
     const { values, handleChange } = this.props;

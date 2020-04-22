@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import DataForm from './DataForm';
-import collapse from 'react-bootstrap/collapse';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 class PersonalData extends Component {
   constructor(props) {
     super(props);
@@ -12,21 +10,44 @@ class PersonalData extends Component {
       userLastName: '',
       email: '',
       phoneNumber: '',
+      adress: '',
     };
   }
+  handleChange = (input) => (e) => {
+    this.setState({ [input]: e.target.value });
+  };
+  addFormDetails = (e, data) => {
+    this.setState({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      emailUser: data.emailUser,
+      phoneNumberUser: data.phoneNumberUser,
+      adress: data.adress,
+    });
+  };
+
   render() {
+    const { values, handleChange, addFormDetails } = this.props;
+
     return (
       <>
         <Accordion>
           <Card>
-            <Card.Header>
-              <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                Personal Data
-              </Accordion.Toggle>
-            </Card.Header>
+            <Accordion.Toggle
+              as={Card.Header}
+              eventKey="0"
+              disabled={this.props.disabled}
+            >
+              2. Personal Data
+            </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
               <Card.Body>
-                <DataForm />
+                <DataForm
+                  values={values}
+                  handleChange={handleChange}
+                  addFormDetails={addFormDetails}
+                  disabled={this.props.disabled}
+                />
               </Card.Body>
             </Accordion.Collapse>
           </Card>

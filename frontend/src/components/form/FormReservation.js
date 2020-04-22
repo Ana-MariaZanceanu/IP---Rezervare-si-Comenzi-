@@ -5,9 +5,9 @@ import FormSucces from "./FormSucces";
 import FormFail from "./FormFail";
 class UserForm extends Component {
   constructor(props) {
-    let success = false;
-    let message = "";
     super(props);
+    this.success = false;
+    this.message = "";
     this.state = {
       step: 1,
       userFirstName: "",
@@ -15,7 +15,7 @@ class UserForm extends Component {
       email: "",
       phoneNumber: "",
       reservationDate: "",
-      hour: "", //sa adauge si back-ul
+      hour: "",
       numberOfSeats: "",
     };
   }
@@ -41,13 +41,15 @@ class UserForm extends Component {
   //schimbam valorile state-ului cu cele introduse in input
   addFormDetails = (e, data) => {
     e.preventDefault();
+    let d = data.reservationDate.substr(0,10);
+    let h = data.reservationDate.substr(11);
     this.setState({
       userFirstName: data.userFirstName,
       userLastName: data.userLastName,
       email: data.email,
       phoneNumber: data.phoneNumber,
-      reservationDate: data.reservationDate,
-      hour: e.target.value, //aici trebuie tot cu data.hour..dupa ce adauga si cei de la back hour
+      reservationDate: d,
+      hour: h,
       numberOfSeats: data.numberOfSeats,
     });
   };
