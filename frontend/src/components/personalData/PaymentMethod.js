@@ -3,7 +3,6 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import PaymentForm from "./PaymentForm";
-import Container from "react-bootstrap/Container";
 
 export class PaymentMethod extends Component {
   constructor(props) {
@@ -34,7 +33,6 @@ export class PaymentMethod extends Component {
     if (this.state.checkedPayOnlineBox === false)
       return (
         <>
-          <Container>
             <Accordion>
               <Card>
                 <Accordion.Toggle as={Card.Header} eventKey="0">
@@ -62,13 +60,11 @@ export class PaymentMethod extends Component {
                 </Accordion.Collapse>
               </Card>
             </Accordion>
-          </Container>
         </>
       );
     else
       return (
         <>
-          <Container>
             <Accordion>
               <Card>
                 <Accordion.Toggle as={Card.Header} eventKey="0">
@@ -98,7 +94,6 @@ export class PaymentMethod extends Component {
                 </Accordion.Collapse>
               </Card>
             </Accordion>
-          </Container>
         </>
       );
   }
