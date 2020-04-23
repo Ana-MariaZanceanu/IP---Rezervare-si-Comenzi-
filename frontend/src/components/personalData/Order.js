@@ -53,12 +53,6 @@ class Order extends Component {
   handleChange = (input) => (e) => {
     if (input === "homeDelivery" || input === "restaurantDelivery") {
       this.setState({ [input]: e.target.checked }, () => {
-        console.log(
-          "handle " +
-            this.state.homeDelivery +
-            " " +
-            this.state.restaurantDelivery
-        );
         this.changeStep();
       });
     } else if (input === "payOnDelivery") {
@@ -87,9 +81,6 @@ class Order extends Component {
         securityCode: data.securityCode,
       },
       () => {
-        console.log(
-          "add " + this.state.homeDelivery + " " + this.state.restaurantDelivery
-        );
         this.changeStep();
       }
     );
@@ -123,7 +114,6 @@ class Order extends Component {
       securityCode,
     };
     const { step } = this.state;
-    console.log("step " + step);
     switch (step) {
       case 1:
         return (
@@ -138,6 +128,7 @@ class Order extends Component {
               handleChange={this.handleChange}
               addFormDetails={this.addFormDetails}
               disabled={"disabled"}
+              disabledAddress={"disabled"}
             />
             <PaymentMethod
               values={values}
@@ -147,26 +138,52 @@ class Order extends Component {
           </div>
         );
       case 2:
-        return (
-          <div>
-            <DeliveryMethod
-              values={values}
-              handleChange={this.handleChange}
-              checkMessage={this.checkMessage}
-            />
-            <PersonalData
-              values={values}
-              handleChange={this.handleChange}
-              addFormDetails={this.addFormDetails}
-              disabled={""}
-            />
-            <PaymentMethod
-              values={values}
-              handleChange={this.handleChange}
-              addFormDetails={this.addFormDetails}
-            />
-          </div>
-        );
+        if(this.state.homeDelivery){
+          return (
+              <div>
+                <DeliveryMethod
+                    values={values}
+                    handleChange={this.handleChange}
+                    checkMessage={this.checkMessage}
+                />
+                <PersonalData
+                    values={values}
+                    handleChange={this.handleChange}
+                    addFormDetails={this.addFormDetails}
+                    disabled={""}
+                    disabledAddress={""}
+                />
+                <PaymentMethod
+                    values={values}
+                    handleChange={this.handleChange}
+                    addFormDetails={this.addFormDetails}
+                />
+              </div>
+          );
+        }else{
+          return (
+              <div>
+                <DeliveryMethod
+                    values={values}
+                    handleChange={this.handleChange}
+                    checkMessage={this.checkMessage}
+                />
+                <PersonalData
+                    values={values}
+                    handleChange={this.handleChange}
+                    addFormDetails={this.addFormDetails}
+                    disabled={""}
+                    disabledAddress={"disabled"}
+                />
+                <PaymentMethod
+                    values={values}
+                    handleChange={this.handleChange}
+                    addFormDetails={this.addFormDetails}
+                />
+              </div>
+          );
+        }
+
     }
   }
 }
