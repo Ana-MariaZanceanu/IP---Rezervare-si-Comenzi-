@@ -4,7 +4,6 @@ import PersonalData from "./PersonalData";
 import PaymentMethod from "./PaymentMethod";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
 class Order extends Component {
   constructor(props) {
     super(props);
