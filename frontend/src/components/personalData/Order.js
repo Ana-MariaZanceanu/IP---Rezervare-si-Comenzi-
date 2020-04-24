@@ -16,6 +16,7 @@ class Order extends Component {
       userLastName: "",
       userDeliveryAdress: "",
       phoneNumber: "",
+      email:"",
       paymentMethod: "",
       tokenId: "",
       submitMessage: "",
@@ -38,7 +39,8 @@ class Order extends Component {
     } else if (
       this.state.userFirstName === "" ||
       this.state.userLastName === "" ||
-      this.state.phoneNumber === ""
+      this.state.phoneNumber === ""||
+      this.state.email===""
     ) {
       this.setState({
         submitMessage: "You have to complete and confirm your personal data",

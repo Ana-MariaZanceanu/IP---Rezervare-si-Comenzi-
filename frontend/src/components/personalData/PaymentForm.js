@@ -16,8 +16,9 @@ export class PaymentForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      errorMessage: "",
+      submitMessage: "",
       nameOnCard: "",
+      error: false,
     };
   }
   handleClick = async (e) => {
@@ -32,9 +33,13 @@ export class PaymentForm extends Component {
     const { error, token } = await stripe.createToken(cardElement);
     if (error) {
       console.log(error);
-      this.setState({ errorMessage: error.message });
+      this.setState({ submitMessage: error.message });
+      this.setState({ error: true });
     } else {
-      this.setState({ errorMessage: "" });
+      this.setState({
+        submitMessage: "Your card info are valid! You can submit your form!",
+      });
+      this.setState({ error: false });
       modifyTokenID(token.id);
     }
   };
@@ -87,7 +92,9 @@ export class PaymentForm extends Component {
               </Col>
             </Row>
           </Form>
-          <Card.Text style={errorStyle}>{this.state.errorMessage}</Card.Text>
+          <Card.Text style={this.state.error ? errorStyle : succesStyle}>
+            {this.state.submitMessage}
+          </Card.Text>
           <Button style={buttonStyle} onClick={this.handleClick}>
             Confirm
           </Button>
@@ -105,6 +112,9 @@ const cardComponentStyle = {
 
 const errorStyle = {
   color: "#FF0000",
+};
+const succesStyle = {
+  color: "#008000",
 };
 
 const buttonStyle = {

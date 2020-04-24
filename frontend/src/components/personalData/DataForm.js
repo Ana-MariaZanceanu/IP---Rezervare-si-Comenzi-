@@ -5,17 +5,6 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 
 class DataForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      firstName: "",
-      lastName: "",
-      emailUser: "",
-      phoneNumberUser: "",
-      adress: "",
-    };
-  }
-
   render() {
     const { values, handleChange } = this.props;
     return (
@@ -29,7 +18,7 @@ class DataForm extends Component {
                   <Form.Control
                     type="text"
                     placeholder="Enter your first name"
-                    value={values.firstName}
+                    value={values.userFirstName}
                     disabled={this.props.disabled}
                     onChange={handleChange("userFirstName")}
                     required
@@ -42,7 +31,7 @@ class DataForm extends Component {
                   <Form.Control
                     type="text"
                     placeholder="Enter your last name"
-                    value={values.lastName}
+                    value={values.userLastName}
                     disabled={this.props.disabled}
                     onChange={handleChange("userLastName")}
                     required
@@ -55,7 +44,7 @@ class DataForm extends Component {
                   <Form.Control
                     type="text"
                     placeholder="Enter phone number"
-                    value={values.phoneNumberUser}
+                    value={values.phoneNumber}
                     disabled={this.props.disabled}
                     onChange={handleChange("phoneNumber")}
                     required
@@ -70,9 +59,9 @@ class DataForm extends Component {
                   <Form.Control
                     type="email"
                     placeholder="Enter email address"
-                    value={values.emailUser}
+                    value={values.email}
                     disabled={this.props.disabled}
-                    onChange={handleChange("emailUser")}
+                    onChange={handleChange("email")}
                     required
                   />
                 </Form.Group>
@@ -83,9 +72,9 @@ class DataForm extends Component {
                   <Form.Control
                     type="text"
                     placeholder="Enter delivery adress"
-                    value={values.reservationDate}
+                    value={values.userDeliveryAdress}
                     disabled={this.props.disabledAddress}
-                    onChange={handleChange("adress")}
+                    onChange={handleChange("userDeliveryAdress")}
                     required
                   />
                 </Form.Group>
