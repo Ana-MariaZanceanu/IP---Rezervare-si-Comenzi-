@@ -1,8 +1,119 @@
 /* eslint-disable no-param-reassign */
+const Logger = require('../loaders/logger');
 
 class CartService {
-	constructor({ services }) {
+	constructor({ db, services }) {
+		this.db = db;
 		this.services = services;
+	}
+
+	async getAllCarts() {
+		try {
+			const carts = await this.db.Cart.find({});
+
+			return { success: true, data: { carts } };
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async getCart(idUser) {
+		console.log(idUser);
+		try {
+			const cart = await this.db.Cart.find({
+				userId: idUser,
+			});
+
+			return { success: true, data: { cart } };
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async add(req) {
+		const payload = req.body;
+		const { cart } = req.session;
+		const { userId } = payload;
+
+		const cartData = {
+			userId,
+		};
+		const date = new Date();
+		date.setHours(date.getHours() + 3);
+		cartData.modifiedDate = date;
+
+		cartData.items = cart.items;
+		cartData.totalPrice = cart.totalPrice;
+		cartData.totalQuantity = cart.totalQty;
+
+		const cartObj = new this.db.Cart(cartData);
+
+		try {
+			await cartObj.save();
+
+			return { success: true, data: { cartObj } };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async update(req) {
+		const { idUser } = req.params;
+		const { cart } = req.session;
+		try {
+			const cartObj = await this.db.Cart.updateOne(
+				{ userId: idUser },
+				cart,
+			);
+
+			return { success: true, data: { cartObj } };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async deleteAll() {
+		try {
+			const cart = await this.db.Cart.deleteMany({});
+
+			return { success: true, data: { cart } };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
+	async deleteCart(idUser) {
+		try {
+			const cart = await this.db.Cart.deleteOne({
+				userId: idUser,
+			});
+
+			return { success: true, data: { cart } };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
 	}
 
 	async addProduct(idProduct, cart) {

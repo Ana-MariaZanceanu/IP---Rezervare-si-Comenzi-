@@ -1,18 +1,70 @@
 const { Router } = require('express');
+const { celebrate } = require('celebrate');
 const { cartService } = require('../../services/index');
+
+const { cartValidationSchema } = require('../../models/index');
 
 const router = Router();
 
 const BAD_REQUEST = 400;
 const OK = 200;
+const CREATED = 201;
 // Here we have all the controllers
-router.get('/', async (req, res) => {
+router.get('/session', async (req, res) => {
 	const result = {
 		success: true,
 		data: req.session.cart ? req.session.cart : 'empty cart',
 	};
 
 	res.status(OK).json(result);
+});
+
+router.get('/', async (req, res) => {
+	const result = await cartService.getAllCarts();
+	const statusCode = result.success ? OK : BAD_REQUEST;
+
+	res.status(statusCode).json(result);
+});
+
+router.get('/:idUser', async (req, res) => {
+	const result = await cartService.getCart(req.params.idUser);
+	const statusCode = result.success ? OK : BAD_REQUEST;
+
+	res.status(statusCode).json(result);
+});
+
+router.post(
+	'/',
+	celebrate({
+		body: cartValidationSchema,
+	}),
+	async function (req, res) {
+		const result = await cartService.add(req);
+		const statusCode = result.success ? CREATED : BAD_REQUEST;
+
+		res.status(statusCode).json(result);
+	},
+);
+
+router.patch('/:idUser', async function (req, res) {
+	const result = await cartService.update(req);
+	const statusCode = result.success ? OK : BAD_REQUEST;
+
+	res.status(statusCode).json(result);
+});
+
+router.delete('/all', async (req, res) => {
+	const result = await cartService.deleteAll();
+	const statusCode = result.success ? OK : BAD_REQUEST;
+
+	res.status(statusCode).json(result);
+});
+
+router.delete('/:idUser', async (req, res) => {
+	const result = await cartService.deleteCart(req.params.idUser);
+	const statusCode = result.success ? OK : BAD_REQUEST;
+
+	res.status(statusCode).json(result);
 });
 
 router.get('/clear', async (req, res) => {

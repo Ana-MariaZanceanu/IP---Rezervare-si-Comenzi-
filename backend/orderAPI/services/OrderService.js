@@ -113,7 +113,7 @@ class OrderService {
 						{
 							amount: cart.totalPrice * 100,
 							currency: 'usd',
-							source: token.id, // obtained with Stripe.js
+							source: token.id,
 							description: 'Test Charge',
 						},
 						function (error) {
