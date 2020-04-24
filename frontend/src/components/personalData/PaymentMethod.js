@@ -4,6 +4,11 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import PaymentForm from "./PaymentForm";
 
+import { ElementsConsumer, Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+//<PaymentForm handleChange={handleChange} values={values} />
+
+const stripePromise = loadStripe("pk_test_wSHt5VF8UO8x8w8z7BRizPh900oAzRuE21");
 export class PaymentMethod extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +34,7 @@ export class PaymentMethod extends Component {
   };
 
   render() {
-    const { values, handleChange } = this.props;
+    const { values, handleChange, modifyTokenID } = this.props;
     if (this.state.checkedPayOnlineBox === false)
       return (
         <>
@@ -89,7 +94,19 @@ export class PaymentMethod extends Component {
                     />
                   </Form>
                   <br />
-                  <PaymentForm handleChange={handleChange} values={values} />
+                  <Elements stripe={stripePromise}>
+                    <ElementsConsumer>
+                      {({ elements, stripe }) => (
+                        <PaymentForm
+                          values={values}
+                          handleChange={handleChange}
+                          elements={elements}
+                          stripe={stripe}
+                          modifyTokenID={modifyTokenID}
+                        />
+                      )}
+                    </ElementsConsumer>
+                  </Elements>
                 </Card.Body>
               </Accordion.Collapse>
             </Card>

@@ -11,17 +11,19 @@ class Order extends Component {
       step: 1,
       homeDelivery: false,
       restaurantDelivery: false,
-      onlinePayment: false,
       userFirstName: "",
       userLastName: "",
       email: "",
       phoneNumber: "",
-      cardNumber: "",
-      nameOnCard: "",
-      expiryDate: "",
-      securityCode: "",
+      paymentMethod: "cash",
+      tokenId: "",
     };
   }
+
+  modifyTokenID = (token) => {
+    console.log("token id primit " + token);
+    this.tokenId = token;
+  };
   changeStep = () => {
     if (
       (this.state.homeDelivery && !this.state.restaurantDelivery) ||
@@ -56,9 +58,9 @@ class Order extends Component {
         this.changeStep();
       });
     } else if (input === "payOnDelivery") {
-      this.setState({ onlinePayment: false });
+      this.setState({ paymentMethod: "cash" });
     } else if (input === "onlinePayment") {
-      this.setState({ onlinePayment: true });
+      this.setState({ paymentMethod: "card" });
     } else {
       this.setState({ [input]: e.target.value });
     }
@@ -70,15 +72,11 @@ class Order extends Component {
       {
         homeDelivery: data.homeDelivery,
         restaurantDelivery: data.restaurantDelivery,
-        onlinePayment: data.onlinePayment,
         userFirstName: data.userFirstName,
         userLastName: data.userLastName,
         email: data.email,
         phoneNumber: data.phoneNumber,
-        cardNumber: data.cardNumber,
-        nameOncard: data.nameOnCard,
-        expiryDate: data.expiryDate,
-        securityCode: data.securityCode,
+        paymentMethod: data.paymentMethod,
       },
       () => {
         this.changeStep();
@@ -90,28 +88,20 @@ class Order extends Component {
     const {
       homeDelivery,
       restaurantDelivery,
-      onlinePayment,
       userFirstName,
       userLastName,
       email,
       phoneNumber,
-      cardNumber,
-      nameOnCard,
-      expiryDate,
-      securityCode,
+      paymentMethod,
     } = this.state;
     const values = {
       homeDelivery,
-      onlinePayment,
       restaurantDelivery,
       userFirstName,
       userLastName,
       email,
       phoneNumber,
-      cardNumber,
-      nameOnCard,
-      expiryDate,
-      securityCode,
+      paymentMethod,
     };
     const { step } = this.state;
     switch (step) {
@@ -133,57 +123,56 @@ class Order extends Component {
             <PaymentMethod
               values={values}
               handleChange={this.handleChange}
-              addFormDetails={this.addFormDetails}
+              modifyTokenID={this.modifyTokenID}
             />
           </div>
         );
       case 2:
-        if(this.state.homeDelivery){
+        if (this.state.homeDelivery) {
           return (
-              <div>
-                <DeliveryMethod
-                    values={values}
-                    handleChange={this.handleChange}
-                    checkMessage={this.checkMessage}
-                />
-                <PersonalData
-                    values={values}
-                    handleChange={this.handleChange}
-                    addFormDetails={this.addFormDetails}
-                    disabled={""}
-                    disabledAddress={""}
-                />
-                <PaymentMethod
-                    values={values}
-                    handleChange={this.handleChange}
-                    addFormDetails={this.addFormDetails}
-                />
-              </div>
+            <div>
+              <DeliveryMethod
+                values={values}
+                handleChange={this.handleChange}
+                checkMessage={this.checkMessage}
+              />
+              <PersonalData
+                values={values}
+                handleChange={this.handleChange}
+                addFormDetails={this.addFormDetails}
+                disabled={""}
+                disabledAddress={""}
+              />
+              <PaymentMethod
+                values={values}
+                handleChange={this.handleChange}
+                modifyTokenID={this.modifyTokenID}
+              />
+            </div>
           );
-        }else{
+        } else {
           return (
-              <div>
-                <DeliveryMethod
-                    values={values}
-                    handleChange={this.handleChange}
-                    checkMessage={this.checkMessage}
-                />
-                <PersonalData
-                    values={values}
-                    handleChange={this.handleChange}
-                    addFormDetails={this.addFormDetails}
-                    disabled={""}
-                    disabledAddress={"disabled"}
-                />
-                <PaymentMethod
-                    values={values}
-                    handleChange={this.handleChange}
-                    addFormDetails={this.addFormDetails}
-                />
-              </div>
+            <div>
+              <DeliveryMethod
+                values={values}
+                handleChange={this.handleChange}
+                checkMessage={this.checkMessage}
+              />
+              <PersonalData
+                values={values}
+                handleChange={this.handleChange}
+                addFormDetails={this.addFormDetails}
+                disabled={""}
+                disabledAddress={"disabled"}
+              />
+              <PaymentMethod
+                values={values}
+                handleChange={this.handleChange}
+                modifyTokenID={this.modifyTokenID}
+              />
+            </div>
           );
         }
-
     }
   }
 }
