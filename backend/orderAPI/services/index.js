@@ -14,6 +14,9 @@ const orderService = new OrderService({
 });
 
 const cartService = new CartService({
+	db: {
+		Cart: db.Cart,
+	},
 	services: {},
 });
 
