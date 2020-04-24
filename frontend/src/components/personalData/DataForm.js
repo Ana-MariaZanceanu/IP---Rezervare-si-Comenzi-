@@ -80,7 +80,7 @@ class DataForm extends Component {
                   type="text"
                   placeholder="Adress"
                   value={values.adress}
-                  disabled={this.props.disabled}
+                  disabled={this.props.disabledAddress}
                   onChange={handleChange('adress')}
                   required
                 />

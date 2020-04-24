@@ -36,7 +36,6 @@ class PersonalData extends Component {
             <Accordion.Toggle
               as={Card.Header}
               eventKey="0"
-              disabled={this.props.disabled}
             >
               2. Personal Data
             </Accordion.Toggle>
@@ -47,6 +46,7 @@ class PersonalData extends Component {
                   handleChange={handleChange}
                   addFormDetails={addFormDetails}
                   disabled={this.props.disabled}
+                  disabledAddress={this.props.disabledAddress}
                 />
               </Card.Body>
             </Accordion.Collapse>
