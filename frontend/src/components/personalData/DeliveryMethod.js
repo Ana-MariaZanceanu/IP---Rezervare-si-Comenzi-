@@ -25,15 +25,16 @@ class DeliveryMethod extends Component {
                       type="checkbox"
                       label="Home delivery"
                       onChange={handleChange("homeDelivery")}
+                      disabled={this.props.homeDisabled}
                     />
                     <Form.Check
                       type="checkbox"
                       label="Pick up from restaurant"
                       onChange={handleChange("restaurantDelivery")}
+                      disabled={this.props.restaurantDisabled}
                     />
                   </Form.Group>
                 </Form>
-                <Card.Text>{this.props.checkMessage}</Card.Text>
               </Card.Body>
             </Accordion.Collapse>
           </Card>

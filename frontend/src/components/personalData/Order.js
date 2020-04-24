@@ -7,7 +7,8 @@ import Card from "react-bootstrap/Card";
 class Order extends Component {
   constructor(props) {
     super(props);
-    this.checkMessage = "";
+    this.homeDisabled = "";
+    this.restaurantDisabled = "";
     this.state = {
       step: 1,
       homeDelivery: false,
@@ -16,7 +17,7 @@ class Order extends Component {
       userLastName: "",
       userDeliveryAdress: "",
       phoneNumber: "",
-      email:"",
+      email: "",
       paymentMethod: "",
       tokenId: "",
       submitMessage: "",
@@ -39,8 +40,8 @@ class Order extends Component {
     } else if (
       this.state.userFirstName === "" ||
       this.state.userLastName === "" ||
-      this.state.phoneNumber === ""||
-      this.state.email===""
+      this.state.phoneNumber === "" ||
+      this.state.email === ""
     ) {
       this.setState({
         submitMessage: "You have to complete and confirm your personal data",
@@ -70,7 +71,6 @@ class Order extends Component {
       (this.state.homeDelivery && !this.state.restaurantDelivery) ||
       (!this.state.homeDelivery && this.state.restaurantDelivery)
     ) {
-      this.checkMessage = "";
       this.setState(
         {
           step: 2,
@@ -80,9 +80,6 @@ class Order extends Component {
         }
       );
     } else {
-      if (this.state.homeDelivery && this.state.restaurantDelivery) {
-        this.checkMessage = "You have to choose just one delivery method!";
-      }
       this.setState(
         {
           step: 1,
@@ -95,6 +92,23 @@ class Order extends Component {
   };
   handleChange = (input) => (e) => {
     if (input === "homeDelivery" || input === "restaurantDelivery") {
+      if (input === "homeDelivery") {
+        if (this.state.homeDelivery === true) {
+          this.homeDisabled = "";
+          this.restaurantDisabled = "";
+        } else {
+          this.homeDisabled = "";
+          this.restaurantDisabled = "disabled";
+        }
+      } else {
+        if (this.state.restaurantDelivery === true) {
+          this.homeDisabled = "";
+          this.restaurantDisabled = "";
+        } else {
+          this.homeDisabled = "disabled";
+          this.restaurantDisabled = "";
+        }
+      }
       this.setState({ [input]: e.target.checked }, () => {
         this.changeStep();
       });
@@ -161,7 +175,8 @@ class Order extends Component {
             <DeliveryMethod
               values={values}
               handleChange={this.handleChange}
-              checkMessage={this.checkMessage}
+              homeDisabled={this.homeDisabled}
+              restaurantDisabled={this.restaurantDisabled}
             />
             <PersonalData
               values={values}
@@ -188,7 +203,8 @@ class Order extends Component {
               <DeliveryMethod
                 values={values}
                 handleChange={this.handleChange}
-                checkMessage={this.checkMessage}
+                homeDisabled={this.homeDisabled}
+                restaurantDisabled={this.restaurantDisabled}
               />
               <PersonalData
                 values={values}
@@ -216,7 +232,8 @@ class Order extends Component {
               <DeliveryMethod
                 values={values}
                 handleChange={this.handleChange}
-                checkMessage={this.checkMessage}
+                homeDisabled={this.homeDisabled}
+                restaurantDisabled={this.restaurantDisabled}
               />
               <PersonalData
                 values={values}
