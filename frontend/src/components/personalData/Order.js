@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import DeliveryMethod from "./DeliveryMethod";
 import PersonalData from "./PersonalData";
 import PaymentMethod from "./PaymentMethod";
-
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
 class Order extends Component {
   constructor(props) {
     super(props);
@@ -13,16 +15,54 @@ class Order extends Component {
       restaurantDelivery: false,
       userFirstName: "",
       userLastName: "",
-      email: "",
+      userDeliveryAdress: "",
       phoneNumber: "",
-      paymentMethod: "cash",
+      paymentMethod: "",
       tokenId: "",
+      submitMessage: "",
     };
   }
 
   modifyTokenID = (token) => {
-    console.log("token id primit " + token);
-    this.tokenId = token;
+    this.setState({ tokenId: token });
+    console.log("tokenul este  " + token);
+  };
+
+  handleSubmit = (e) => {
+    if (
+      this.state.homeDelivery === false &&
+      this.state.restaurantDelivery === false
+    ) {
+      this.setState({
+        submitMessage: "You have to choose a delivery method",
+      });
+    } else if (
+      this.state.userFirstName === "" ||
+      this.state.userLastName === "" ||
+      this.state.phoneNumber === ""
+    ) {
+      this.setState({
+        submitMessage: "You have to complete and confirm your personal data",
+      });
+      console.log(this.state.submitMessage);
+    } else if (this.state.paymentMethod === "") {
+      console.log("no paymentmethod");
+      this.setState({
+        submitMessage: "You have to choose a payment method",
+      });
+    } else if (
+      this.state.paymentMethod === "card" &&
+      this.state.tokenId === ""
+    ) {
+      console.log("no token");
+      this.setState({
+        submitMessage: "You have to complete and confirm your card info",
+      });
+    } else {
+      this.setState({
+        submitMessage: "",
+      });
+    }
   };
   changeStep = () => {
     if (
@@ -58,9 +98,15 @@ class Order extends Component {
         this.changeStep();
       });
     } else if (input === "payOnDelivery") {
-      this.setState({ paymentMethod: "cash" });
+      if (e.target.checked === true) {
+        this.setState({ paymentMethod: "cash" });
+        console.log(this.state.paymentMethod);
+      }
     } else if (input === "onlinePayment") {
-      this.setState({ paymentMethod: "card" });
+      if (e.target.checked === true) {
+        this.setState({ paymentMethod: "card" });
+        console.log(this.state.paymentMethod);
+      }
     } else {
       this.setState({ [input]: e.target.value });
     }
@@ -76,6 +122,7 @@ class Order extends Component {
         userLastName: data.userLastName,
         email: data.email,
         phoneNumber: data.phoneNumber,
+        userDeliveryAdress: data.userDeliveryAdress,
         paymentMethod: data.paymentMethod,
       },
       () => {
@@ -92,6 +139,7 @@ class Order extends Component {
       userLastName,
       email,
       phoneNumber,
+      userDeliveryAdress,
       paymentMethod,
     } = this.state;
     const values = {
@@ -101,6 +149,7 @@ class Order extends Component {
       userLastName,
       email,
       phoneNumber,
+      userDeliveryAdress,
       paymentMethod,
     };
     const { step } = this.state;
@@ -116,7 +165,6 @@ class Order extends Component {
             <PersonalData
               values={values}
               handleChange={this.handleChange}
-              addFormDetails={this.addFormDetails}
               disabled={"disabled"}
               disabledAddress={"disabled"}
             />
@@ -125,6 +173,11 @@ class Order extends Component {
               handleChange={this.handleChange}
               modifyTokenID={this.modifyTokenID}
             />
+            <br />
+            <Card.Text style={errorStyle}>{this.state.submitMessage}</Card.Text>
+            <Button onClick={this.handleSubmit} style={buttonStyle}>
+              Submit
+            </Button>
           </div>
         );
       case 2:
@@ -139,7 +192,6 @@ class Order extends Component {
               <PersonalData
                 values={values}
                 handleChange={this.handleChange}
-                addFormDetails={this.addFormDetails}
                 disabled={""}
                 disabledAddress={""}
               />
@@ -148,6 +200,13 @@ class Order extends Component {
                 handleChange={this.handleChange}
                 modifyTokenID={this.modifyTokenID}
               />
+              <br />
+              <Card.Text style={errorStyle}>
+                {this.state.submitMessage}
+              </Card.Text>
+              <Button onClick={this.handleSubmit} style={buttonStyle}>
+                Submit
+              </Button>
             </div>
           );
         } else {
@@ -161,7 +220,6 @@ class Order extends Component {
               <PersonalData
                 values={values}
                 handleChange={this.handleChange}
-                addFormDetails={this.addFormDetails}
                 disabled={""}
                 disabledAddress={"disabled"}
               />
@@ -170,11 +228,27 @@ class Order extends Component {
                 handleChange={this.handleChange}
                 modifyTokenID={this.modifyTokenID}
               />
+              <br />
+              <Card.Text style={errorStyle}>
+                {this.state.submitMessage}
+              </Card.Text>
+              <Button onClick={this.handleSubmit} style={buttonStyle}>
+                Submit
+              </Button>
             </div>
           );
         }
     }
   }
 }
+
+const buttonStyle = {
+  backgroundColor: "#A71D31",
+  color: "#F7E7D9",
+};
+
+const errorStyle = {
+  color: "#FF0000",
+};
 
 export default Order;

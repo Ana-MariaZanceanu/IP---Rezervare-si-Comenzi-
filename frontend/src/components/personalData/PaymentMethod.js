@@ -18,7 +18,7 @@ export class PaymentMethod extends Component {
     };
   }
 
-  handleClickPayOnline = (handleChange, e) => {
+  handleClickPayOnline = (e) => {
     if (this.state.checkedPayOnlineBox === true)
       this.setState({ checkedPayOnlineBox: false });
     else {

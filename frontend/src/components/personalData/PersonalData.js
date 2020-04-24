@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import DataForm from './DataForm';
-import Accordion from 'react-bootstrap/Accordion';
-import Card from 'react-bootstrap/Card';
+import React, { Component } from "react";
+import DataForm from "./DataForm";
+import Accordion from "react-bootstrap/Accordion";
+import Card from "react-bootstrap/Card";
 class PersonalData extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userFirstName: '',
-      userLastName: '',
-      email: '',
-      phoneNumber: '',
-      adress: '',
+      userFirstName: "",
+      userLastName: "",
+      email: "",
+      phoneNumber: "",
+      adress: "",
     };
   }
   handleChange = (input) => (e) => {
@@ -27,16 +27,13 @@ class PersonalData extends Component {
   };
 
   render() {
-    const { values, handleChange, addFormDetails } = this.props;
+    const { values, handleChange } = this.props;
 
     return (
       <>
         <Accordion>
           <Card>
-            <Accordion.Toggle
-              as={Card.Header}
-              eventKey="0"
-            >
+            <Accordion.Toggle as={Card.Header} eventKey="0">
               2. Personal Data
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
@@ -44,7 +41,6 @@ class PersonalData extends Component {
                 <DataForm
                   values={values}
                   handleChange={handleChange}
-                  addFormDetails={addFormDetails}
                   disabled={this.props.disabled}
                   disabledAddress={this.props.disabledAddress}
                 />

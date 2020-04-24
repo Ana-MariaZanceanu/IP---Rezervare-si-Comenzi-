@@ -17,6 +17,7 @@ export class PaymentForm extends Component {
     super(props);
     this.state = {
       errorMessage: "",
+      nameOnCard: "",
     };
   }
   handleClick = async (e) => {
@@ -36,17 +37,8 @@ export class PaymentForm extends Component {
       this.setState({ errorMessage: "" });
       modifyTokenID(token.id);
     }
-    /*try {
-      let token = await this.props.spite.createToken({
-        name: this.state.nameOnCard,
-      });
-      console.log(token);
-    } catch (e) {
-      throw e;
-    }*/
   };
   render() {
-    const { stripe, elements, values, handleChange } = this.props;
     return (
       <>
         <Container>
@@ -54,7 +46,7 @@ export class PaymentForm extends Component {
             <Row>
               <Col md>
                 <Form.Group>
-                  <Form.Label>Enter name on card</Form.Label>
+                  <Form.Label>Enter name on card*</Form.Label>
                   <Form.Control
                     type="text"
                     value={this.state.nameOnCard}
