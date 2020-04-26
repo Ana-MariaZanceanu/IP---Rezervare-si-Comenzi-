@@ -4,11 +4,15 @@ import PersonalData from "./PersonalData";
 import PaymentMethod from "./PaymentMethod";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import Success from "./Success";
+import Fail from "./Fail";
+import axios from "axios";
 class Order extends Component {
   constructor(props) {
     super(props);
     this.homeDisabled = "";
     this.restaurantDisabled = "";
+    this.message = "";
     this.state = {
       step: 1,
       homeDelivery: false,
@@ -21,6 +25,7 @@ class Order extends Component {
       paymentMethod: "",
       tokenId: "",
       submitMessage: "",
+      success: false,
     };
   }
 
@@ -63,6 +68,7 @@ class Order extends Component {
     } else {
       this.setState({
         submitMessage: "",
+        step: 3,
       });
     }
   };
@@ -131,14 +137,46 @@ class Order extends Component {
     e.preventDefault();
     this.setState(
       {
-        homeDelivery: data.homeDelivery,
-        restaurantDelivery: data.restaurantDelivery,
         userFirstName: data.userFirstName,
         userLastName: data.userLastName,
         email: data.email,
         phoneNumber: data.phoneNumber,
         userDeliveryAdress: data.userDeliveryAdress,
         paymentMethod: data.paymentMethod,
+        paymentToken: data.paymentToken,
+      },
+      () => {
+        axios({
+          method: "post",
+          url: "",
+          data,
+        })
+          .then((response) => {
+            this.setState({
+              success: true,
+            });
+          })
+          .catch((err) => {
+            this.setState(
+              {
+                success: false,
+              },
+              () => {
+                this.message = err.response.data.error.message;
+              }
+            );
+          });
+      }
+    );
+  };
+  prevStep = () => {
+    this.homeDisabled = "";
+    this.restaurantDisabled = "";
+    this.setState(
+      {
+        homeDelivery: false,
+        restaurantDelivery: false,
+        userDeliveryAdress: "",
       },
       () => {
         this.changeStep();
@@ -156,6 +194,7 @@ class Order extends Component {
       phoneNumber,
       userDeliveryAdress,
       paymentMethod,
+      tokenId,
     } = this.state;
     const values = {
       homeDelivery,
@@ -166,6 +205,16 @@ class Order extends Component {
       phoneNumber,
       userDeliveryAdress,
       paymentMethod,
+    };
+    let formValues = {
+      userFirstName: userFirstName,
+      userLastName: userLastName,
+      email: email,
+      phoneNumber: phoneNumber,
+      userDeliveryAdress: userDeliveryAdress,
+      paymentMethod: paymentMethod,
+      paymentToken: tokenId,
+      restaurantId: "5e8b6ecd5935d8350c6c2c2a",
     };
     const { step } = this.state;
     switch (step) {
@@ -191,7 +240,13 @@ class Order extends Component {
             />
             <br />
             <Card.Text style={errorStyle}>{this.state.submitMessage}</Card.Text>
-            <Button onClick={this.handleSubmit} style={buttonStyle}>
+            <Button
+              onClick={(event) => {
+                this.handleSubmit(event);
+                this.addFormDetails(event, formValues);
+              }}
+              style={buttonStyle}
+            >
               Submit
             </Button>
           </div>
@@ -221,7 +276,13 @@ class Order extends Component {
               <Card.Text style={errorStyle}>
                 {this.state.submitMessage}
               </Card.Text>
-              <Button onClick={this.handleSubmit} style={buttonStyle}>
+              <Button
+                onClick={(event) => {
+                  this.handleSubmit(event);
+                  this.addFormDetails(event, formValues);
+                }}
+                style={buttonStyle}
+              >
                 Submit
               </Button>
             </div>
@@ -250,12 +311,24 @@ class Order extends Component {
               <Card.Text style={errorStyle}>
                 {this.state.submitMessage}
               </Card.Text>
-              <Button onClick={this.handleSubmit} style={buttonStyle}>
+              <Button
+                onClick={(event) => {
+                  this.handleSubmit(event);
+                  this.addFormDetails(event, formValues);
+                }}
+                style={buttonStyle}
+              >
                 Submit
               </Button>
             </div>
           );
         }
+      case 3:
+        return this.state.success === true ? (
+          <Success />
+        ) : (
+          <Fail response={this.message} prevStep={this.prevStep} />
+        );
     }
   }
 }

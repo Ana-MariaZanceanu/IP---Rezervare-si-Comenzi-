@@ -33,12 +33,10 @@ class UserForm extends Component {
       step: step - 1,
     });
   };
-  //ascultam cand se produce un event pe state-ul nostru (pe fiecare input)
   handleChange = (input) => (e) => {
     this.setState({ [input]: e.target.value });
   };
 
-  //schimbam valorile state-ului cu cele introduse in input
   addFormDetails = (e, data) => {
     e.preventDefault();
     let d = data.reservationDate.substr(0,10);

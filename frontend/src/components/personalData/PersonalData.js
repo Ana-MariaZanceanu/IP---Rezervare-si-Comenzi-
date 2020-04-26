@@ -13,18 +13,6 @@ class PersonalData extends Component {
       adress: "",
     };
   }
-  handleChange = (input) => (e) => {
-    this.setState({ [input]: e.target.value });
-  };
-  addFormDetails = (e, data) => {
-    this.setState({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      emailUser: data.emailUser,
-      phoneNumberUser: data.phoneNumberUser,
-      adress: data.adress,
-    });
-  };
 
   render() {
     const { values, handleChange } = this.props;

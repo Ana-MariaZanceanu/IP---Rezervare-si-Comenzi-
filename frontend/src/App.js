@@ -7,7 +7,8 @@ import Container from "react-bootstrap/Container";
 function App() {
   return (
     <div>
-      <ModalForm name="Book a table" />
+      {/*<ModalForm name="Book a table" />*/}
+
       <Container>
         <Order />
       </Container>
