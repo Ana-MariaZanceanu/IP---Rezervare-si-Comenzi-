@@ -68,8 +68,9 @@ class Order extends Component {
     } else {
       this.setState({
         submitMessage: "",
+      },() => {
+          this.addFormDetails(e, formValues);
       });
-      this.addFormDetails(e, formValues);
     }
   };
   changeStep = () => {
@@ -180,7 +181,6 @@ class Order extends Component {
       {
         homeDelivery: false,
         restaurantDelivery: false,
-        userDeliveryAdress: "",
       },
       () => {
         this.changeStep();
