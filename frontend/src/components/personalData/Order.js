@@ -34,7 +34,7 @@ class Order extends Component {
     console.log("tokenul este  " + token);
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = (e, formValues) => {
     if (
       this.state.homeDelivery === false &&
       this.state.restaurantDelivery === false
@@ -49,7 +49,7 @@ class Order extends Component {
       this.state.email === ""
     ) {
       this.setState({
-        submitMessage: "You have to complete and confirm your personal data",
+        submitMessage: "You have to complete all your personal data",
       });
       console.log(this.state.submitMessage);
     } else if (this.state.paymentMethod === "") {
@@ -69,6 +69,7 @@ class Order extends Component {
       this.setState({
         submitMessage: "",
       });
+      this.addFormDetails(e, formValues);
     }
   };
   changeStep = () => {
@@ -258,8 +259,7 @@ class Order extends Component {
             <Card.Text style={errorStyle}>{this.state.submitMessage}</Card.Text>
             <Button
               onClick={(event) => {
-                this.handleSubmit(event);
-                this.addFormDetails(event, formValues);
+                this.handleSubmit(event, formValues);
               }}
               style={buttonStyle}
             >
@@ -294,8 +294,7 @@ class Order extends Component {
               </Card.Text>
               <Button
                 onClick={(event) => {
-                  this.handleSubmit(event);
-                  this.addFormDetails(event, formValues);
+                  this.handleSubmit(event, formValues);
                 }}
                 style={buttonStyle}
               >
@@ -329,8 +328,7 @@ class Order extends Component {
               </Card.Text>
               <Button
                 onClick={(event) => {
-                  this.handleSubmit(event);
-                  this.addFormDetails(event, formValues);
+                  this.handleSubmit(event, formValues);
                 }}
                 style={buttonStyle}
               >
