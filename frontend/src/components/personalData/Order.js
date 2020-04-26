@@ -20,7 +20,7 @@ class Order extends Component {
       restaurantDelivery: false,
       userFirstName: "",
       userLastName: "",
-      userDeliveryAdress: " ",
+      userDeliveryAdress: "",
       phoneNumber: "",
       email: "",
       paymentMethod: "",
@@ -135,33 +135,22 @@ class Order extends Component {
   postData = (e, data) => {
     e.preventDefault();
     axios({
-      method: "get",
-      url:
-        "http://localhost:3000/api/v1/cart/add-product/5e9494d0dd757435187a6dc0",
+      method: "post",
+      url: "http://localhost:3000/api/v1/orders",
+      data,
     })
       .then((res) => {
-        console.log(res);
-        axios({
-          method: "post",
-          url: "http://localhost:3000/api/v1/orders",
-          data,
-        })
-          .then((res) => {
-            this.success = true;
-            this.setState({
-              step: 3,
-            });
-          })
-          .catch((err) => {
-            this.success = false;
-            this.message = err.response.data.err.message;
-            this.setState({
-              step: 3,
-            });
-          });
+        this.success = true;
+        this.setState({
+          step: 3,
+        });
       })
       .catch((err) => {
-        console.log(err);
+        this.success = false;
+        this.message = err.response.data.err.message;
+        this.setState({
+          step: 3,
+        });
       });
   };
 
@@ -190,7 +179,7 @@ class Order extends Component {
       {
         homeDelivery: false,
         restaurantDelivery: false,
-        userDeliveryAdress: " ",
+        userDeliveryAdress: "",
       },
       () => {
         this.changeStep();
@@ -220,16 +209,29 @@ class Order extends Component {
       userDeliveryAdress,
       paymentMethod,
     };
-    let formValues = {
-      userFirstName: userFirstName,
-      userLastName: userLastName,
-      email: email,
-      phoneNumber: phoneNumber,
-      userDeliveryAdress: userDeliveryAdress,
-      paymentMethod: paymentMethod,
-      paymentToken: tokenId,
-      restaurantId: "5e8b6ecd5935d8350c6c2c2a",
-    };
+    let formValues;
+    if (this.state.restaurantDelivery === true) {
+      formValues = {
+        userFirstName: userFirstName,
+        userLastName: userLastName,
+        email: email,
+        phoneNumber: phoneNumber,
+        paymentMethod: paymentMethod,
+        paymentToken: tokenId,
+        restaurantId: "5e8b6ecd5935d8350c6c2c2a",
+      };
+    } else {
+      formValues = {
+        userFirstName: userFirstName,
+        userLastName: userLastName,
+        email: email,
+        phoneNumber: phoneNumber,
+        userDeliveryAdress: userDeliveryAdress,
+        paymentMethod: paymentMethod,
+        paymentToken: tokenId,
+        restaurantId: "5e8b6ecd5935d8350c6c2c2a",
+      };
+    }
     const { step } = this.state;
     switch (step) {
       case 1:
