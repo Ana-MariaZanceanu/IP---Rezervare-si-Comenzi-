@@ -80,7 +80,10 @@ class OrderService {
 
 			if (!existsOrder) {
 				if (req.body.paymentMethod === 'card') {
-					await this.cardPayment(req.session.cart);
+					await this.cardPayment(
+						req.session.cart,
+						req.body.paymentToken,
+					);
 				}
 				await order.save();
 			}
@@ -95,37 +98,52 @@ class OrderService {
 		}
 	}
 
-	async cardPayment(cart) {
-		stripe.tokens.create(
+	async cardPayment(cart, token) {
+		// stripe.tokens.create(
+		// 	{
+		// 		card: {
+		// 			number: '4242424242424242',
+		// 			exp_month: 4,
+		// 			exp_year: 2021,
+		// 			cvc: '314',
+		// 		},
+		// 	},
+		// 	function (err, token) {
+		// 		if (err) {
+		// 			Logger.error(err);
+		// 		} else {
+		// 			stripe.charges.create(
+		// 				{
+		// 					amount: cart.totalPrice * 100,
+		// 					currency: 'usd',
+		// 					source: token.id,
+		// 					description: 'Test Charge',
+		// 				},
+		// 				function (error) {
+		// 					if (error) {
+		// 						Logger.error(error);
+		// 					} else {
+		// 						Logger.info(
+		// 							'Payment successfully made.',
+		// 						);
+		// 					}
+		// 				},
+		// 			);
+		// 		}
+		// 	},
+		// );
+		stripe.charges.create(
 			{
-				card: {
-					number: '4242424242424242',
-					exp_month: 4,
-					exp_year: 2021,
-					cvc: '314',
-				},
+				amount: cart.totalPrice * 100,
+				currency: 'usd',
+				source: token,
+				description: 'Test Charge',
 			},
-			function (err, token) {
-				if (err) {
-					Logger.error(err);
+			function (error) {
+				if (error) {
+					Logger.error(error);
 				} else {
-					stripe.charges.create(
-						{
-							amount: cart.totalPrice * 100,
-							currency: 'usd',
-							source: token.id,
-							description: 'Test Charge',
-						},
-						function (error) {
-							if (error) {
-								Logger.error(error);
-							} else {
-								Logger.info(
-									'Payment successfully made.',
-								);
-							}
-						},
-					);
+					Logger.info('Payment successfully made.');
 				}
 			},
 		);
