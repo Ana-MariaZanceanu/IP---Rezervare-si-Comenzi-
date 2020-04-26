@@ -141,29 +141,28 @@ class Order extends Component {
     })
       .then((res) => {
         console.log(res);
-          axios({
-              method: "post",
-              url: "http://localhost:3000/api/v1/orders",
-              data,
+        axios({
+          method: "post",
+          url: "http://localhost:3000/api/v1/orders",
+          data,
+        })
+          .then((res) => {
+            this.success = true;
+            this.setState({
+              step: 3,
+            });
           })
-              .then((res) => {
-                  this.success = true;
-                  this.setState({
-                      step: 3,
-                  });
-              })
-              .catch((err) => {
-                  this.success = false;
-                  this.message = err.response.data.err.message;
-                  this.setState({
-                      step: 3,
-                  });
-              });
+          .catch((err) => {
+            this.success = false;
+            this.message = err.response.data.err.message;
+            this.setState({
+              step: 3,
+            });
+          });
       })
       .catch((err) => {
         console.log(err);
       });
-
   };
 
   addFormDetails = (e, data) => {

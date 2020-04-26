@@ -74,6 +74,7 @@ router.get('/clear', async (req, res) => {
 });
 
 router.get('/add-product/:idProduct', async (req, res) => {
+	console.log(req.sessionID);
 	const result = await cartService.addProduct(
 		req.params.idProduct,
 		req.session.cart ? req.session.cart : {},

@@ -39,7 +39,22 @@ class OrderService {
 
 	async submit(req) {
 		const payload = req.body;
-		const { cart } = req.session;
+		const cart = req.session.cart
+			? req.session.cart
+			: {
+					items: [
+						{
+							id: '5e9494d0dd757435187a6dc0',
+							item: {
+								price: 20,
+								quantity: 1,
+								product: 'Pizza',
+							},
+						},
+					],
+					totalPrice: 20,
+					totalQty: 1,
+			  };
 		const {
 			userId,
 			email,
@@ -81,7 +96,7 @@ class OrderService {
 			if (!existsOrder) {
 				if (req.body.paymentMethod === 'card') {
 					await this.cardPayment(
-						req.session.cart,
+						cart,
 						req.body.paymentToken,
 					);
 				}
