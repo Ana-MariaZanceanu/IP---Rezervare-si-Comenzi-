@@ -13,19 +13,19 @@ class Order extends Component {
     this.homeDisabled = "";
     this.restaurantDisabled = "";
     this.message = "";
+    this.success = false;
     this.state = {
       step: 1,
       homeDelivery: false,
       restaurantDelivery: false,
       userFirstName: "",
       userLastName: "",
-      userDeliveryAdress: "",
+      userDeliveryAdress: " ",
       phoneNumber: "",
       email: "",
       paymentMethod: "",
-      tokenId: "",
+      tokenId: " ",
       submitMessage: "",
-      success: false,
     };
   }
 
@@ -68,7 +68,6 @@ class Order extends Component {
     } else {
       this.setState({
         submitMessage: "",
-        step: 3,
       });
     }
   };
@@ -133,6 +132,40 @@ class Order extends Component {
     }
   };
 
+  postData = (e, data) => {
+    e.preventDefault();
+    axios({
+      method: "get",
+      url:
+        "http://localhost:3000/api/v1/cart/add-product/5e9494d0dd757435187a6dc0",
+    })
+      .then((res) => {
+        console.log(res);
+          axios({
+              method: "post",
+              url: "http://localhost:3000/api/v1/orders",
+              data,
+          })
+              .then((res) => {
+                  this.success = true;
+                  this.setState({
+                      step: 3,
+                  });
+              })
+              .catch((err) => {
+                  this.success = false;
+                  this.message = err.response.data.err.message;
+                  this.setState({
+                      step: 3,
+                  });
+              });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+  };
+
   addFormDetails = (e, data) => {
     e.preventDefault();
     this.setState(
@@ -146,29 +179,11 @@ class Order extends Component {
         paymentToken: data.paymentToken,
       },
       () => {
-        axios({
-          method: "post",
-          url: "",
-          data,
-        })
-          .then((response) => {
-            this.setState({
-              success: true,
-            });
-          })
-          .catch((err) => {
-            this.setState(
-              {
-                success: false,
-              },
-              () => {
-                this.message = err.response.data.error.message;
-              }
-            );
-          });
+        this.postData(e, data);
       }
     );
   };
+
   prevStep = () => {
     this.homeDisabled = "";
     this.restaurantDisabled = "";
@@ -176,7 +191,7 @@ class Order extends Component {
       {
         homeDelivery: false,
         restaurantDelivery: false,
-        userDeliveryAdress: "",
+        userDeliveryAdress: " ",
       },
       () => {
         this.changeStep();
@@ -324,7 +339,7 @@ class Order extends Component {
           );
         }
       case 3:
-        return this.state.success === true ? (
+        return this.success === true ? (
           <Success />
         ) : (
           <Fail response={this.message} prevStep={this.prevStep} />

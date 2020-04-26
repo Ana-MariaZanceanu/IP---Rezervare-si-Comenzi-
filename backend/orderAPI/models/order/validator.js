@@ -31,6 +31,9 @@ const orderValidationSchema = Joi.object().keys({
 	paymentMethod: Joi.string()
 		.regex(/^(cash|card)$/)
 		.error(new Error('Payment Method invalid')),
+	paymentToken: Joi.string().error(
+		new Error('Payment Token invalid'),
+	),
 });
 
 module.exports = { orderValidationSchema };
