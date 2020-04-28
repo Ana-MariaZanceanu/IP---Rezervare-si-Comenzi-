@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import ModalForm from "./components/ModalForm";
-import Order from "./components/personalData/Order";
+import Order from "./components/orderCheckout/Order";
 import Container from "react-bootstrap/Container";
 
 function App() {

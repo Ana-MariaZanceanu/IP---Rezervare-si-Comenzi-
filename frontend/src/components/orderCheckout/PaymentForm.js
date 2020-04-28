@@ -51,7 +51,7 @@ export class PaymentForm extends Component {
             <Row>
               <Col md>
                 <Form.Group>
-                  <Form.Label>Enter name on card*</Form.Label>
+                  <Form.Label>Enter name on card</Form.Label>
                   <Form.Control
                     type="text"
                     value={this.state.nameOnCard}
@@ -66,7 +66,7 @@ export class PaymentForm extends Component {
               </Col>
               <Col md>
                 <Form.Group>
-                  <Form.Label>Enter card number</Form.Label>
+                  <Form.Label>Enter card number*</Form.Label>
                   <div style={cardComponentStyle}>
                     <CardNumberElement options={cardElementStyle} />
                   </div>
@@ -76,7 +76,7 @@ export class PaymentForm extends Component {
             <Row>
               <Col md>
                 <Form.Group>
-                  <Form.Label>Enter card expiry date</Form.Label>
+                  <Form.Label>Enter card expiry date*</Form.Label>
                   <div style={cardComponentStyle}>
                     <CardExpiryElement options={cardElementStyle} />
                   </div>
@@ -84,7 +84,7 @@ export class PaymentForm extends Component {
               </Col>
               <Col md>
                 <Form.Group>
-                  <Form.Label>Enter card expiry date</Form.Label>
+                  <Form.Label>Enter card expiry date*</Form.Label>
                   <div style={cardComponentStyle}>
                     <CardCvcElement options={cardElementStyle} />
                   </div>

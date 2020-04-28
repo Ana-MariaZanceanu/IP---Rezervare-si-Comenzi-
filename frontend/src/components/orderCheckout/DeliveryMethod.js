@@ -4,12 +4,8 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 
 class DeliveryMethod extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    const { values, handleChange } = this.props;
+    const { handleChange } = this.props;
     return (
       <div>
         <Accordion defaultActiveKey="0">
