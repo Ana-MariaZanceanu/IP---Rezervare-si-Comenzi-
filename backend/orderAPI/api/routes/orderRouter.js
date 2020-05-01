@@ -34,10 +34,7 @@ router.post(
 		let result;
 
 		if (req.body.userId) {
-			const DbCart = (
-				await cartService.getCart(req.body.userId)
-			).data;
-			result = await orderService.submit(req, DbCart);
+			result = await orderService.submit(req, cartService);
 		} else {
 			result = await orderService.submit(req);
 		}
