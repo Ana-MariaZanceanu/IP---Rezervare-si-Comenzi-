@@ -1,0 +1,68 @@
+.modalSizes{
+    width: 60%;
+    max-width: none!important;
+}
+
+.modal-dialog{
+    width: 60%!important;
+}
+
+.modal-content{
+    border-radius: 0.8rem!important;
+}
+
+.list-group-item{
+    border: none!important;
+    color: #386150;
+    font-weight: bold;
+}
+
+.modalHeader {
+    border: none!important;
+}
+.nameStyle {
+    font-family: Pacifico;
+    font-size: 2.5rem;
+    color: #A71D31;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 1vh;
+}
+.imageStyle {
+    width: 100%;
+    height: 100%;
+}
+.priceStyle {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: 1.2rem;
+    color: #2B2633;
+}
+.inStock {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    color: #18c17b;
+    padding-bottom: 1vh;
+}
+.soldOut {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    color: #A71D31;
+    padding-bottom: 1vh;
+}
+.descriptionTitleStyle {
+    border-top: 1px solid #dee2e6;
+    padding-top: 1vh;
+    margin-top: 3vh;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #A71D31;
+}
+.descriptionTextStyle {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: 1rem;
+}
+.buttons_cart{
+    margin-top: 3vh;
+}
