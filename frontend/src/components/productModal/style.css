@@ -66,10 +66,3 @@
 .buttons_cart{
     margin-top: 3vh;
 }
-i {
-    margin-right: 5px !important;
-}
-i:hover {
-    background-color: #a71d31 !important;
-    color: white !important;
-}
