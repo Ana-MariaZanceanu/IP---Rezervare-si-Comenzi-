@@ -1,4 +1,9 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-loop-func */
+/* eslint-disable no-await-in-loop */
 const nodemailer = require('nodemailer');
+const fetch = require('node-fetch');
+
 const Logger = require('../loaders/logger');
 
 class ReservationService {
@@ -70,7 +75,27 @@ class ReservationService {
 				reservationDate,
 			);
 
-			if (!existsReservation) {
+			const existsEmptySeats = await this.checkSeatsAvailability(
+				reservationData,
+			);
+
+			const restaurantOpen = await this.checkRestaurantAvailability(
+				reservationData,
+			);
+
+			// if (!restaurantOpen) {
+			// 	throw new Error(
+			// 		'This restaurant is not open for the time of your reservation.',
+			// 	);
+			// }
+
+			if (!existsEmptySeats) {
+				throw new Error(
+					"This restaurant doesn't have enough empty seats for your reservation.",
+				);
+			}
+
+			if (!existsReservation && existsEmptySeats) {
 				await reservation.save();
 				await this.sendReservationMail(reservationData);
 			}
@@ -83,6 +108,82 @@ class ReservationService {
 				error: { message: error.message },
 			};
 		}
+	}
+
+	async checkRestaurantAvailability(reservationData) {
+		await fetch(
+			`http://localhost:5000/api/users/${reservationData.restaurantId}`,
+		)
+			.then((response) => response.json())
+			.then((data) => {
+				const restaurantSchedule =
+					data.data.user.details.schedule;
+			})
+			.catch((err) => {
+				Logger.error(err);
+			});
+	}
+
+	async checkSeatsAvailability(reservationData) {
+		const date = reservationData.reservationDate;
+		const occupiedSeats = await this.countReservationByDate(
+			reservationData.restaurantId,
+			date.getFullYear(),
+			date.getMonth() + 1,
+			date.getDate(),
+			date.getHours(),
+		);
+		let restaurantQuantity = 0;
+		await fetch(
+			`http://localhost:5000/api/users/${reservationData.restaurantId}`,
+		)
+			.then((response) => response.json())
+			.then((data) => {
+				restaurantQuantity = data.data.user.details.tables;
+			})
+			.catch((err) => {
+				Logger.error(err);
+			});
+		if (
+			restaurantQuantity - occupiedSeats >
+			reservationData.numberOfSeats
+		) {
+			return true;
+		}
+		return false;
+	}
+
+	async countReservationByDate(
+		restaurantId,
+		year,
+		month,
+		day,
+		hour,
+	) {
+		let countOccupiedSeats = 0;
+		const reservations = await this.findByRestaurant(
+			restaurantId,
+		);
+		const reservationsData = reservations.data.reservations;
+
+		await (async () => {
+			for (const reservation of reservationsData) {
+				await (async () => {
+					const dateReservation =
+						reservation.reservationDate;
+					if (
+						dateReservation.getFullYear() === year &&
+						dateReservation.getMonth() === month - 1 &&
+						dateReservation.getDate() === day &&
+						dateReservation.getHours() >= hour
+					) {
+						countOccupiedSeats +=
+							reservation.numberOfSeats;
+					}
+				})();
+			}
+		})();
+		return countOccupiedSeats;
 	}
 
 	async sendReservationMail(reservationData) {
@@ -108,6 +209,21 @@ class ReservationService {
 				Logger.info(`Reservation Email sent`);
 			}
 		});
+	}
+
+	async findByRestaurant(restaurantId) {
+		try {
+			const reservations = await this.db.Reservation.find({
+				restaurantId,
+			});
+
+			return { success: true, data: { reservations } };
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
 	}
 
 	async update(idReservation, payload) {

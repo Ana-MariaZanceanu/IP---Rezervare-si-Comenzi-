@@ -4,13 +4,6 @@ const reservationSchema = mongoose.Schema({
 	userId: {
 		type: mongoose.Types.ObjectId,
 		required: false,
-		validate: {
-			validator(value) {
-				// verificam daca user-ul chiar exista
-				return true;
-			},
-			message: 'User id not valid',
-		},
 	},
 	email: {
 		type: String,
@@ -56,13 +49,6 @@ const reservationSchema = mongoose.Schema({
 	restaurantId: {
 		type: mongoose.Types.ObjectId,
 		required: true,
-		validate: {
-			validator(value) {
-				// verificam daca restaurantul chiar exista
-				return true;
-			},
-			message: 'Restaurant id not valid',
-		},
 	},
 	guest: {
 		type: Boolean,

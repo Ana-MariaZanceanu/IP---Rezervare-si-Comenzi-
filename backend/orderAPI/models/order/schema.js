@@ -4,13 +4,6 @@ const orderSchema = mongoose.Schema({
 	userId: {
 		type: mongoose.Types.ObjectId,
 		required: false,
-		validate: {
-			validator(value) {
-				// verificam daca user-ul chiar exista
-				return true;
-			},
-			message: 'User id not valid',
-		},
 	},
 	email: {
 		type: String,
@@ -36,13 +29,6 @@ const orderSchema = mongoose.Schema({
 	restaurantId: {
 		type: mongoose.Types.ObjectId,
 		required: true,
-		validate: {
-			validator(value) {
-				// verificam daca restaurantul chiar exista
-				return true;
-			},
-			message: 'Restaurant id not valid',
-		},
 	},
 	orderDate: {
 		type: Date,
@@ -73,13 +59,6 @@ const orderSchema = mongoose.Schema({
 			id: {
 				type: mongoose.Types.ObjectId,
 				required: true,
-				validate: {
-					validator(value) {
-						// verificam daca restaurantul chiar exista
-						return true;
-					},
-					message: 'Item id not valid',
-				},
 			},
 			item: {
 				price: { type: Number, required: true, min: 1 },
