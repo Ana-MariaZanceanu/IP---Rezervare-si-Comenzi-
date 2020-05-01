@@ -19,7 +19,7 @@ export default function ModalProduct(props) {
             <Col xs={12} md={6}>
               <Row className="show-grid">
                 <Col xs={12} md={12}>
-                  <Card.Title>{productName}</Card.Title>
+                  <h2 style={styles.nameStyle}>{productName}</h2>
                 </Col>
               </Row>
               <Row className="show-grid">
@@ -55,5 +55,9 @@ export default function ModalProduct(props) {
 const styles = {
   modalHeader: {
     border: "none",
+  },
+  nameStyle: {
+    fontFamily: "Pacifico",
+    fontSize: "2rem",
   },
 };
