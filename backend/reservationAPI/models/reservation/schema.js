@@ -7,7 +7,6 @@ const reservationSchema = mongoose.Schema({
 		validate: {
 			validator(value) {
 				// verificam daca user-ul chiar exista
-				console.log(value);
 				return true;
 			},
 			message: 'User id not valid',
@@ -60,7 +59,6 @@ const reservationSchema = mongoose.Schema({
 		validate: {
 			validator(value) {
 				// verificam daca restaurantul chiar exista
-				console.log(value);
 				return true;
 			},
 			message: 'Restaurant id not valid',

@@ -26,6 +26,12 @@ router.get('/', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
+router.get('/clear', async (req, res) => {
+	delete req.session.cart;
+
+	res.status(OK).json({ success: true, data: 'Cart cleared' });
+});
+
 router.get('/:idUser', async (req, res) => {
 	const result = await cartService.getCart(req.params.idUser);
 	const statusCode = result.success ? OK : BAD_REQUEST;
@@ -67,14 +73,7 @@ router.delete('/:idUser', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
-router.get('/clear', async (req, res) => {
-	delete req.session.cart;
-
-	res.status(OK).json({ success: true, data: 'Cart cleared' });
-});
-
 router.get('/add-product/:idProduct', async (req, res) => {
-	console.log(req.sessionID);
 	const result = await cartService.addProduct(
 		req.params.idProduct,
 		req.session.cart ? req.session.cart : {},
@@ -90,8 +89,6 @@ router.get('/add-quantity/:idProduct', async (req, res) => {
 		req.params.idProduct,
 		req.session.cart ? req.session.cart : {},
 	);
-	console.log(req.session.cart);
-	console.log(result.data.cart);
 	req.session.cart = result.data.cart;
 	const statusCode = result.success ? OK : BAD_REQUEST;
 
