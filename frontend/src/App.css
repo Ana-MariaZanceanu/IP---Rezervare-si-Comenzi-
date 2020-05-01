@@ -14,12 +14,3 @@
 .restaurant-card-button:hover {
   background-color: #802231 !important;
 }
-
-.modalSizes{
-  width: 60%;
-  max-width: none!important;
-}
-
-.modal-dialog{
-  width: 60%!important;
-}

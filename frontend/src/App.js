@@ -13,6 +13,7 @@ function App() {
       {/*<ModalForm name="Book a table" />*/}
 
       <ShowModalProduct img={pizzaImage} productName={"Pizza"} productPrice={"12$"} productAvailability={"in stock"}/>
+        <ShowModalProduct img={pizzaImage} productName={"Pizza"} productPrice={"12$"} productAvailability={"sold out"}/>
 
       {/*<Container>
         <Order />
