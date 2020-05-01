@@ -12,7 +12,7 @@ class DataForm extends Component {
         <Container fluid="xl">
           <Form>
             <Row>
-              <Col>
+              <Col md>
                 <Form.Group controlId="firstName">
                   <Form.Label>Enter first name</Form.Label>
                   <Form.Control
@@ -25,7 +25,7 @@ class DataForm extends Component {
                   />
                 </Form.Group>
               </Col>
-              <Col>
+              <Col md>
                 <Form.Group controlId="lastName">
                   <Form.Label>Enter last name</Form.Label>
                   <Form.Control
@@ -38,7 +38,7 @@ class DataForm extends Component {
                   />
                 </Form.Group>
               </Col>
-              <Col>
+              <Col md>
                 <Form.Group controlId="phoneNumber">
                   <Form.Label>Enter phone number</Form.Label>
                   <Form.Control
@@ -53,7 +53,7 @@ class DataForm extends Component {
               </Col>
             </Row>
             <Row>
-              <Col>
+              <Col md>
                 <Form.Group controlId="emailUser">
                   <Form.Label>Enter email address</Form.Label>
                   <Form.Control
@@ -66,7 +66,7 @@ class DataForm extends Component {
                   />
                 </Form.Group>
               </Col>
-              <Col>
+              <Col md>
                 <Form.Group controlId="adress">
                   <Form.Label>Enter delivery adress</Form.Label>
                   <Form.Control
@@ -86,21 +86,5 @@ class DataForm extends Component {
     );
   }
 }
-
-const styles = {
-  button: {
-    backgroundColor: "#A71D31",
-    color: "#F7E7D9",
-    border: "none",
-    marginRight: "1vw",
-    marginTop: "2vh",
-    width: "auto",
-    height: "auto",
-  },
-  buttonConfirm: {
-    backgroundColor: "#A71D31",
-    color: "#F7E7D9",
-  },
-};
 
 export default DataForm;

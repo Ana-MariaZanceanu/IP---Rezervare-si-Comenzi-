@@ -24,8 +24,12 @@ class Order extends Component {
       phoneNumber: "",
       email: "",
       paymentMethod: "",
-      tokenId: " ",
-      submitMessage: "",
+      tokenId: "",
+      deliveryMessage: "",
+      personalDataMessage: "",
+      paymentMessage: "",
+      cash: false,
+      card: false,
     };
   }
 
@@ -40,37 +44,51 @@ class Order extends Component {
       this.state.restaurantDelivery === false
     ) {
       this.setState({
-        submitMessage: "You have to choose a delivery method",
+        deliveryMessage: "You have to choose a delivery method",
       });
-    } else if (
+    } else {
+      this.setState({
+        deliveryMessage: "",
+      });
+    }
+
+    if (
       this.state.userFirstName === "" ||
       this.state.userLastName === "" ||
       this.state.phoneNumber === "" ||
       this.state.email === ""
     ) {
       this.setState({
-        submitMessage: "You have to complete all your personal data",
+        personalDataMessage: "You have to complete all your personal data",
       });
-      console.log(this.state.submitMessage);
-    } else if (this.state.paymentMethod === "") {
-      console.log("no paymentmethod");
+    } else {
       this.setState({
-        submitMessage: "You have to choose a payment method",
+        personalDataMessage: "",
+      });
+    }
+    if (this.state.paymentMethod === "") {
+      this.setState({
+        paymentMessage: "You have to choose a payment method",
       });
     } else if (
       this.state.paymentMethod === "card" &&
       this.state.tokenId === ""
     ) {
-      console.log("no token");
       this.setState({
-        submitMessage: "You have to complete and confirm your card info",
+        paymentMessage: "You have to complete and confirm your card info",
       });
     } else {
       this.setState({
-        submitMessage: "",
-      },() => {
-          this.addFormDetails(e, formValues);
+        paymentMessage: "",
       });
+    }
+
+    if (
+      this.state.deliveryMessage === "" &&
+      this.state.personalDataMessage === "" &&
+      this.state.paymentMessage === ""
+    ) {
+      this.addFormDetails(e, formValues);
     }
   };
   changeStep = () => {
@@ -119,15 +137,24 @@ class Order extends Component {
       this.setState({ [input]: e.target.checked }, () => {
         this.changeStep();
       });
-    } else if (input === "payOnDelivery") {
-      if (e.target.checked === true) {
-        this.setState({ paymentMethod: "cash" });
-        console.log(this.state.paymentMethod);
+    } else if (input === "cash" || input === "card") {
+      if (input === "cash") {
+        if (this.state.cash === false) {
+          this.setState({ cash: true });
+          this.setState({ paymentMethod: "cash" });
+        } else {
+          this.setState({ cash: false });
+          this.setState({ paymentMethod: "" });
+        }
       }
-    } else if (input === "onlinePayment") {
-      if (e.target.checked === true) {
-        this.setState({ paymentMethod: "card" });
-        console.log(this.state.paymentMethod);
+      if (input === "card") {
+        if (this.state.card === false) {
+          this.setState({ card: true });
+          this.setState({ paymentMethod: "card" });
+        } else {
+          this.setState({ card: false });
+          this.setState({ paymentMethod: "" });
+        }
       }
     } else {
       this.setState({ [input]: e.target.value });
@@ -239,24 +266,30 @@ class Order extends Component {
         return (
           <div>
             <DeliveryMethod
-              values={values}
               handleChange={this.handleChange}
               homeDisabled={this.homeDisabled}
               restaurantDisabled={this.restaurantDisabled}
             />
+            <Card.Text style={errorStyle}>
+              {this.state.deliveryMessage}
+            </Card.Text>
             <PersonalData
               values={values}
               handleChange={this.handleChange}
               disabled={"disabled"}
               disabledAddress={"disabled"}
             />
+            <Card.Text style={errorStyle}>
+              {this.state.personalDataMessage}
+            </Card.Text>
             <PaymentMethod
               values={values}
               handleChange={this.handleChange}
               modifyTokenID={this.modifyTokenID}
             />
-            <br />
-            <Card.Text style={errorStyle}>{this.state.submitMessage}</Card.Text>
+            <Card.Text style={errorStyle}>
+              {this.state.paymentMessage}
+            </Card.Text>
             <Button
               onClick={(event) => {
                 this.handleSubmit(event, formValues);
@@ -272,25 +305,29 @@ class Order extends Component {
           return (
             <div>
               <DeliveryMethod
-                values={values}
                 handleChange={this.handleChange}
                 homeDisabled={this.homeDisabled}
                 restaurantDisabled={this.restaurantDisabled}
               />
+              <Card.Text style={errorStyle}>
+                {this.state.deliveryMessage}
+              </Card.Text>
               <PersonalData
                 values={values}
                 handleChange={this.handleChange}
                 disabled={""}
                 disabledAddress={""}
               />
+              <Card.Text style={errorStyle}>
+                {this.state.personalDataMessage}
+              </Card.Text>
               <PaymentMethod
                 values={values}
                 handleChange={this.handleChange}
                 modifyTokenID={this.modifyTokenID}
               />
-              <br />
               <Card.Text style={errorStyle}>
-                {this.state.submitMessage}
+                {this.state.paymentMessage}
               </Card.Text>
               <Button
                 onClick={(event) => {
@@ -306,25 +343,29 @@ class Order extends Component {
           return (
             <div>
               <DeliveryMethod
-                values={values}
                 handleChange={this.handleChange}
                 homeDisabled={this.homeDisabled}
                 restaurantDisabled={this.restaurantDisabled}
               />
+              <Card.Text style={errorStyle}>
+                {this.state.deliveryMessage}
+              </Card.Text>
               <PersonalData
                 values={values}
                 handleChange={this.handleChange}
                 disabled={""}
                 disabledAddress={"disabled"}
               />
+              <Card.Text style={errorStyle}>
+                {this.state.personalDataMessage}
+              </Card.Text>
               <PaymentMethod
                 values={values}
                 handleChange={this.handleChange}
                 modifyTokenID={this.modifyTokenID}
               />
-              <br />
               <Card.Text style={errorStyle}>
-                {this.state.submitMessage}
+                {this.state.paymentMessage}
               </Card.Text>
               <Button
                 onClick={(event) => {
@@ -343,6 +384,8 @@ class Order extends Component {
         ) : (
           <Fail response={this.message} prevStep={this.prevStep} />
         );
+      default:
+        return null;
     }
   }
 }

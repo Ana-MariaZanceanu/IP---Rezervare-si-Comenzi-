@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { celebrate } = require('celebrate');
 const { orderService } = require('../../services/index');
+const { cartService } = require('../../services/index');
 
 const { orderValidationSchema } = require('../../models/index');
 
@@ -30,8 +31,17 @@ router.post(
 		body: orderValidationSchema,
 	}),
 	async function (req, res) {
-		console.log(req.sessionID);
-		const result = await orderService.submit(req);
+		let result;
+
+		if (req.body.userId) {
+			const DbCart = (
+				await cartService.getCart(req.body.userId)
+			).data;
+			result = await orderService.submit(req, DbCart);
+		} else {
+			result = await orderService.submit(req);
+		}
+
 		const statusCode = result.success ? CREATED : BAD_REQUEST;
 
 		res.status(statusCode).json(result);

@@ -21,12 +21,10 @@ class CartService {
 	}
 
 	async getCart(idUser) {
-		console.log(idUser);
 		try {
 			const cart = await this.db.Cart.find({
 				userId: idUser,
 			});
-
 			return { success: true, data: { cart } };
 		} catch (error) {
 			return {

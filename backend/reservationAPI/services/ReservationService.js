@@ -1,3 +1,4 @@
+const nodemailer = require('nodemailer');
 const Logger = require('../loaders/logger');
 
 class ReservationService {
@@ -71,6 +72,7 @@ class ReservationService {
 
 			if (!existsReservation) {
 				await reservation.save();
+				await this.sendReservationMail(reservationData);
 			}
 
 			return { success: true, data: { reservation } };
@@ -81,6 +83,31 @@ class ReservationService {
 				error: { message: error.message },
 			};
 		}
+	}
+
+	async sendReservationMail(reservationData) {
+		const transporter = nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+				user: 'restaurantapp20ip@gmail.com',
+				pass: 'restaurantapp20!',
+			},
+		});
+
+		const mailOptions = {
+			from: 'restaurantapp20ip@gmail.com',
+			to: 'andrasimion99@gmail.com',
+			subject: 'Confirmare rezervare',
+			html: `<h2>Rezervarea a fost inregistrata cu success!</h2> Ora rezervarii: ${reservationData.reservationDate} <br> Numar de locuri: ${reservationData.numberOfSeats}`,
+		};
+
+		transporter.sendMail(mailOptions, function (error) {
+			if (error) {
+				Logger.error(error);
+			} else {
+				Logger.info(`Reservation Email sent`);
+			}
+		});
 	}
 
 	async update(idReservation, payload) {

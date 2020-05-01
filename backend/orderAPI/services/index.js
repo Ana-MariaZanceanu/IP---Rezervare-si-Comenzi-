@@ -9,6 +9,7 @@ const CartService = require('./CartService');
 const orderService = new OrderService({
 	db: {
 		Order: db.Order,
+		Cart: db.Cart,
 	},
 	services: {},
 });

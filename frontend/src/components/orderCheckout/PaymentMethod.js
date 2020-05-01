@@ -6,7 +6,6 @@ import PaymentForm from "./PaymentForm";
 
 import { ElementsConsumer, Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-//<PaymentForm handleChange={handleChange} values={values} />
 
 const stripePromise = loadStripe("pk_test_wSHt5VF8UO8x8w8z7BRizPh900oAzRuE21");
 export class PaymentMethod extends Component {
@@ -41,7 +40,7 @@ export class PaymentMethod extends Component {
           <Accordion>
             <Card>
               <Accordion.Toggle as={Card.Header} eventKey="0">
-                3. Select payment method
+                3. Payment method
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
                 <Card.Body>
@@ -50,13 +49,13 @@ export class PaymentMethod extends Component {
                       type="checkbox"
                       label="Pay online"
                       onClick={this.handleClickPayOnline}
-                      onChange={handleChange("onlinePayment")}
+                      onChange={handleChange("card")}
                       disabled={this.state.checkedOnDeliveryBox}
                     />
                     <Form.Check
                       type="checkbox"
                       label="Cash on delivery"
-                      onChange={handleChange("payOnDelivery")}
+                      onChange={handleChange("cash")}
                       onClick={this.handleClickOnDelivery}
                       disabled={this.state.checkedPayOnlineBox}
                     />
@@ -82,13 +81,13 @@ export class PaymentMethod extends Component {
                       type="checkbox"
                       label="Pay online"
                       onClick={this.handleClickPayOnline}
-                      onChange={handleChange("onlinePayment")}
+                      onChange={handleChange("card")}
                       disabled={this.state.checkedOnDeliveryBox}
                     />
                     <Form.Check
                       type="checkbox"
                       label="Cash on delivery"
-                      onChange={handleChange("payOnDelivery")}
+                      onChange={handleChange("cash")}
                       onClick={this.handleClickOnDelivery}
                       disabled={this.state.checkedPayOnlineBox}
                     />

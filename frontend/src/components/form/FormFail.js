@@ -3,9 +3,9 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
 class FormFail extends Component {
-    constructor(props) {
+    /*constructor(props) {
         super(props);
-    }
+    }*/
 
     back = (e) => {
         e.preventDefault();
