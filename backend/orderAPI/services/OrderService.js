@@ -39,8 +39,10 @@ class OrderService {
 		}
 	}
 
-	async submit(req, DbCart) {
+	async submit(req, cartService) {
 		const payload = req.body;
+		const DbCart = (await cartService.getCart(req.body.userId))
+			.data;
 		const cart = req.session.cart
 			? req.session.cart
 			: {
@@ -117,6 +119,11 @@ class OrderService {
 				}
 				await order.save();
 				await this.sendOrderMail(orderData);
+				if (payload.userId) {
+					cartService.deleteCart(payload.userId);
+				} else {
+					delete req.session.cart;
+				}
 			}
 
 			return { success: true, data: { order } };

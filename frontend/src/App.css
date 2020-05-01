@@ -1,3 +1,4 @@
+/*----color:a71d31----*/
 .header {
   text-align: center;
 }
@@ -14,6 +15,15 @@
 .restaurant-card-button:hover {
   background-color: #802231 !important;
 }
+<<<<<<< HEAD
+i {
+  margin-right: 5px !important;
+}
+i:hover {
+  background-color: #a71d31 !important;
+  color: white !important;
+}
+=======
 
 .modalSizes{
   width: 60%;
@@ -23,3 +33,4 @@
 .modal-dialog{
   width: 60%!important;
 }
+>>>>>>> 6fc9031e6aa64c6992f9e8b6c8b6a299c93eb1c3
