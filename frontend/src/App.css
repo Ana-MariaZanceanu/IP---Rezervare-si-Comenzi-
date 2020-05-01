@@ -1,3 +1,4 @@
+/*----color:a71d31----*/
 .header {
   text-align: center;
 }
@@ -13,4 +14,11 @@
 }
 .restaurant-card-button:hover {
   background-color: #802231 !important;
+}
+i {
+  margin-right: 5px !important;
+}
+i:hover {
+  background-color: #a71d31 !important;
+  color: white !important;
 }
