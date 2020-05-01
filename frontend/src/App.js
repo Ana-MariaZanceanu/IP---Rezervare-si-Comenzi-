@@ -5,7 +5,7 @@ import ModalForm from "./components/ModalForm";
 import Order from "./components/orderCheckout/Order";
 import Container from "react-bootstrap/Container";
 import MainPage from "./components/mainPage/MainPage";
-
+import ProductImg from "./components/produsPage/ProductImg";
 function App() {
   return (
     <div>
@@ -13,8 +13,9 @@ function App() {
 
       {/*<Container>
         <Order />
-      </Container>*/}
-      <MainPage />
+      </Container>
+      <MainPage />*/}
+      <ProductImg/>
     </div>
   );
 }
