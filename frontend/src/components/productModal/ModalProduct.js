@@ -4,17 +4,20 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
+import Image from "react-bootstrap/Image";
+import "../../App.css";
+
 
 export default function ModalProduct(props) {
-  const {show,onHide,productName,productPrice,productAvailability} = props;
+  const {show,onHide,img,productName,productPrice,productAvailability} = props;
   return (
-    <Modal show={show} onHide={onHide} aria-labelledby="contained-modal-title-vcenter">
+    <Modal show={show} onHide={onHide} dialogClassName="modalSizes" aria-labelledby="example-custom-modal-styling-title">
       <Modal.Header closeButton style={styles.modalHeader} />
       <Modal.Body>
         <Container>
           <Row className="show-grid">
             <Col xs={12} md={5}>
-              <Card.Text>poza</Card.Text>
+                  <Image src={img} rounded style={styles.imageStyle} />
             </Col>
             <Col xs={12} md={6}>
               <Row className="show-grid">
@@ -59,5 +62,9 @@ const styles = {
   nameStyle: {
     fontFamily: "Pacifico",
     fontSize: "2rem",
+  },
+  imageStyle: {
+    width: "100%",
+    height: "100%"
   },
 };
