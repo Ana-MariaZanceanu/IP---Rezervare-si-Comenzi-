@@ -41,7 +41,6 @@
     text-transform: uppercase;
     font-size: 1.1rem;
     color: #18c17b;
-    border-bottom: 1px solid #dee2e6;
     padding-bottom: 1vh;
 }
 .soldOut {
@@ -49,7 +48,6 @@
     text-transform: uppercase;
     font-size: 1.1rem;
     color: #A71D31;
-    border-bottom: 1px solid #dee2e6;
     padding-bottom: 1vh;
 }
 .descriptionTitleStyle {
@@ -64,4 +62,14 @@
 .descriptionTextStyle {
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
     font-size: 1rem;
+}
+.buttons_cart{
+    margin-top: 3vh;
+}
+i {
+    margin-right: 5px !important;
+}
+i:hover {
+    background-color: #a71d31 !important;
+    color: white !important;
 }
