@@ -41,11 +41,12 @@ class OrderService {
 
 	async submit(req, cartService) {
 		const payload = req.body;
+		let DbCart;
 		if (payload.userId) {
-			const DbCart = (
-				await cartService.getCart(req.body.userId)
-			).data;
+			DbCart = (await cartService.getCart(req.body.userId))
+				.data;
 		}
+
 		const cart = req.session.cart
 			? req.session.cart
 			: {
