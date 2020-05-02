@@ -112,7 +112,7 @@ class ReservationService {
 
 	async checkRestaurantAvailability(reservationData) {
 		await fetch(
-			`http://localhost:5000/api/users/${reservationData.restaurantId}`,
+			`http://localhost:4000/api/users/${reservationData.restaurantId}`,
 		)
 			.then((response) => response.json())
 			.then((data) => {
@@ -135,7 +135,7 @@ class ReservationService {
 		);
 		let restaurantQuantity = 0;
 		await fetch(
-			`http://localhost:5000/api/users/${reservationData.restaurantId}`,
+			`http://localhost:4000/api/users/${reservationData.restaurantId}`,
 		)
 			.then((response) => response.json())
 			.then((data) => {
@@ -145,7 +145,7 @@ class ReservationService {
 				Logger.error(err);
 			});
 		if (
-			restaurantQuantity - occupiedSeats >
+			restaurantQuantity - occupiedSeats >=
 			reservationData.numberOfSeats
 		) {
 			return true;
