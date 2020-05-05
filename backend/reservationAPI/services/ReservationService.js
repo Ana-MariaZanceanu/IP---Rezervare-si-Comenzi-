@@ -83,11 +83,11 @@ class ReservationService {
 				reservationData,
 			);
 
-			// if (!restaurantOpen) {
-			// 	throw new Error(
-			// 		'This restaurant is not open for the time of your reservation.',
-			// 	);
-			// }
+			if (!restaurantOpen) {
+				throw new Error(
+					'This restaurant is not open for the time of your reservation.',
+				);
+			}
 
 			if (!existsEmptySeats) {
 				throw new Error(
@@ -110,18 +110,61 @@ class ReservationService {
 		}
 	}
 
+	async verifySchedule(restaurantDay, reservationHour) {
+		let startHour = parseInt(
+			restaurantDay.startHour.substring(0, 2),
+			10,
+		);
+		let endHour = parseInt(
+			restaurantDay.endHour.substring(0, 2),
+			10,
+		);
+		if (restaurantDay.startHour.match('pm')) {
+			startHour += 12;
+		}
+		if (restaurantDay.endHour.match('pm')) {
+			endHour += 12;
+		}
+		if (
+			startHour <= reservationHour &&
+			reservationHour < endHour
+		) {
+			return true;
+		}
+		return false;
+	}
+
 	async checkRestaurantAvailability(reservationData) {
+		let available;
+		let restaurantSchedule;
+		let reservationDay;
 		await fetch(
 			`http://localhost:4000/api/users/${reservationData.restaurantId}`,
 		)
 			.then((response) => response.json())
-			.then((data) => {
-				const restaurantSchedule =
-					data.data.user.details.schedule;
+			.then(async function (data) {
+				restaurantSchedule =
+					data.data.user.details.schedule.schedule;
+				reservationDay = reservationData.reservationDate.getDay();
 			})
 			.catch((err) => {
 				Logger.error(err);
 			});
+		if (reservationDay === 0) {
+			available = await this.verifySchedule(
+				restaurantSchedule[reservationDay + 6],
+				reservationData.reservationDate.getHours(),
+			);
+		} else {
+			available = await this.verifySchedule(
+				restaurantSchedule[reservationDay - 1],
+				reservationData.reservationDate.getHours(),
+			);
+		}
+		if (available) {
+			return true;
+		}
+		return false;
 	}
 
 	async checkSeatsAvailability(reservationData) {
@@ -139,7 +182,7 @@ class ReservationService {
 		)
 			.then((response) => response.json())
 			.then((data) => {
-				restaurantQuantity = data.data.user.details.tables;
+				restaurantQuantity = data.data.user.details.capacity;
 			})
 			.catch((err) => {
 				Logger.error(err);
