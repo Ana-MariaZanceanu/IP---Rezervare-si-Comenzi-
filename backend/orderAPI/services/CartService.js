@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+const fetch = require('node-fetch');
 const Logger = require('../loaders/logger');
 
 class CartService {
@@ -114,8 +115,22 @@ class CartService {
 		}
 	}
 
+	async getProduct(idProduct) {
+		let product;
+		await fetch(`http://localhost:4000/api/courses/${idProduct}`)
+			.then((response) => response.json())
+			.then(async function (data) {
+				product = data.data[0];
+			})
+			.catch((err) => {
+				Logger.error(err);
+			});
+		return product;
+	}
+
 	async addProduct(idProduct, cart) {
 		let storedItem;
+		const storedProduct = await this.getProduct(idProduct);
 		try {
 			if (Object.keys(cart).length === 0) {
 				cart.items = [];
@@ -127,11 +142,11 @@ class CartService {
 			});
 			if (!storedItem) {
 				storedItem = {
-					id: idProduct,
+					id: storedProduct._id,
 					item: {
-						price: 20,
+						price: storedProduct.price,
 						quantity: 1,
-						product: 'Pizza',
+						product: storedProduct.name,
 					},
 				};
 				cart.items.push(storedItem);
