@@ -1,90 +1,573 @@
-# NodeJS Project Architecture
+# Orders API
 
-Before I start, I want to say that I have inspired from santiq
-solution that you can found here
-https://github.com/santiq/bulletproof-nodejs.
+## Response structure
 
-# MVC
+The structure of the API responses' body is as follows:
 
-Model - View - Controller\
-Or, in other words ...\
-Data - Design - Controller\
-What do you need to know from here? Well, every express handler of route
-of your api is a CONTROLLER That means that is its only responsibilty is
-to call a Service and return the result. Nothing more, nothing else. Well..
-I've added a thing.. Before returning, it has to determine the http status
-code. But, that's ALL.. No other logic should be placed here.
+-   for successful responses, a JSON object containing the properties:
+    -   `success`: `true`
+    -   `data`: An object, structure detailed for each route below.
+-   for unsuccessful responses, a JSON object containing the
+    properties:
+    -   `success`: `false`
+    -   `error`: An object containing a `message` property, and
+        sometimes additional helpful properties.
+	
+## /api/v1/orders
 
-# 3 Layer architecture
+### GET
 
-Controller - Service Layer - Data Acces Layer\
-Or, in other words ...\
-Express Route Controller - Service Class - Mongoose\
-What's important here are SERVICES.. They should contain all of your business
-logic and be as modular as separated as it can.\
-mongoose MODELS\
-Also, you have to declare all your models somewhere else. And there is
-more.. We need a clear structure here. That's very important. A model is
-separated in schemas, virtuals, statics, methods and hooks(mongoose middlewares).
-These will hold logic that is solely related on dealing with de db. For
-example, you may create a static 'findByCredentials' that looks for a document
-in the db with the specified credentials(there can be some more advanced
-match options). That's the Data Access Layer.\
-Sure, you have an index file where all of this are putted in place.\
-!!! Don't put your logic inside controllers
+Get the all the orders from the db.
 
-# Events Layer
+**Return codes**:
 
-If you think that you've already acquaired a good architecture, think
-twice babe :)))\
-What if you want to call a 3rd party service? I'll give you the easiest
-example eveer. When user registers, you want to send him an email, saying
-you thank him for using your AWESOME app.\
-How are you gonna do this? Well, you will 'create' an event, define a
-'handler' for it, and when a user register, 'emit' that event\
+-   200 - OK
+-   400 - There was a problem fetching data
 
-# Cron Jobs
+**Usage example**:  
+ `localhost:3000/api/v1/orders`
 
-Wtf are these? You prabably already know about setTimeout and
-setInterval. It's quite the same thing, but a more elevated form. Cron
-jobs are task that have to be repeated at a period of time, or tasks
-that need a delay.. Let's say that someone made a reservation, but he
-doesn't show up.. You give him 20 minutes from the reservation time,
-and after this you are going to free his table. How do you plan to do
-this? Well, you need something(a croon job) that checks at every 10
-minutes the state of the reservations, and if it hasn't been
-fullfilled in 20 mins after the reservation time, you quit it. Why
-would you need this? It's simple.. this has to happen for every
-reservation.. I don't think you'd like to check those status yourself
-and update the database, nah?
+**Returned data example**:
 
-# Configuration and ENV variables
+```JSON
+{
+    "success": true,
+    "data": {
+        "orders": [
+            {
+                "paymentMethod": "cash",
+                "guest": true,
+                "_id": "5ead4f803f29fe06b727b88a",
+                "email": "andu.birnoveanu@gmail.com",
+                "userFirstName": "Andu",
+                "userLastName": "Birnoveanu",
+                "phoneNumber": "0745520036",
+                "restaurantId": "5e9494aadd757435187a6dbd",
+                "userDeliveryAdress": "Bld. Alex. cel Bun 47",
+                "orderDate": "2020-05-02T13:46:24.102Z",
+                "items": [
+                    {
+                        "item": {
+                            "price": 20,
+                            "quantity": 1,
+                            "product": "Pizza"
+                        },
+                        "_id": "5ead4f803f29fe06b727b88b",
+                        "id": "5e9494d0dd757435187a6dc0"
+                    }
+                ],
+                "amount": 20,
+                "__v": 0
+            },
+            {
+                "paymentMethod": "cash",
+                "guest": true,
+                "_id": "5ead519d3f29fe06b727b892",
+                "email": "paul.cojocaru@gmail.com",
+                "userFirstName": "Paul",
+                "userLastName": "Cojocaru",
+                "phoneNumber": "0788654321",
+                "restaurantId": "5e9494aadd757435187a6dbd",
+                "userDeliveryAdress": "Str. Primaverii 35",
+                "orderDate": "2020-05-02T13:55:25.047Z",
+                "items": [
+                    {
+                        "item": {
+                            "price": 20,
+                            "quantity": 3,
+                            "product": "Pizza"
+                        },
+                        "_id": "5ead519d3f29fe06b727b893",
+                        "id": "5e9494d0dd757435187a6dc0"
+                    }
+                ],
+                "amount": 60,
+                "__v": 0
+            },
+            {
+                "paymentMethod": "card",
+                "guest": false,
+                "_id": "5ead6a3020197a0a76be6eb5",
+                "userId": "5e8c4f351842ba322c5c13ec",
+                "email": "toma.manolescu@gmail.com",
+                "userFirstName": "Toma",
+                "userLastName": "Manolescu",
+                "phoneNumber": "0723570389",
+                "restaurantId": "5e9494aadd757435187a6dbd",
+                "userDeliveryAdress": "Str. 1 Decembrie 40",
+                "orderDate": "2020-05-02T15:40:16.200Z",
+                "items": [
+                    {
+                        "item": {
+                            "price": 20,
+                            "quantity": 2,
+                            "product": "Pizza"
+                        },
+                        "_id": "5ead6a1020197a0a76be6eb4",
+                        "id": "5e9494d0dd757435187a6dc0"
+                    }
+                ],
+                "amount": 40,
+                "__v": 0
+            }
+        ]
+    }
+}
+```
 
-This will be our secret, ok? NO ONE ELSE has to know it. 'env'
-variables are variables that are needed for the application and only
-the server has to know them.. For everyone else, they should be
-COMPLETELY hidden. Let's say you want to connect to a db.. If it's a
-mongodb, in the connection url you have to type the username and
-password. Probably you won't sleep that well knowing that everyone can
-have access to those and fool with your db. That's why we put such
-variables in a .env file and ignore it when we host the app. Also, we
-import all of this in a config file to have a more intuitive way to
-access them so that it makes our life eaaasy.
+## /api/v1/orders/:orderId
 
-# Loaders
+### GET
 
-Have you ever worked on a the backend of an application? There are a
-lot of stuff that have to be loaded.. Believe, in this project, they
-are still few things.. When an app it's hosted somewhere, it run the
-app.js or index.js file in the root folder. And you don't like long
-and unorganised files, so we split it in more files which have a
-single responsibility. In our case it's one for mongoose, one for
-express, one for logger, and of course, an index :)))
+Get a specific order by its id.
 
-# Others
+**Return codes**:
 
-!! don't use console.log\
-Log any information using the Logger module. We have Logger.info, Logger.warn
-and Logger.error that we'll provide us a ore intuitive output.\
+-   200 - OK
+-   400 - There was a problem fetching data
 
-Enjoy coding :D
+**Usage example**:  
+ `localhost:3000/api/v1/orders/5ead4f803f29fe06b727b88a`
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "orders": [
+            {
+                "paymentMethod": "cash",
+                "guest": true,
+                "_id": "5ead4f803f29fe06b727b88a",
+                "email": "andu.birnoveanu@gmail.com",
+                "userFirstName": "Andu",
+                "userLastName": "Birnoveanu",
+                "phoneNumber": "0745520036",
+                "restaurantId": "5e9494aadd757435187a6dbd",
+                "userDeliveryAdress": "Bld. Alex. cel Bun 47",
+                "orderDate": "2020-05-02T13:46:24.102Z",
+                "items": [
+                    {
+                        "item": {
+                            "price": 20,
+                            "quantity": 1,
+                            "product": "Pizza"
+                        },
+                        "_id": "5ead4f803f29fe06b727b88b",
+                        "id": "5e9494d0dd757435187a6dc0"
+                    }
+                ],
+                "amount": 20,
+                "__v": 0
+            }
+        ]
+    }
+}
+```
+## /api/v1/orders
+
+### POST
+
+Post a order to Order Database
+
+**Body example**
+
+`userId`, `userDeliveryAdress` sunt optionale.
+
+```JSON
+{
+	"userId": "5e8c4f351842ba322c5c13ec",
+	"email": "test@yahoo.com",
+    "userFirstName": "Test",
+    "userLastName": "Test",
+    "phoneNumber": "2341341227",
+    "restaurantId": "5eb16d673a637d28884dc226",
+    "paymentMethod": "cash",
+    "userDeliveryAdress": "Str. Palat 10"
+}
+```
+
+**Return codes**:
+
+-   201 - CREATED
+-   400 - Bad Request
+
+**Usage example**:  
+ `localhost:3000/api/v1/orders`
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "order": {
+            "paymentMethod": "cash",
+            "guest": false,
+            "_id": "5eb29ba3bae6850104c29940",
+            "userId": "5e8c4f351842ba322c5c13ec",
+            "email": "test@yahoo.com",
+            "userFirstName": "Test",
+            "userLastName": "Test",
+            "phoneNumber": "2341341227",
+            "restaurantId": "5eb16d673a637d28884dc226",
+            "userDeliveryAdress": "Str. Palat 10",
+            "orderDate": "2020-05-06T14:12:35.958Z",
+            "items": [
+                {
+                    "_id": "5eb298f4bae6850104c2993f",
+                    "item": {
+                        "price": 20,
+                        "quantity": 4,
+                        "product": "Pizza"
+                    },
+                    "id": "5eb173d3d6fb9132c43218a2"
+                }
+            ],
+            "amount": 80,
+            "__v": 0
+        }
+    }
+}
+```
+
+## /api/v1/cart/session
+
+### GET
+
+Get the whole session cart .
+
+**Return codes**:
+
+-   200 - OK
+-   400 - There was a problem fetching data
+
+**Usage example**:  
+ `localhost:3000/api/cart/session`
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "items": [
+            {
+                "id": "5eb173d3d6fb9132c43218a2",
+                "item": {
+                    "price": 20,
+                    "quantity": 5,
+                    "product": "Pizza"
+                }
+            }
+        ],
+        "totalPrice": 100,
+        "totalQty": 5
+    }
+}
+```
+
+## /api/v1/cart
+
+### POST
+
+Post a session cart to Cart Database for an user.
+
+**Body example**
+
+```JSON
+{
+    "userId": "5e8c4f351842ba322c5c13ec",
+}
+```
+
+**Return codes**:
+
+-   201 - CREATED
+-   400 - Bad Request
+
+**Usage example**:  
+ `localhost:3000/api/v1/cart`
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "cartObj": {
+            "_id": "5eb29521bae6850104c2993d",
+            "userId": "5e8c4f351842ba322c5c13ec",
+            "modifiedDate": "2020-05-06T13:44:49.816Z",
+            "items": [
+                {
+                    "_id": "5eb29521bae6850104c2993e",
+                    "id": "5eb173d3d6fb9132c43218a2",
+                    "item": {
+                        "price": 20,
+                        "quantity": 2,
+                        "product": "Pizza"
+                    }
+                }
+            ],
+            "totalPrice": 40,
+            "totalQuantity": 2,
+            "__v": 0
+        }
+    }
+}
+```
+
+## /api/v1/cart/:userId
+
+### PATCH
+
+Modifies a cart from Cart Database with the sseion cart for a userId.
+
+**Return codes**:
+
+-   200 - OK
+-   400 - Bad Request
+
+**Usage example**:  
+ `localhost:3000/api/v1/cart/5e8c4f351842ba322c5c13ec`
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "cartObj": {
+            "n": 1,
+            "nModified": 1,
+            "opTime": {
+                "ts": "6823684559159164930",
+                "t": 50
+            },
+            "electionId": "7fffffff0000000000000032",
+            "ok": 1,
+            "$clusterTime": {
+                "clusterTime": "6823684559159164930",
+                "signature": {
+                    "hash": "XioMWLlIfNGiqaIT0hKyovVm+mE=",
+                    "keyId": "6759538930535628801"
+                }
+            },
+            "operationTime": "6823684559159164930"
+        }
+    }
+}
+```
+
+## /api/v1/cart/:userId
+
+### GET
+
+Get a specific cart by its userId.
+
+**Return codes**:
+
+-   200 - OK
+-   400 - There was a problem fetching data
+
+**Usage example**:  
+ `localhost:3000/api/cart/5e8c4f351842ba322c5c13ec`
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "cart": [
+            {
+                "_id": "5eb29521bae6850104c2993d",
+                "userId": "5e8c4f351842ba322c5c13ec",
+                "modifiedDate": "2020-05-06T13:44:49.816Z",
+                "items": [
+                    {
+                        "item": {
+                            "price": 20,
+                            "quantity": 2,
+                            "product": "Pizza"
+                        },
+                        "_id": "5eb29521bae6850104c2993e",
+                        "id": "5eb173d3d6fb9132c43218a2"
+                    }
+                ],
+                "totalPrice": 40,
+                "totalQuantity": 2,
+                "__v": 0
+            }
+        ]
+    }
+}
+```
+
+## /api/v1/cart/add-product/:idProduct
+
+### GET
+
+Add a product into a cart session by its id.
+
+**Return codes**:
+
+-   200 - OK
+-   400 - Bad request
+
+**Usage example**:  
+ `localhost:3000/api/cart/add-product/5eb173d3d6fb9132c43218a2`
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "cart": {
+            "items": [
+                {
+                    "id": "5eb173d3d6fb9132c43218a2",
+                    "item": {
+                        "price": 20,
+                        "quantity": 1,
+                        "product": "Pizza"
+                    }
+                }
+            ],
+            "totalPrice": 20,
+            "totalQty": 1
+        }
+    }
+}
+```
+
+## /api/v1/cart/add-quantity/:idProduct
+
+### GET
+
+Add quantity to a product from the cart session by its id.
+
+**Return codes**:
+
+-   200 - OK
+-   400 - Bad request
+
+**Usage example**:  
+ `localhost:3000/api/cart/add-quantity/5eb173d3d6fb9132c43218a2`
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "cart": {
+            "items": [
+                {
+                    "id": "5eb173d3d6fb9132c43218a2",
+                    "item": {
+                        "price": 20,
+                        "quantity": 2,
+                        "product": "Pizza"
+                    }
+                }
+            ],
+            "totalPrice": 40,
+            "totalQty": 2
+        }
+    }
+}
+```
+
+## /api/v1/cart/substract-quantity/:idProduct
+
+### GET
+
+Substract quantity from a product from the cart session by its id.
+
+**Return codes**:
+
+-   200 - OK
+-   400 - Bad request
+
+**Usage example**:  
+ `localhost:3000/api/cart/substract-quantity/5eb173d3d6fb9132c43218a2`
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "cart": {
+            "items": [
+                {
+                    "id": "5eb173d3d6fb9132c43218a2",
+                    "item": {
+                        "price": 20,
+                        "quantity": 1,
+                        "product": "Pizza"
+                    }
+                }
+            ],
+            "totalPrice": 20,
+            "totalQty": 1
+        }
+    }
+}
+```
+
+## /api/v1/cart/delete-product/:idProduct
+
+### GET
+
+Delete a product from the cart session by its id.
+
+**Return codes**:
+
+-   200 - OK
+-   400 - Bad request
+
+**Usage example**:  
+ `localhost:3000/api/cart/delete-product/5eb173d3d6fb9132c43218a2`
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "cart": {
+            "items": [],
+            "totalPrice": 0,
+            "totalQty": 0
+        }
+    }
+}
+```
+
+## /api/v1/cart/clear
+
+### GET
+
+Delete the session cart.
+
+**Return codes**:
+
+-   200 - OK
+-   400 - There was a problem fetching data
+
+**Usage example**:  
+ `localhost:3000/api/cart/clear`
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": "Cart cleared"
+}
+```

@@ -1,90 +1,261 @@
-# NodeJS Project Architecture
+# Reservations API
 
-Before I start, I want to say that I have inspired from santiq
-solution that you can found here
-https://github.com/santiq/bulletproof-nodejs.
+## Response structure
 
-# MVC
+The structure of the API responses' body is as follows:
 
-Model - View - Controller\
-Or, in other words ...\
-Data - Design - Controller\
-What do you need to know from here? Well, every express handler of route
-of your api is a CONTROLLER That means that is its only responsibilty is
-to call a Service and return the result. Nothing more, nothing else. Well..
-I've added a thing.. Before returning, it has to determine the http status
-code. But, that's ALL.. No other logic should be placed here.
+-   for successful responses, a JSON object containing the properties:
+    -   `success`: `true`
+    -   `data`: An object, structure detailed for each route below.
+-   for unsuccessful responses, a JSON object containing the
+    properties:
+    -   `success`: `false`
+    -   `error`: An object containing a `message` property, and
+        sometimes additional helpful properties.
 
-# 3 Layer architecture
+## /api/v1/reservations
 
-Controller - Service Layer - Data Acces Layer\
-Or, in other words ...\
-Express Route Controller - Service Class - Mongoose\
-What's important here are SERVICES.. They should contain all of your business
-logic and be as modular as separated as it can.\
-mongoose MODELS\
-Also, you have to declare all your models somewhere else. And there is
-more.. We need a clear structure here. That's very important. A model is
-separated in schemas, virtuals, statics, methods and hooks(mongoose middlewares).
-These will hold logic that is solely related on dealing with de db. For
-example, you may create a static 'findByCredentials' that looks for a document
-in the db with the specified credentials(there can be some more advanced
-match options). That's the Data Access Layer.\
-Sure, you have an index file where all of this are putted in place.\
-!!! Don't put your logic inside controllers
+### GET
 
-# Events Layer
+Get the all the reservations from the db.
 
-If you think that you've already acquaired a good architecture, think
-twice babe :)))\
-What if you want to call a 3rd party service? I'll give you the easiest
-example eveer. When user registers, you want to send him an email, saying
-you thank him for using your AWESOME app.\
-How are you gonna do this? Well, you will 'create' an event, define a
-'handler' for it, and when a user register, 'emit' that event\
+**Return codes**:
 
-# Cron Jobs
+-   200 - OK
+-   400 - There was a problem fetching data
 
-Wtf are these? You prabably already know about setTimeout and
-setInterval. It's quite the same thing, but a more elevated form. Cron
-jobs are task that have to be repeated at a period of time, or tasks
-that need a delay.. Let's say that someone made a reservation, but he
-doesn't show up.. You give him 20 minutes from the reservation time,
-and after this you are going to free his table. How do you plan to do
-this? Well, you need something(a croon job) that checks at every 10
-minutes the state of the reservations, and if it hasn't been
-fullfilled in 20 mins after the reservation time, you quit it. Why
-would you need this? It's simple.. this has to happen for every
-reservation.. I don't think you'd like to check those status yourself
-and update the database, nah?
+**Usage example**:  
+ `localhost:3000/api/v1/reservations`
 
-# Configuration and ENV variables
+**Returned data example**:
 
-This will be our secret, ok? NO ONE ELSE has to know it. 'env'
-variables are variables that are needed for the application and only
-the server has to know them.. For everyone else, they should be
-COMPLETELY hidden. Let's say you want to connect to a db.. If it's a
-mongodb, in the connection url you have to type the username and
-password. Probably you won't sleep that well knowing that everyone can
-have access to those and fool with your db. That's why we put such
-variables in a .env file and ignore it when we host the app. Also, we
-import all of this in a config file to have a more intuitive way to
-access them so that it makes our life eaaasy.
+```JSON
+{
+    "success": true,
+    "data": {
+        "reservations": [
+            {
+                "guest": true,
+                "_id": "5ead38cf340c241a2014b4b7",
+                "email": "laura_stan@gmail.com",
+                "userFirstName": "laura",
+                "userLastName": "stan",
+                "reservationDate": "2020-05-15T20:30:00.000Z",
+                "phoneNumber": "0753533239",
+                "numberOfSeats": 5,
+                "restaurantId": "5e8c51298dc0561b64ecc341",
+                "__v": 0
+            },
+            {
+                "guest": true,
+                "_id": "5ead3934340c241a2014b4b8",
+                "email": "botez.georgiana99@gmail.com",
+                "userFirstName": "georgiana",
+                "userLastName": "botez",
+                "reservationDate": "2020-05-25T18:30:00.000Z",
+                "phoneNumber": "0755455477",
+                "numberOfSeats": 2,
+                "restaurantId": "5e8c51298dc0561b64ecc341",
+                "__v": 0
+            },
+            {
+                "guest": true,
+                "_id": "5eb15306812dfb6a38aba88b",
+                "email": "andra@yahoo.com",
+                "userFirstName": "Andra",
+                "userLastName": "Simion",
+                "reservationDate": "2020-05-24T11:52:00.000Z",
+                "phoneNumber": "0231341227",
+                "numberOfSeats": 2,
+                "restaurantId": "5eb11ec24f81a21fc863d642",
+                "__v": 0
+            }
+        ]
+    }
+}
+```
 
-# Loaders
+## /api/v1/reservations/:reservationId
 
-Have you ever worked on a the backend of an application? There are a
-lot of stuff that have to be loaded.. Believe, in this project, they
-are still few things.. When an app it's hosted somewhere, it run the
-app.js or index.js file in the root folder. And you don't like long
-and unorganised files, so we split it in more files which have a
-single responsibility. In our case it's one for mongoose, one for
-express, one for logger, and of course, an index :)))
+### GET
 
-# Others
+Get a specific reservation by its id.
 
-!! don't use console.log\
-Log any information using the Logger module. We have Logger.info, Logger.warn
-and Logger.error that we'll provide us a ore intuitive output.\
+**Return codes**:
 
-Enjoy coding :D
+-   200 - OK
+-   400 - There was a problem fetching data
+
+**Usage example**:  
+ `localhost:3000/api/v1/reservations/5ead38cf340c241a2014b4b7`
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "reservations": [
+            {
+                "guest": true,
+                "_id": "5ead38cf340c241a2014b4b7",
+                "email": "laura_stan@gmail.com",
+                "userFirstName": "laura",
+                "userLastName": "stan",
+                "reservationDate": "2020-05-15T20:30:00.000Z",
+                "phoneNumber": "0753533239",
+                "numberOfSeats": 5,
+                "restaurantId": "5e8c51298dc0561b64ecc341",
+                "__v": 0
+            }
+        ]
+    }
+}
+```
+## /api/v1/reservations
+
+### POST
+
+Post a reservation to Reservation Database
+
+**Body example**
+
+`userId` este optional.
+
+```JSON
+{
+    "userId": "5eb175539dff1b3844a84ab8",
+	"email": "andra@gmail.com",
+    "userFirstName": "Andra",
+    "userLastName": "Simion",
+    "phoneNumber": "0231341227",
+    "restaurantId": "5eb16d673a637d28884dc226",
+    "numberOfSeats": 2,
+    "reservationDate": "2020-05-24T15:52:00"
+}
+```
+
+**Return codes**:
+
+-   201 - CREATED
+-   400 - Bad Request
+
+**Usage example**:  
+ `localhost:3000/api/v1/reservations`
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "reservation": {
+            "guest": false,
+            "_id": "5eb2868deefb31331c672029",
+            "userId": "5eb175539dff1b3844a84ab8",
+            "email": "andra@gmail.com",
+            "userFirstName": "Andra",
+            "userLastName": "Simion",
+            "reservationDate": "2020-05-24T12:52:00.000Z",
+            "phoneNumber": "0231341227",
+            "numberOfSeats": 2,
+            "restaurantId": "5eb16d673a637d28884dc226",
+            "__v": 0
+        }
+    }
+}
+```
+
+## /api/v1/reservations/:reservationId
+
+### PATCH
+
+Modifies a reservation in database.
+
+**Body example**
+
+
+```JSON
+{
+    "numberOfSeats": 5,
+    "reservationDate": "2020-05-24T12:52:00"
+}
+```
+
+**Return codes**:
+
+-   200 - OK
+-   400 - Bad Request
+
+**Usage example**:  
+ `localhost:3000/api/v1/reservations/5eb2868deefb31331c672029`
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "reservation": {
+            "n": 1,
+            "nModified": 1,
+            "opTime": {
+                "ts": "6823664913978753025",
+                "t": 50
+            },
+            "electionId": "7fffffff0000000000000032",
+            "ok": 1,
+            "$clusterTime": {
+                "clusterTime": "6823664913978753025",
+                "signature": {
+                    "hash": "e+aWUBjrZ7GkaQZD+ZvBkJppNpY=",
+                    "keyId": "6759538930535628801"
+                }
+            },
+            "operationTime": "6823664913978753025"
+        }
+    }
+}
+```
+
+## /api/v1/reservations/:reservationId
+
+### DELETE
+
+Delete a reservation from database
+
+**Return codes**:
+
+-   200 - OK
+-   400 - Bad request
+
+**Usage example**:  
+ `localhost:3000/api/v1/reservation/5eb152c9e6addf016c28e3ca`
+
+**Returned data example**:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "reservation": {
+            "n": 1,
+            "opTime": {
+                "ts": "6823666073619922945",
+                "t": 50
+            },
+            "electionId": "7fffffff0000000000000032",
+            "ok": 1,
+            "$clusterTime": {
+                "clusterTime": "6823666073619922945",
+                "signature": {
+                    "hash": "tYTpYyRGGboR3ZmUUBxhpI6Jiqg=",
+                    "keyId": "6759538930535628801"
+                }
+            },
+            "operationTime": "6823666073619922945",
+            "deletedCount": 1
+        }
+    }
+}
+```
