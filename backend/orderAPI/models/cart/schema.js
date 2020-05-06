@@ -4,13 +4,6 @@ const cartSchema = mongoose.Schema({
 	userId: {
 		type: mongoose.Types.ObjectId,
 		required: false,
-		validate: {
-			validator(value) {
-				// verificam daca user-ul chiar exista
-				return true;
-			},
-			message: 'User id not valid',
-		},
 	},
 	modifiedDate: {
 		type: Date,
@@ -31,13 +24,6 @@ const cartSchema = mongoose.Schema({
 			id: {
 				type: mongoose.Types.ObjectId,
 				required: true,
-				validate: {
-					validator(value) {
-						// verificam daca restaurantul chiar exista
-						return true;
-					},
-					message: 'Item id not valid',
-				},
 			},
 			item: {
 				price: { type: Number, required: true, min: 1 },
