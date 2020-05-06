@@ -100,6 +100,25 @@ class ReservationService {
 				await this.sendReservationMail(reservationData);
 			}
 
+			fetch(
+				'http://localhost:4000/api/clients/addReservation',
+				{
+					method: 'POST',
+					body: {
+						clientId: reservation.userId,
+						providerId: reservation.idReservation,
+						// eslint-disable-next-line no-underscore-dangle
+						reservationId: reservation._id,
+					},
+				},
+			)
+				.then((res) => {
+					return res.json();
+				})
+				.catch((error) => {
+					Logger.error(error);
+				});
+
 			return { success: true, data: { reservation } };
 		} catch (error) {
 			Logger.error(error);
@@ -153,12 +172,12 @@ class ReservationService {
 		if (reservationDay === 0) {
 			available = await this.verifySchedule(
 				restaurantSchedule[reservationDay + 6],
-				reservationData.reservationDate.getHours(),
+				reservationData.reservationDate.getHours() - 3,
 			);
 		} else {
 			available = await this.verifySchedule(
 				restaurantSchedule[reservationDay - 1],
-				reservationData.reservationDate.getHours(),
+				reservationData.reservationDate.getHours() - 3,
 			);
 		}
 		if (available) {
