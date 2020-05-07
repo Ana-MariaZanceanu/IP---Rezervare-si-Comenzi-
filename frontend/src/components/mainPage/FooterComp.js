@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import "boxicons";
 
@@ -14,18 +15,24 @@ export class FooterComp extends Component {
   }
   render() {
     return (
-      <div>
-        <Row style={styles.footer} className="justify-content-md-center pt-5">
-          <h2 style={styles.footerTitle}>{this.state.title}</h2>
-        </Row>
-        <Row style={styles.footer} className="justify-content-md-center pb-3">
-          <p>{this.state.desc}</p>
-        </Row>
-        <Row style={styles.footer} className="justify-content-md-center pb-5">
-          <i style={styles.socialLink} class="bx bxl-facebook"></i>
-          <i style={styles.socialLink} class="bx bxl-twitter"></i>
-          <i style={styles.socialLink} class="bx bxl-instagram"></i>
-        </Row>
+      <div style={styles.footer}>
+        <Container>
+          <Row className="justify-content-md-center pt-5">
+            <Col>
+              <h2 style={styles.footerTitle}>{this.state.title}</h2>
+            </Col>
+          </Row>
+          <Row className="justify-content-md-center pb-3">
+            <Col lg="6">
+              <p>{this.state.desc}</p>
+            </Col>
+          </Row>
+          <div className="justify-content-md-center pb-5">
+            <i style={styles.socialLink} class="bx bxl-facebook"></i>
+            <i style={styles.socialLink} class="bx bxl-twitter"></i>
+            <i style={styles.socialLink} class="bx bxl-instagram"></i>
+          </div>
+        </Container>
       </div>
     );
   }
@@ -35,6 +42,7 @@ const styles = {
   footer: {
     backgroundColor: "black",
     color: "#757575",
+    textAlign: "Center",
   },
   socialLink: {
     color: "#a1a1a1",

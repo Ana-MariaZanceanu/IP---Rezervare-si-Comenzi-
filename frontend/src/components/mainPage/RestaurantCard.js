@@ -1,20 +1,29 @@
 import React, { Component } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import res1 from "./../../resources/img/res2.jpeg";
 export class RestaurantCard extends Component {
+  addDefaultSrc(ev) {
+    ev.target.src = res1;
+  }
   render() {
-    const { title, img } = this.props;
+    const { title, desc, img } = this.props;
     return (
       <div>
         <Card style={styles.card} className="animated fadeInUp">
-          <Card.Img variant="top" src={img} />
+          <Card.Img
+            style={styles.cardImg}
+            onError={this.addDefaultSrc}
+            variant="top"
+            src={img}
+          />
           <Card.Body>
             <Card.Title style={styles.title}>{title}</Card.Title>
-            <Card.Text style={styles.desc}>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </Card.Text>
-            <Button className="float-right restaurant-card-button" style={styles.button}>
+            <Card.Text style={styles.desc}>{desc}</Card.Text>
+            <Button
+              className="float-right restaurant-card-button"
+              style={styles.button}
+            >
               See more
             </Button>
           </Card.Body>
@@ -26,14 +35,17 @@ export class RestaurantCard extends Component {
 
 const styles = {
   card: {
+    minHeight: "474px",
     border: "none",
     boxShadow:
       "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
   },
+  cardImg: { minHeight: "225px" },
   title: {
     fontFamily: "Pacifico",
   },
   desc: {
+    minHeight: "100px",
     fonFamily: "Noto Sans KR",
     fontWeight: "400",
   },

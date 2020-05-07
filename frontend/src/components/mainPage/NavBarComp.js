@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 export class NavBarComp extends Component {
   render() {
@@ -30,6 +32,14 @@ export class NavBarComp extends Component {
                   Contact
                 </Nav.Link>
               </Nav>
+              <Form inline>
+                <Form.Control
+                  type="text"
+                  placeholder="Search"
+                  className="mr-sm-2"
+                />
+                <Button variant="danger">Search</Button>
+              </Form>
             </Navbar.Collapse>
           </Container>
         </Navbar>
@@ -41,6 +51,7 @@ export class NavBarComp extends Component {
 const styles = {
   nav: {
     color: "#f7e7d9",
+    marginRight: "5px",
   },
 };
 
