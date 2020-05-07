@@ -3,12 +3,6 @@ import RestaurantCard from "./RestaurantCard";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import res1 from "./../../resources/img/restaurant.jpg";
-import res2 from "./../../resources/img/res2.jpeg";
-import res3 from "./../../resources/img/res3.jpeg";
-import res4 from "./../../resources/img/res4.jpeg";
-import res5 from "./../../resources/img/res5.jpeg";
-import res6 from "./../../resources/img/res6.jpeg";
 
 export class ChooseUsRestaurants extends Component {
   constructor(props) {
