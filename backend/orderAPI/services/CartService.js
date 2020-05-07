@@ -120,6 +120,7 @@ class CartService {
 		await fetch(`http://localhost:4000/api/courses/${idProduct}`)
 			.then((response) => response.json())
 			.then(async function (data) {
+				// eslint-disable-next-line prefer-destructuring
 				product = data.data[0];
 			})
 			.catch((err) => {
@@ -142,6 +143,7 @@ class CartService {
 			});
 			if (!storedItem) {
 				storedItem = {
+					// eslint-disable-next-line no-underscore-dangle
 					id: storedProduct._id,
 					item: {
 						price: storedProduct.price,
