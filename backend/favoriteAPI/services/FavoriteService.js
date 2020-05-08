@@ -1,22 +1,22 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-loop-func */
 /* eslint-disable no-await-in-loop */
-const nodemailer = require('nodemailer');
-const fetch = require('node-fetch');
+// const nodemailer = require('nodemailer');
+// const fetch = require('node-fetch');
 
 const Logger = require('../loaders/logger');
 
-class ReservationService {
+class FavoriteService {
 	constructor({ db, services }) {
 		this.db = db;
 		this.services = services;
 	}
 
-	async getAllReservations() {
+	async getAllFavoriteProducts() {
 		try {
-			const reservations = await this.db.Reservation.find({});
+			const favorites = await this.db.Favorite.find({});
 
-			return { success: true, data: { reservations } };
+			return { success: true, data: { favorites } };
 		} catch (error) {
 			return {
 				success: false,
@@ -25,13 +25,13 @@ class ReservationService {
 		}
 	}
 
-	async getReservation(idReservation) {
+	async getFavoriteProducts(idUser) {
 		try {
-			const reservations = await this.db.Reservation.find({
-				_id: idReservation,
+			const favorites = await this.db.Favorite.find({
+				userId: idUser,
 			});
 
-			return { success: true, data: { reservations } };
+			return { success: true, data: { favorites } };
 		} catch (error) {
 			return {
 				success: false,
@@ -40,6 +40,7 @@ class ReservationService {
 		}
 	}
 
+	/*
 	async submit(payload) {
 		const {
 			userId,
@@ -151,8 +152,9 @@ class ReservationService {
 			return true;
 		}
 		return false;
-	}
+	} */
 
+	/*
 	async checkRestaurantAvailability(reservationData) {
 		let available;
 		let restaurantSchedule;
@@ -184,8 +186,9 @@ class ReservationService {
 			return true;
 		}
 		return false;
-	}
+	} */
 
+	/*
 	async checkSeatsAvailability(reservationData) {
 		const date = reservationData.reservationDate;
 		const occupiedSeats = await this.countReservationByDate(
@@ -213,8 +216,9 @@ class ReservationService {
 			return true;
 		}
 		return false;
-	}
+	} */
 
+	/*
 	async countReservationByDate(
 		restaurantId,
 		year,
@@ -246,8 +250,9 @@ class ReservationService {
 			}
 		})();
 		return countOccupiedSeats;
-	}
+	} */
 
+	/*
 	async sendReservationMail(reservationData) {
 		const transporter = nodemailer.createTransport({
 			service: 'gmail',
@@ -271,8 +276,9 @@ class ReservationService {
 				Logger.info(`Reservation Email sent`);
 			}
 		});
-	}
+	} */
 
+	/*
 	async findByRestaurant(restaurantId) {
 		try {
 			const reservations = await this.db.Reservation.find({
@@ -286,8 +292,9 @@ class ReservationService {
 				error: { message: error.message },
 			};
 		}
-	}
+	} */
 
+	/*
 	async update(idReservation, payload) {
 		try {
 			const reservation = await this.db.Reservation.updateOne(
@@ -303,15 +310,13 @@ class ReservationService {
 				error: { message: error.message },
 			};
 		}
-	}
+	} */
 
 	async deleteAll() {
 		try {
-			const reservation = await this.db.Reservation.deleteMany(
-				{},
-			);
+			const favorites = await this.db.Favorite.deleteMany({});
 
-			return { success: true, data: { reservation } };
+			return { success: true, data: { favorites } };
 		} catch (error) {
 			Logger.error(error);
 			return {
@@ -321,6 +326,7 @@ class ReservationService {
 		}
 	}
 
+	/*
 	async deleteReservation(idReservation) {
 		try {
 			const reservation = await this.db.Reservation.deleteOne({
@@ -335,7 +341,7 @@ class ReservationService {
 				error: { message: error.message },
 			};
 		}
-	}
+	} */
 }
 
-module.exports = ReservationService;
+module.exports = FavoriteService;

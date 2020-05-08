@@ -7,8 +7,8 @@ import Container from 'react-bootstrap/Container';
 import ShowModalProduct from './components/productModal/ShowModalProduct';
 import MainPage from './components/mainPage/MainPage';
 import pizzaImage from './components/productModal/images/pizza.png';
-
 // import ShoppingCart from './components/shoppingCart/ShoppingCart';
+
 function App() {
     return (
         <div>

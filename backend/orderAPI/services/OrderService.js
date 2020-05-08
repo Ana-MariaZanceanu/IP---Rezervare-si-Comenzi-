@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 const stripe = require('stripe')(
 	'sk_test_6Qtc8kKAPJVEFZ69mObgzgSA00Sej2WCK9',
 );
@@ -123,6 +124,25 @@ class OrderService {
 				}
 				await order.save();
 				await this.sendOrderMail(orderData);
+				// eslint-disable-next-line no-undef
+				fetch(
+					'http://localhost:4000/api/clients/addCommand',
+					{
+						method: 'POST',
+						body: {
+							clientId: order.userId,
+							providerId: order.restaurantId,
+							// eslint-disable-next-line no-underscore-dangle
+							commandId: order._id,
+						},
+					},
+				)
+					.then((res) => {
+						return res.json();
+					})
+					.catch((error) => {
+						Logger.error(error);
+					});
 				if (payload.userId) {
 					cartService.deleteCart(payload.userId);
 				} else {
