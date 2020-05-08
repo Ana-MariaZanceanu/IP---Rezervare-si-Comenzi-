@@ -143,7 +143,6 @@ class CartService {
 			});
 			if (!storedItem) {
 				storedItem = {
-					// eslint-disable-next-line no-underscore-dangle
 					id: storedProduct._id,
 					item: {
 						price: storedProduct.price,
