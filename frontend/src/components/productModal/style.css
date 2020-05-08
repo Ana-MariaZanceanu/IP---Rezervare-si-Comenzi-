@@ -9,12 +9,17 @@
 
 .modal-content{
     border-radius: 0.8rem!important;
+    background-color: #fbeee0!important;
 }
 
 .list-group-item{
     border: none!important;
     color: #386150;
     font-weight: bold;
+}
+
+.list-group{
+    background-color: #fbeee0!important;
 }
 
 .modalHeader {
@@ -62,6 +67,7 @@
 .descriptionTextStyle {
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
     font-size: 1rem;
+    background-color: #fbeee0!important;
 }
 .buttons_cart{
     margin-top: 3vh;
