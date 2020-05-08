@@ -1,12 +1,11 @@
 import React from 'react';
 import './App.css';
 import './Animation.css';
-import ModalForm from './components/ModalForm';
-import Order from './components/orderCheckout/Order';
-import Container from 'react-bootstrap/Container';
-import ShowModalProduct from './components/productModal/ShowModalProduct';
+// import ModalForm from './components/ModalForm';
+// import Order from './components/orderCheckout/Order';
+// import Container from 'react-bootstrap/Container';
+// import ShowModalProduct from './components/productModal/ShowModalProduct';
 import MainPage from './components/mainPage/MainPage';
-import pizzaImage from './components/productModal/images/pizza.png';
 // import ShoppingCart from './components/shoppingCart/ShoppingCart';
 
 function App() {
@@ -20,7 +19,8 @@ function App() {
         <Order />
       </Container>*/}
             <MainPage />
-            <ShowModalProduct id={"5eb17a5c6f436666294bc421"}/>
+            {/*<ShowModalProduct id={"5eb17a5c6f436666294bc421"}/>*/}
+
         </div>
     );
 }

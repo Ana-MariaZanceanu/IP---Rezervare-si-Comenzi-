@@ -13,10 +13,7 @@ class ShoppingCart extends Component {
     super(props);
     this.state = {
       cart: {
-        apple: 0,
-        banana: 0,
-        orange: 0,
-        papaya: 0,
+        housePasta: 5,
       },
     };
     this.emptyCart = this.emptyCart.bind(this);
@@ -44,10 +41,7 @@ class ShoppingCart extends Component {
     e.preventDefault();
     this.setState((prevState) => {
       prevState.cart = {
-        apple: 0,
-        banana: 0,
-        orange: 0,
-        papaya: 0,
+        housePasta: 0,
       };
       return prevState;
     });
@@ -69,12 +63,37 @@ class ShoppingCart extends Component {
     } else {
       cartClasses += ' cart-hidden';
     }
-    let tax = Math.ceil(total * TAX_RATE);
     const {products} = this.props;
     console.log(products)
+    let tax = 0;
+    let cartProductRows = products.map((p, i) => {
+      let quantity = p.item.quantity;
+      console.log("quantity " + quantity)
+      if (!quantity) {
+        return null;
+      }
+      let name = p.item.product;
+      let price = p.item.price;
+      total += price * quantity;
+      tax = Math.ceil(total * TAX_RATE);
+      return (
+          <tr key={i}>
+            <td> {name} </td>
+            <td>
+              <NumericInput
+                  min={0}
+                  value={quantity}
+                  onChange={this.cartChange(name)}
+              />
+              &nbsp;
+              <button onClick={this.zeroProduct(name)}>x</button>
+            </td>
+            <td className="currency">{price}</td>
+          </tr>
+      );
+    });
     return (
-      <div>
-        <section className={cartClasses}>
+      <div className={"cartClasses"}>
           <table>
             <thead>
               <tr>
@@ -83,28 +102,28 @@ class ShoppingCart extends Component {
                 <th>subtotal</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>{cartProductRows}</tbody>
             <tfoot>
               <tr key="subtotal">
                 <td colSpan="2"></td>
                 <td>
                   <strong>subtotal</strong>
                 </td>
-                <td className="currency">{dollarsFromCents(total)}</td>
+                <td className="currency">{total}</td>
               </tr>
               <tr key="tax">
                 <td colSpan="2"></td>
                 <td>
                   <strong>{TAX_TEXT}</strong>
                 </td>
-                <td className="currency">{dollarsFromCents(tax)}</td>
+                <td className="currency">{tax}</td>
               </tr>
               <tr key="total">
                 <td colSpan="2"></td>
                 <td>
                   <strong>total</strong>
                 </td>
-                <td className="currency">{dollarsFromCents(total + tax)}</td>
+                <td className="currency">{total + tax}</td>
               </tr>
               <tr className="cart-actions" key="cart-actions">
                 <td colSpan="2"></td>
@@ -123,7 +142,6 @@ class ShoppingCart extends Component {
               </tr>
             </tfoot>
           </table>
-        </section>
       </div>
     );
   }

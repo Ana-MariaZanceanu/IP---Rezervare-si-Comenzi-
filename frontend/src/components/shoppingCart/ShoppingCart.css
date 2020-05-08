@@ -1,4 +1,4 @@
-section {
+.cartClasses {
   background: white;
   color: black!important;
   border: 3px solid orange;
@@ -6,11 +6,6 @@ section {
   margin: 1em;
   display: inline-block;
   float: left;
-}
-
-.modal-content{
-  border-radius: 0.8rem!important;
-  background-color: #fbf3e6!important;
 }
 
 /* clearfix */
@@ -131,4 +126,13 @@ button.cart-pay {
   font-weight: bold;
   text-transform: uppercase;
   outline: none;
+}
+
+.modalSizes{
+  width: 60%;
+  max-width: none!important;
+}
+
+.modal-dialog{
+  width: 60%!important;
 }

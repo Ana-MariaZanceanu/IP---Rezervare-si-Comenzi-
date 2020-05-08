@@ -34,7 +34,7 @@ export class NavBarComp extends Component {
     }).catch((error) => {
       console.log(error)
     });
-    return JSON.stringify(products);
+    return products;
   }
 
   render() {
