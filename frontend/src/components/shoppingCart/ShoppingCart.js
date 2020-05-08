@@ -47,7 +47,7 @@ function dollarsFromCents(n) {
     return '$' + parseFloat(n / 100).toFixed(2)
   }
 
-class ShoppingCard extends Component {
+class ShoppingCart extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -211,4 +211,4 @@ class ShoppingCard extends Component {
   }
 }
 
-export default ShoppingCard;
+export default ShoppingCart;

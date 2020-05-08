@@ -22,7 +22,7 @@ class ModalProduct extends Component{
             method: "get",
             url: "http://localhost:3000/api/v1/cart/add-product/" + idProduct
         }).then((response) => {
-            console.log(response)
+            console.log(response.headers["set-cookie"])
         }).catch((error) => {
             console.log(error)
         });
