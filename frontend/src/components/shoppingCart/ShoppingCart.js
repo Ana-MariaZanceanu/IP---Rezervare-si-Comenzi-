@@ -3,46 +3,7 @@ import NumericInput from 'react-numeric-input';
 import './ShoppingCart.css';
 const TAX_RATE = 0.06;
 const TAX_TEXT = '6% sales tax'
-const PRODUCTS = [
-  {
-    name: 'apple',
-    pluralName: 'apples',
-    image: 'images/apple.png',
-    priceText: '$0.25 each',
-    price: (quantity) => {
-      return quantity * 25;
-    },
-  },
-  {
-    name: 'banana',
-    pluralName: 'bananas',
-    image: 'images/banana.png',
-    priceText: '$0.15 each',
-    price: (quantity) => {
-      return quantity * 15;
-    },
-  },
-  {
-    name: 'orange',
-    pluralName: 'oranges',
-    image: 'images/orange.png',
-    priceText: '$0.30 each',
-    price: (quantity) => {
-      return quantity * 30;
-    },
-  },
-  {
-    name: 'papaya',
-    pluralName: 'papayas',
-    image: 'images/papaya.png',
-    priceText: '$0.50 each',
-    dealText: '3 for $1',
-    price: (quantity) => {
-      let odds = quantity % 3;
-      return ((quantity - odds) / 3) * 100 + odds * 50;
-    },
-  },
-];
+
 function dollarsFromCents(n) {
     return '$' + parseFloat(n / 100).toFixed(2)
   }
@@ -59,6 +20,7 @@ class ShoppingCart extends Component {
       },
     };
     this.emptyCart = this.emptyCart.bind(this);
+
   }
   addProduct(productName) {
     return (e) => {
@@ -101,52 +63,6 @@ class ShoppingCart extends Component {
 
   render() {
     let total = 0;
-    let cartProductRows = PRODUCTS.map((p, i) => {
-      let productStyle = {
-        backgroundImage: 'url(' + p.image + ')',
-      };
-      let quantity = this.state.cart[p.name];
-      if (!quantity) {
-        return null;
-      }
-      let name = quantity === 1 ? p.name : p.pluralName;
-      let price = p.price(quantity);
-      let priceText = p.priceText ? <div>{p.priceText}</div> : '';
-      let dealText = p.dealText ? <div>{' or ' + p.dealText}</div> : '';
-      total += price;
-      return (
-        <tr key={i}>
-          <td>
-            <a
-              className="fruit-link"
-              style={productStyle}
-              key={i}
-              href={'#' + p.name}
-              onClick={this.addProduct(p.name)}
-            >
-              {p.name}
-            </a>
-          </td>
-          <td>
-            <strong>{name}</strong>
-            <div className="cart-price-info">
-              {priceText}
-              {dealText}
-            </div>
-          </td>
-          <td>
-            <NumericInput
-              min={0}
-              value={quantity}
-              onChange={this.cartChange(p.name)}
-            />
-            &nbsp;
-            <button onClick={this.zeroProduct(p.name)}>x</button>
-          </td>
-          <td className="currency">{dollarsFromCents(price)}</td>
-        </tr>
-      );
-    });
     let cartClasses = 'cart';
     if (total) {
       cartClasses += ' cart-shown';
@@ -154,8 +70,10 @@ class ShoppingCart extends Component {
       cartClasses += ' cart-hidden';
     }
     let tax = Math.ceil(total * TAX_RATE);
+    const {products} = this.props;
+    console.log(products)
     return (
-      <div className="App">
+      <div>
         <section className={cartClasses}>
           <table>
             <thead>
@@ -165,7 +83,7 @@ class ShoppingCart extends Component {
                 <th>subtotal</th>
               </tr>
             </thead>
-            <tbody>{cartProductRows}</tbody>
+            <tbody></tbody>
             <tfoot>
               <tr key="subtotal">
                 <td colSpan="2"></td>

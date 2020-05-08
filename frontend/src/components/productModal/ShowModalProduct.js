@@ -18,7 +18,6 @@ const getProduct = async (id) => {
 
 export default function ShowModalProduct(props) {
     const [modalShow, setModalShow] = useState(false);
-    const {productAvailability} = props;
     const {id} = props;
     const [productById, setProductById] = useState({});
     return (
@@ -26,7 +25,7 @@ export default function ShowModalProduct(props) {
             <Button variant="primary" onClick={() => { setModalShow(true); getProduct(id).then(result => setProductById(result)); }}>
                 Product
             </Button>
-            <ModalProduct show={modalShow} onHide={() => setModalShow(false)} productAvailability={productAvailability} product={productById}/>
+            <ModalProduct show={modalShow} onHide={() => setModalShow(false)} product={productById}/>
         </div>
     );
 }

@@ -11,13 +11,32 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import ShoppingCart from "../shoppingCart/ShoppingCart";
+import ShoppingCartModal from "../shoppingCart/ShoppingCartModal";
+import axios from "axios";
 
 export class NavBarComp extends Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      modalShow: false,
+      products: [],
+    }
   }
+
+  getCart = async() => {
+    let products = [];
+    await axios({
+      method: "get",
+      url: "http://localhost:3000/api/v1/cart/session",
+      withCredentials: true,
+    }).then((response) => {
+      products = response.data.data.items;
+    }).catch((error) => {
+      console.log(error)
+    });
+    return JSON.stringify(products);
+  }
+
   render() {
     return (
         <Router>
@@ -44,7 +63,7 @@ export class NavBarComp extends Component {
                 <Nav.Link style={styles.nav} href="#link">
                   Contact
                 </Nav.Link>
-                <Nav.Link style={styles.nav}><Link to="/cart"><FaShoppingCart/></Link></Nav.Link>
+                <Nav.Link style={styles.nav} onClick={() => { this.setState({ modalShow: true }); this.getCart().then(result => this.setState({ products: result })) }}><Link to="/"><FaShoppingCart/></Link></Nav.Link>
               </Nav>
               <Form inline>
                 <Form.Control
@@ -59,8 +78,8 @@ export class NavBarComp extends Component {
         </Navbar>
 
         <Switch>
-          <Route path="/cart">
-            <ShoppingCart/>
+          <Route path="/">
+            <ShoppingCartModal show={this.state.modalShow} onHide={() => { this.setState({ modalShow: false }) }} products={this.state.products}/>
           </Route>
         </Switch>
 

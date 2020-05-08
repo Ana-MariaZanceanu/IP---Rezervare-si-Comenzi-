@@ -1,11 +1,16 @@
 section {
   background: white;
-  color: black;
+  color: black!important;
   border: 3px solid orange;
   padding: 1em;
   margin: 1em;
   display: inline-block;
   float: left;
+}
+
+.modal-content{
+  border-radius: 0.8rem!important;
+  background-color: #fbf3e6!important;
 }
 
 /* clearfix */

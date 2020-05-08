@@ -16,6 +16,7 @@ class FavoriteService {
 		await fetch(`http://localhost:4000/api/courses/${idProduct}`)
 			.then((response) => response.json())
 			.then(async function (data) {
+				// eslint-disable-next-line prefer-destructuring
 				product = data.data[0];
 			})
 			.catch((err) => {
@@ -27,7 +28,7 @@ class FavoriteService {
 	async deleteFromFavoriteList(payload, idProduct) {
 		let storedItem;
 		const { userId } = payload;
-		let userExists = await this.db.Favorite.findOne({
+		const userExists = await this.db.Favorite.findOne({
 			userId,
 		});
 
@@ -37,17 +38,18 @@ class FavoriteService {
 			});
 			if (storedItem) {
 				userExists.items.splice(
+					// eslint-disable-next-line no-underscore-dangle
 					userExists.items.indexOf(storedItem._id),
 					1,
 				);
 				userExists.save();
 				return { success: true, data: { userExists } };
-			} else {
-				return {
-					success: false,
-					mesaj: 'Produsul nu exista in lista de favorite',
-				};
 			}
+			return {
+				success: false,
+				mesaj: 'Produsul nu exista in lista de favorite',
+			};
+			// eslint-disable-next-line no-else-return
 		} else {
 			return {
 				success: false,
@@ -59,7 +61,7 @@ class FavoriteService {
 	async addInFavoriteList(payload, idProduct) {
 		let storedItem;
 		const { userId } = payload;
-		var items = [];
+		const items = [];
 		const list = {
 			userId,
 			items,
@@ -69,22 +71,25 @@ class FavoriteService {
 
 		try {
 			if (storedProduct) {
-				let userExists = await this.db.Favorite.findOne({
+				const userExists = await this.db.Favorite.findOne({
 					userId,
 				});
 				if (userExists) {
 					storedItem = userExists.items.find(function (
 						elem,
 					) {
+						// eslint-disable-next-line no-underscore-dangle
 						return elem == storedProduct._id;
 					});
 					if (!storedItem) {
+						// eslint-disable-next-line no-underscore-dangle
 						userExists.items.push(storedProduct._id);
 						userExists.save();
 						return {
 							success: true,
 							data: { userExists },
 						};
+						// eslint-disable-next-line no-else-return
 					} else {
 						return {
 							success: false,
