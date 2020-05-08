@@ -14,13 +14,18 @@ const cartRouter = require('./routes/cartRouter');
 app.use(cookieParser());
 app.use(
 	session({
+		name: 'cart.1',
 		secret: 'cartSession',
 		resave: false,
 		saveUninitialized: true,
 		store: new MongoStore({
 			mongooseConnection: mongoose.connection,
 		}),
-		cookie: { maxAge: 24 * 60 * 60 * 1000, httpOnly: false },
+		cookie: {
+			maxAge: 24 * 60 * 60 * 1000,
+			secure: false,
+			httpOnly: false,
+		},
 	}),
 );
 app.use('/cart', cartRouter);
