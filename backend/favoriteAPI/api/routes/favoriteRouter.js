@@ -1,14 +1,13 @@
 const { Router } = require('express');
-// const { celebrate } = require('celebrate');
+const { celebrate } = require('celebrate');
 const { favoriteService } = require('../../services/index');
-
-// const { favoriteValidationSchema } = require('../../models/index');
+const { favoriteValidationSchema } = require('../../models/index');
 
 const router = Router();
 
 const BAD_REQUEST = 400;
 const OK = 200;
-// const CREATED = 201;
+const CREATED = 201;
 // Here we have all the controllers
 
 router.get('/', async (req, res) => {
@@ -27,29 +26,33 @@ router.get('/:idUser', async (req, res) => {
 	res.status(statusCode).json(result);
 });
 
-/*
 router.post(
-	'/',
-	celebrate({
-		body: favoriteValidationSchema,
-	}),
+	'/add-product/:idProduct',
+	celebrate({ body: favoriteValidationSchema }),
 	async function (req, res) {
-		const result = await favoriteService.submit(req.body);
+		const result = await favoriteService.addInFavoriteList(
+			req.body,
+			req.params.idProduct,
+		);
 		const statusCode = result.success ? CREATED : BAD_REQUEST;
 
 		res.status(statusCode).json(result);
 	},
-); */
+);
 
-/* router.patch('/:idReservation', async function (req, res) {
-	const result = await favoriteService.update(
-		req.params.idReservation,
-		req.body,
-	);
-	const statusCode = result.success ? OK : BAD_REQUEST;
+router.delete(
+	'/delete-product/:idProduct',
+	celebrate({ body: favoriteValidationSchema }),
+	async function (req, res) {
+		const result = await favoriteService.deleteFromFavoriteList(
+			req.body,
+			req.params.idProduct,
+		);
+		const statusCode = result.success ? OK : BAD_REQUEST;
 
-	res.status(statusCode).json(result);
-}); */
+		res.status(statusCode).json(result);
+	},
+);
 
 router.delete('/all', async (req, res) => {
 	const result = await favoriteService.deleteAll();
@@ -57,15 +60,6 @@ router.delete('/all', async (req, res) => {
 
 	res.status(statusCode).json(result);
 });
-
-/* router.delete('/:idReservation', async (req, res) => {
-	const result = await favoriteService.deleteReservation(
-		req.params.idReservation,
-	);
-	const statusCode = result.success ? OK : BAD_REQUEST;
-
-	res.status(statusCode).json(result);
-}); */
 
 module.exports = router;
 

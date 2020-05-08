@@ -2,14 +2,117 @@
 /* eslint-disable no-loop-func */
 /* eslint-disable no-await-in-loop */
 // const nodemailer = require('nodemailer');
-// const fetch = require('node-fetch');
-
+const fetch = require('node-fetch');
 const Logger = require('../loaders/logger');
 
 class FavoriteService {
 	constructor({ db, services }) {
 		this.db = db;
 		this.services = services;
+	}
+
+	async getProduct(idProduct) {
+		let product;
+		await fetch(`http://localhost:4000/api/courses/${idProduct}`)
+			.then((response) => response.json())
+			.then(async function (data) {
+				product = data.data[0];
+			})
+			.catch((err) => {
+				Logger.error(err);
+			});
+		return product;
+	}
+
+	async deleteFromFavoriteList(payload, idProduct) {
+		let storedItem;
+		const { userId } = payload;
+		let userExists = await this.db.Favorite.findOne({
+			userId,
+		});
+
+		if (userExists) {
+			storedItem = userExists.items.find(function (elem) {
+				return elem == idProduct;
+			});
+			if (storedItem) {
+				userExists.items.splice(
+					userExists.items.indexOf(storedItem._id),
+					1,
+				);
+				userExists.save();
+				return { success: true, data: { userExists } };
+			} else {
+				return {
+					success: false,
+					mesaj: 'Produsul nu exista in lista de favorite',
+				};
+			}
+		} else {
+			return {
+				success: false,
+				mesaj: 'Utilizatorul nu exista',
+			};
+		}
+	}
+
+	async addInFavoriteList(payload, idProduct) {
+		let storedItem;
+		const { userId } = payload;
+		var items = [];
+		const list = {
+			userId,
+			items,
+		};
+
+		const storedProduct = await this.getProduct(idProduct);
+
+		try {
+			if (storedProduct) {
+				let userExists = await this.db.Favorite.findOne({
+					userId,
+				});
+				if (userExists) {
+					storedItem = userExists.items.find(function (
+						elem,
+					) {
+						return elem == storedProduct._id;
+					});
+					if (!storedItem) {
+						userExists.items.push(storedProduct._id);
+						userExists.save();
+						return {
+							success: true,
+							data: { userExists },
+						};
+					} else {
+						return {
+							success: false,
+							data: {
+								mesaj:
+									'Produsul exista deja in lista de favorite.',
+								userExists,
+							},
+						};
+					}
+				} else {
+					list.items.push(storedProduct._id);
+					const listObject = new this.db.Favorite(list);
+					listObject.save();
+					return { success: true, data: { listObject } };
+				}
+			} else {
+				return {
+					success: false,
+					mesaj: 'Produsul nu exista in baza de date',
+				};
+			}
+		} catch (error) {
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
 	}
 
 	async getAllFavoriteProducts() {
@@ -40,278 +143,6 @@ class FavoriteService {
 		}
 	}
 
-	/*
-	async submit(payload) {
-		const {
-			userId,
-			email,
-			userFirstName,
-			userLastName,
-			reservationDate,
-			phoneNumber,
-			numberOfSeats,
-			restaurantId,
-		} = payload;
-
-		const reservationData = {
-			userId,
-			email,
-			userFirstName,
-			userLastName,
-			reservationDate,
-			phoneNumber,
-			numberOfSeats,
-			restaurantId,
-		};
-
-		if (payload.userId) {
-			reservationData.guest = false;
-		}
-
-		const reservation = new this.db.Reservation(reservationData);
-
-		try {
-			const existsReservation = await this.db.Reservation.findByData(
-				email,
-				reservationDate,
-			);
-
-			const existsEmptySeats = await this.checkSeatsAvailability(
-				reservationData,
-			);
-
-			const restaurantOpen = await this.checkRestaurantAvailability(
-				reservationData,
-			);
-
-			if (!restaurantOpen) {
-				throw new Error(
-					'This restaurant is not open for the time of your reservation.',
-				);
-			}
-
-			if (!existsEmptySeats) {
-				throw new Error(
-					"This restaurant doesn't have enough empty seats for your reservation.",
-				);
-			}
-
-			if (!existsReservation && existsEmptySeats) {
-				await reservation.save();
-				await this.sendReservationMail(reservationData);
-			}
-
-			fetch(
-				'http://localhost:4000/api/clients/addReservation',
-				{
-					method: 'POST',
-					body: {
-						clientId: reservation.userId,
-						providerId: reservation.idReservation,
-						// eslint-disable-next-line no-underscore-dangle
-						reservationId: reservation._id,
-					},
-				},
-			)
-				.then((res) => {
-					return res.json();
-				})
-				.catch((error) => {
-					Logger.error(error);
-				});
-
-			return { success: true, data: { reservation } };
-		} catch (error) {
-			Logger.error(error);
-			return {
-				success: false,
-				error: { message: error.message },
-			};
-		}
-	}
-
-	async verifySchedule(restaurantDay, reservationHour) {
-		let startHour = parseInt(
-			restaurantDay.startHour.substring(0, 2),
-			10,
-		);
-		let endHour = parseInt(
-			restaurantDay.endHour.substring(0, 2),
-			10,
-		);
-		if (restaurantDay.startHour.match('pm')) {
-			startHour += 12;
-		}
-		if (restaurantDay.endHour.match('pm')) {
-			endHour += 12;
-		}
-		if (
-			startHour <= reservationHour &&
-			reservationHour < endHour
-		) {
-			return true;
-		}
-		return false;
-	} */
-
-	/*
-	async checkRestaurantAvailability(reservationData) {
-		let available;
-		let restaurantSchedule;
-		let reservationDay;
-		await fetch(
-			`http://localhost:4000/api/users/${reservationData.restaurantId}`,
-		)
-			.then((response) => response.json())
-			.then(async function (data) {
-				restaurantSchedule =
-					data.data.user.details.schedule.schedule;
-				reservationDay = reservationData.reservationDate.getDay();
-			})
-			.catch((err) => {
-				Logger.error(err);
-			});
-		if (reservationDay === 0) {
-			available = await this.verifySchedule(
-				restaurantSchedule[reservationDay + 6],
-				reservationData.reservationDate.getHours() - 3,
-			);
-		} else {
-			available = await this.verifySchedule(
-				restaurantSchedule[reservationDay - 1],
-				reservationData.reservationDate.getHours() - 3,
-			);
-		}
-		if (available) {
-			return true;
-		}
-		return false;
-	} */
-
-	/*
-	async checkSeatsAvailability(reservationData) {
-		const date = reservationData.reservationDate;
-		const occupiedSeats = await this.countReservationByDate(
-			reservationData.restaurantId,
-			date.getFullYear(),
-			date.getMonth() + 1,
-			date.getDate(),
-			date.getHours(),
-		);
-		let restaurantQuantity = 0;
-		await fetch(
-			`http://localhost:4000/api/users/${reservationData.restaurantId}`,
-		)
-			.then((response) => response.json())
-			.then((data) => {
-				restaurantQuantity = data.data.user.details.capacity;
-			})
-			.catch((err) => {
-				Logger.error(err);
-			});
-		if (
-			restaurantQuantity - occupiedSeats >=
-			reservationData.numberOfSeats
-		) {
-			return true;
-		}
-		return false;
-	} */
-
-	/*
-	async countReservationByDate(
-		restaurantId,
-		year,
-		month,
-		day,
-		hour,
-	) {
-		let countOccupiedSeats = 0;
-		const reservations = await this.findByRestaurant(
-			restaurantId,
-		);
-		const reservationsData = reservations.data.reservations;
-
-		await (async () => {
-			for (const reservation of reservationsData) {
-				await (async () => {
-					const dateReservation =
-						reservation.reservationDate;
-					if (
-						dateReservation.getFullYear() === year &&
-						dateReservation.getMonth() === month - 1 &&
-						dateReservation.getDate() === day &&
-						dateReservation.getHours() >= hour
-					) {
-						countOccupiedSeats +=
-							reservation.numberOfSeats;
-					}
-				})();
-			}
-		})();
-		return countOccupiedSeats;
-	} */
-
-	/*
-	async sendReservationMail(reservationData) {
-		const transporter = nodemailer.createTransport({
-			service: 'gmail',
-			auth: {
-				user: 'restaurantapp20ip@gmail.com',
-				pass: 'restaurantapp20!',
-			},
-		});
-
-		const mailOptions = {
-			from: 'restaurantapp20ip@gmail.com',
-			to: 'andrasimion99@gmail.com',
-			subject: 'Confirmare rezervare',
-			html: `<h2>Rezervarea a fost inregistrata cu success!</h2> Ora rezervarii: ${reservationData.reservationDate} <br> Numar de locuri: ${reservationData.numberOfSeats}`,
-		};
-
-		transporter.sendMail(mailOptions, function (error) {
-			if (error) {
-				Logger.error(error);
-			} else {
-				Logger.info(`Reservation Email sent`);
-			}
-		});
-	} */
-
-	/*
-	async findByRestaurant(restaurantId) {
-		try {
-			const reservations = await this.db.Reservation.find({
-				restaurantId,
-			});
-
-			return { success: true, data: { reservations } };
-		} catch (error) {
-			return {
-				success: false,
-				error: { message: error.message },
-			};
-		}
-	} */
-
-	/*
-	async update(idReservation, payload) {
-		try {
-			const reservation = await this.db.Reservation.updateOne(
-				{ _id: idReservation },
-				payload,
-			);
-
-			return { success: true, data: { reservation } };
-		} catch (error) {
-			Logger.error(error);
-			return {
-				success: false,
-				error: { message: error.message },
-			};
-		}
-	} */
-
 	async deleteAll() {
 		try {
 			const favorites = await this.db.Favorite.deleteMany({});
@@ -325,23 +156,6 @@ class FavoriteService {
 			};
 		}
 	}
-
-	/*
-	async deleteReservation(idReservation) {
-		try {
-			const reservation = await this.db.Reservation.deleteOne({
-				_id: idReservation,
-			});
-
-			return { success: true, data: { reservation } };
-		} catch (error) {
-			Logger.error(error);
-			return {
-				success: false,
-				error: { message: error.message },
-			};
-		}
-	} */
 }
 
 module.exports = FavoriteService;
