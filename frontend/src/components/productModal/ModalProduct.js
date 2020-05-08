@@ -7,15 +7,14 @@ import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import {FaCartPlus, FaHeart, FaCheck} from 'react-icons/fa';
-import ListGroup from "react-bootstrap/ListGroup";
-import "./style.css";
-import axios from "axios";
+import ListGroup from 'react-bootstrap/ListGroup';
+import './style.css';
+import axios from 'axios';
 
 class ModalProduct extends Component{
 
     constructor(props) {
         super(props);
-        let message = "";
     }
 
     postProductToCart = async (idProduct) => {
@@ -80,12 +79,15 @@ class ModalProduct extends Component{
                             </Col>
                         </Row>
 
-                        <Row className="show-grid">
-                            <Col xs={12} md={12}>
+                        <Row className="show-grid description">
+                            <Col xs={12} md={6}>
                                 <Card.Text className={"descriptionTitleStyle"}>Product Ingredients</Card.Text>
                                 <ListGroup className={"descriptionTextStyle"}>
                                     {product.ingredients.map(ingredient => <ListGroup.Item><FaCheck/>{ingredient}</ListGroup.Item>)}
                                 </ListGroup>
+                            </Col>
+                            <Col md={6}>
+                                <Image src={"https://cdn.dribbble.com/users/1355613/screenshots/10555328/media/aaa94d5016561c4faba977333269fb3a.jpg"} className={"chefImg"}/>
                             </Col>
                         </Row>
                     </Container>
