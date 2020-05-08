@@ -122,7 +122,7 @@ class ShoppingCard extends Component {
               style={productStyle}
               key={i}
               href={'#' + p.name}
-              onClick={this.addFruit(p.name)}
+              onClick={this.addProduct(p.name)}
             >
               {p.name}
             </a>
@@ -141,7 +141,7 @@ class ShoppingCard extends Component {
               onChange={this.cartChange(p.name)}
             />
             &nbsp;
-            <button onClick={this.zeroFruit(p.name)}>x</button>
+            <button onClick={this.zeroProduct(p.name)}>x</button>
           </td>
           <td className="currency">{dollarsFromCents(price)}</td>
         </tr>
