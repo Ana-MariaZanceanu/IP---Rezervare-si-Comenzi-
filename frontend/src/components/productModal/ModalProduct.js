@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
-import { FaCartPlus, FaHeart, FaCheck } from "react-icons/fa";
+import { FaCartPlus, FaHeart } from "react-icons/fa";
 import ListGroup from "react-bootstrap/ListGroup";
 import "./style.css";
 import axios from "axios";
@@ -14,6 +14,7 @@ import axios from "axios";
 class ModalProduct extends Component {
   constructor(props) {
     super(props);
+    this.message = "";
   }
 
   postProductToCart = async (idProduct) => {
@@ -24,6 +25,14 @@ class ModalProduct extends Component {
     })
       .then((response) => {
         console.log(response);
+        this.message = "Product added to cart!";
+        this.forceUpdate(async () => {
+          await setTimeout(() => {
+            this.message = "";
+            console.log(this.message);
+            this.forceUpdate();
+          }, 4000);
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -31,11 +40,12 @@ class ModalProduct extends Component {
   };
 
   render() {
-    const { show, onHide} = this.props;
+    const { show, onHide } = this.props;
     const { product } = this.props;
     if (Object.keys(product).length === 0) {
       return <div />;
     }
+    let i = 0;
     return (
       <Modal
         show={show}
@@ -54,6 +64,30 @@ class ModalProduct extends Component {
                 <Row className="show-grid">
                   <Col xs={12} md={12}>
                     <h2 className={"nameStyle"}>{product.name}</h2>
+                  </Col>
+                </Row>
+                <Row className="show-grid">
+                  <Col xs={12} md={12}>
+                    <ListGroup className={"descriptionTextStyle"}>
+                      (
+                      {product.ingredients.map(function (ingredient) {
+                        if (i === product.ingredients.length - 1) {
+                          return (
+                            <ListGroup.Item className="ingredientListItem">
+                              {ingredient}
+                            </ListGroup.Item>
+                          );
+                        } else {
+                          i++;
+                          return (
+                            <ListGroup.Item className="ingredientListItem">
+                              {ingredient},
+                            </ListGroup.Item>
+                          );
+                        }
+                      })}
+                      )
+                    </ListGroup>
                   </Col>
                 </Row>
                 <Row className="show-grid">
@@ -80,30 +114,13 @@ class ModalProduct extends Component {
                     </Button>
                   </Col>
                 </Row>
-              </Col>
-            </Row>
-
-            <Row className="show-grid description">
-              <Col xs={12} md={6}>
-                <Card.Text className={"descriptionTitleStyle"}>
-                  Product Ingredients
-                </Card.Text>
-                <ListGroup className={"descriptionTextStyle"}>
-                  {product.ingredients.map((ingredient) => (
-                    <ListGroup.Item>
-                      <FaCheck />
-                      {ingredient}
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              </Col>
-              <Col md={6}>
-                <Image
-                  src={
-                    "https://cdn.dribbble.com/users/1355613/screenshots/10555328/media/aaa94d5016561c4faba977333269fb3a.jpg"
-                  }
-                  className={"chefImg"}
-                />
+                <Row className="show-grid">
+                  <Col xs={12} md={12}>
+                    <Card.Text className="messageProductAdded">
+                      {this.message}
+                    </Card.Text>
+                  </Col>
+                </Row>
               </Col>
             </Row>
           </Container>

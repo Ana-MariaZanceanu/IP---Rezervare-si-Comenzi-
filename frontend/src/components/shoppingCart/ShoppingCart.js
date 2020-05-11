@@ -1,149 +1,206 @@
-import React, { Component } from 'react';
-import NumericInput from 'react-numeric-input';
-import './ShoppingCart.css';
-const TAX_RATE = 0.06;
-const TAX_TEXT = '6% sales tax'
+import React, { Component } from "react";
+import NumericInput from "react-numeric-input";
+import "./ShoppingCart.css";
+import Button from "react-bootstrap/Button";
+import axios from "axios";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Order from "../orderCheckout/Order";
 
-function dollarsFromCents(n) {
-    return '$' + parseFloat(n / 100).toFixed(2)
-  }
+const TAX_RATE = 0.06;
+const TAX_TEXT = "6% sales tax";
 
 class ShoppingCart extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      cart: {
-        housePasta: 5,
-      },
-    };
     this.emptyCart = this.emptyCart.bind(this);
-
   }
-  addProduct(productName) {
-    return (e) => {
-      e.preventDefault();
-      this.setState((prevState) => {
-        prevState.cart[productName]++;
-        return prevState;
-      });
+  zeroProduct(product) {
+    return async (e) => {
+      await axios({
+        method: "get",
+        url: "http://localhost:3000/api/v1/cart/delete-product/" + product.id,
+        withCredentials: true,
+      })
+        .then((result) => {
+          console.log(result);
+          product.item.price = 0;
+          product.item.quantity = 0;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.forceUpdate();
     };
   }
-  zeroProduct(productName) {
-    return (e) => {
-      e.preventDefault();
-      this.setState((prevState) => {
-        prevState.cart[productName] = 0;
-        return prevState;
+  emptyCart = async (products) => {
+    await axios({
+      method: "get",
+      url: "http://localhost:3000/api/v1/cart/clear",
+      withCredentials: true,
+    })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    };
-  }
-  emptyCart(e) {
-    e.preventDefault();
-    this.setState((prevState) => {
-      prevState.cart = {
-        housePasta: 0,
-      };
-      return prevState;
+    products.map((p, i) => {
+      p.item.quantity = 0;
     });
-  }
-  cartChange(productName) {
-    return (quantity) => {
-      this.setState((prevState) => {
-        prevState.cart[productName] = quantity;
-        return prevState;
-      });
+    this.forceUpdate();
+  };
+  cartChange = (product) => {
+    return async (e) => {
+      if (product.item.quantity < e) {
+        await axios({
+          method: "get",
+          url: "http://localhost:3000/api/v1/cart/add-quantity/" + product.id,
+          withCredentials: true,
+        })
+          .then((result) => {
+            console.log(result);
+            product.item.quantity += 1;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        await axios({
+          method: "get",
+          url:
+            "http://localhost:3000/api/v1/cart/substract-quantity/" +
+            product.id,
+          withCredentials: true,
+        })
+          .then((result) => {
+            product.item.quantity -= 1;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+      this.forceUpdate();
+      return product.item.quantity;
     };
-  }
+  };
 
   render() {
     let total = 0;
-    let cartClasses = 'cart';
-    if (total) {
-      cartClasses += ' cart-shown';
+    let { products } = this.props;
+    if (products === null || products === undefined || products.length === 0) {
+      return <div className="emptyCart">Empty cart!</div>;
     } else {
-      cartClasses += ' cart-hidden';
-    }
-    const {products} = this.props;
-    console.log(products)
-    let tax = 0;
-    let cartProductRows = products.map((p, i) => {
-      let quantity = p.item.quantity;
-      console.log("quantity " + quantity)
-      if (!quantity) {
-        return null;
-      }
-      let name = p.item.product;
-      let price = p.item.price;
-      total += price * quantity;
-      tax = Math.ceil(total * TAX_RATE);
-      return (
+      let tax = 0;
+      console.log(products);
+      let cartProductRows = products.map((p, i) => {
+        let quantity = p.item.quantity;
+        if (!quantity) {
+          return null;
+        }
+        let name = p.item.product;
+        let price = p.item.price * p.item.quantity;
+        total += price;
+        tax = Math.ceil(total * TAX_RATE);
+        return (
           <tr key={i}>
+            <td>
+              <Button onClick={this.zeroProduct(p)} className="deleteProduct">
+                x
+              </Button>
+            </td>
             <td> {name} </td>
             <td>
               <NumericInput
-                  min={0}
-                  value={quantity}
-                  onChange={this.cartChange(name)}
+                min={0}
+                value={quantity}
+                onChange={this.cartChange(p)}
+                className="numericInput"
               />
-              &nbsp;
-              <button onClick={this.zeroProduct(name)}>x</button>
             </td>
-            <td className="currency">{price}</td>
+            <td className="currency">{price}$</td>
           </tr>
+        );
+      });
+      let ok = 0;
+      for (let i = 0; i < cartProductRows.length; i++) {
+        if (cartProductRows[i]) {
+          ok = 1;
+          break;
+        }
+      }
+      if (ok === 0) {
+        return <div className="emptyCart">Empty cart!</div>;
+      }
+      return (
+        <Router>
+          <div className={"cartClasses"}>
+            <table className="tableClass">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody className="bodyTable">{cartProductRows}</tbody>
+              <br />
+              <tfoot className="footerTable">
+                <tr key="subtotal">
+                  <td colSpan="2"></td>
+                  <td>
+                    <strong>Subtotal</strong>
+                  </td>
+                  <td className="currency">{total}$</td>
+                </tr>
+                <tr key="tax">
+                  <td colSpan="2"></td>
+                  <td>
+                    <strong>{TAX_TEXT}</strong>
+                  </td>
+                  <td className="currency">{tax}$</td>
+                </tr>
+                <tr key="total">
+                  <td colSpan="2"></td>
+                  <td>
+                    <strong>Total</strong>
+                  </td>
+                  <td className="currency">{total + tax}$</td>
+                </tr>
+                <br />
+                <tr className="cart-actions" key="cart-actions">
+                  <td colSpan="2"></td>
+                  <td>
+                    <Button
+                      className="cart-empty"
+                      onClick={async () => {
+                        await this.emptyCart(products);
+                      }}
+                    >
+                      clear cart
+                    </Button>
+                  </td>
+                  <td>
+                    <Button className="cart-pay">
+                      <Link to="/checkout" className="payButton">
+                        pay now
+                      </Link>
+                    </Button>
+                  </td>
+                </tr>
+                <br />
+              </tfoot>
+            </table>
+
+            <Switch>
+              <Route path="/checkout">
+                <Order />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
       );
-    });
-    return (
-      <div className={"cartClasses"}>
-          <table>
-            <thead>
-              <tr>
-                <th colSpan="2">product</th>
-                <th>quantity</th>
-                <th>subtotal</th>
-              </tr>
-            </thead>
-            <tbody>{cartProductRows}</tbody>
-            <tfoot>
-              <tr key="subtotal">
-                <td colSpan="2"></td>
-                <td>
-                  <strong>subtotal</strong>
-                </td>
-                <td className="currency">{total}</td>
-              </tr>
-              <tr key="tax">
-                <td colSpan="2"></td>
-                <td>
-                  <strong>{TAX_TEXT}</strong>
-                </td>
-                <td className="currency">{tax}</td>
-              </tr>
-              <tr key="total">
-                <td colSpan="2"></td>
-                <td>
-                  <strong>total</strong>
-                </td>
-                <td className="currency">{total + tax}</td>
-              </tr>
-              <tr className="cart-actions" key="cart-actions">
-                <td colSpan="2"></td>
-                <td>
-                  <a
-                    className="cart-empty"
-                    href="#empty-cart"
-                    onClick={this.emptyCart}
-                  >
-                    empty cart
-                  </a>
-                </td>
-                <td>
-                  <button className="cart-pay">pay now</button>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-      </div>
-    );
+    }
   }
 }
 

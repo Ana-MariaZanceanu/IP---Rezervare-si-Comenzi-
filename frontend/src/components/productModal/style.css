@@ -1,27 +1,15 @@
 .modalSizes{
-    width: 60%;
-    max-width: none!important;
-}
-
-.modal-dialog{
     width: 60%!important;
-}
-
-.modal-content{
+    max-width: none!important;
     border-radius: 0.8rem!important;
-    background-color: #fbf3e6!important;
 }
 
 .list-group-item{
     border: none!important;
     color: #386150;
     font-weight: bold;
-    background-color: #fbf3e6!important;
 }
 
-.list-group{
-    background-color: #fbf3e6!important;
-}
 
 .modalHeader {
     border: none!important;
@@ -42,20 +30,13 @@
     font-size: 1.2rem;
     color: #2B2633;
 }
-.inStock {
+.messageProductAdded {
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-    text-transform: uppercase;
     font-size: 1.1rem;
-    color: #18c17b;
-    padding-bottom: 1vh;
+    color: #386150;
+    margin-top: 2vh;
 }
-.soldOut {
-    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-    text-transform: uppercase;
-    font-size: 1.1rem;
-    color: #A71D31;
-    padding-bottom: 1vh;
-}
+
 .descriptionTitleStyle {
     padding-top: 1vh;
     margin-top: 3vh;
@@ -67,7 +48,8 @@
 .descriptionTextStyle {
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
     font-size: 1rem;
-    background-color: #fbeee0!important;
+    flex-direction: row!important;
+    flex-wrap: wrap;
 }
 .buttons_cart{
     margin-top: 3vh;
@@ -83,11 +65,12 @@
     margin-top: 3vh;
 }
 
+.ingredientListItem{
+    padding: 0 0.5rem 0 0!important;
+}
+
 @media screen and (max-width: 700px){
-    .chefImg{
-        display: none;
-    }
-    .modal-dialog{
+    .modalSizes{
         width: 90%!important;
     }
 }
