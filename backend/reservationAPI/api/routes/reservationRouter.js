@@ -1,18 +1,18 @@
 const { Router } = require('express');
 const { celebrate } = require('celebrate');
 const { reservationService } = require('../../services/index');
+const { status } = require('../config/index');
 
 const { reservationValidationSchema } = require('../../models/index');
 
 const router = Router();
 
-const BAD_REQUEST = 400;
-const OK = 200;
-const CREATED = 201;
 // Here we have all the controllers
 router.get('/', async (req, res) => {
 	const result = await reservationService.getAllReservations();
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? status.OK
+		: status.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
@@ -21,7 +21,9 @@ router.get('/:idReservation', async (req, res) => {
 	const result = await reservationService.getReservation(
 		req.params.idReservation,
 	);
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? status.OK
+		: status.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
@@ -33,7 +35,9 @@ router.post(
 	}),
 	async function (req, res) {
 		const result = await reservationService.submit(req.body);
-		const statusCode = result.success ? CREATED : BAD_REQUEST;
+		const statusCode = result.success
+			? status.CREATED
+			: status.BAD_REQUEST;
 
 		res.status(statusCode).json(result);
 	},
@@ -44,14 +48,16 @@ router.patch('/:idReservation', async function (req, res) {
 		req.params.idReservation,
 		req.body,
 	);
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? status.ACCEPTED
+		: status.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
 
 router.delete('/all', async (req, res) => {
 	const result = await reservationService.deleteAll();
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success ? status.OK : status.NO_CONTENT;
 
 	res.status(statusCode).json(result);
 });
@@ -60,7 +66,7 @@ router.delete('/:idReservation', async (req, res) => {
 	const result = await reservationService.deleteReservation(
 		req.params.idReservation,
 	);
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success ? status.OK : status.NO_CONTENT;
 
 	res.status(statusCode).json(result);
 });

@@ -244,7 +244,7 @@ Get the whole session cart .
 -   400 - There was a problem fetching data
 
 **Usage example**:  
- `localhost:3000/api/cart/session`
+ `localhost:3000/api/v1/cart/session`
 
 **Returned data example**:
 
@@ -327,7 +327,7 @@ Modifies a cart from Cart Database with the sseion cart for a userId.
 
 **Return codes**:
 
--   200 - OK
+-   202 - Accepted
 -   400 - Bad Request
 
 **Usage example**:  
@@ -373,7 +373,7 @@ Get a specific cart by its userId.
 -   400 - There was a problem fetching data
 
 **Usage example**:  
- `localhost:3000/api/cart/5e8c4f351842ba322c5c13ec`
+ `localhost:3000/api/v1/cart/5e8c4f351842ba322c5c13ec`
 
 **Returned data example**:
 
@@ -418,7 +418,7 @@ Add a product into a cart session by its id.
 -   400 - Bad request
 
 **Usage example**:  
- `localhost:3000/api/cart/add-product/5eb173d3d6fb9132c43218a2`
+ `localhost:3000/api/v1/cart/add-product/5eb173d3d6fb9132c43218a2`
 
 **Returned data example**:
 
@@ -456,7 +456,7 @@ Add quantity to a product from the cart session by its id.
 -   400 - Bad request
 
 **Usage example**:  
- `localhost:3000/api/cart/add-quantity/5eb173d3d6fb9132c43218a2`
+ `localhost:3000/api/v1/cart/add-quantity/5eb173d3d6fb9132c43218a2`
 
 **Returned data example**:
 
@@ -494,7 +494,7 @@ Substract quantity from a product from the cart session by its id.
 -   400 - Bad request
 
 **Usage example**:  
- `localhost:3000/api/cart/substract-quantity/5eb173d3d6fb9132c43218a2`
+ `localhost:3000/api/v1/cart/substract-quantity/5eb173d3d6fb9132c43218a2`
 
 **Returned data example**:
 
@@ -532,7 +532,7 @@ Delete a product from the cart session by its id.
 -   400 - Bad request
 
 **Usage example**:  
- `localhost:3000/api/cart/delete-product/5eb173d3d6fb9132c43218a2`
+ `localhost:3000/api/v1/cart/delete-product/5eb173d3d6fb9132c43218a2`
 
 **Returned data example**:
 
@@ -561,7 +561,7 @@ Delete the session cart.
 -   400 - There was a problem fetching data
 
 **Usage example**:  
- `localhost:3000/api/cart/clear`
+ `localhost:3000/api/v1/cart/clear`
 
 **Returned data example**:
 
