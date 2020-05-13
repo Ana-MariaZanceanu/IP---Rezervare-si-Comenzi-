@@ -1,6 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-loop-func */
-/* eslint-disable no-await-in-loop */
 const nodemailer = require('nodemailer');
 const fetch = require('node-fetch');
 
@@ -107,7 +104,6 @@ class ReservationService {
 					body: {
 						clientId: reservation.userId,
 						providerId: reservation.idReservation,
-						// eslint-disable-next-line no-underscore-dangle
 						reservationId: reservation._id,
 					},
 				},

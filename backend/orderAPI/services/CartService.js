@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 const fetch = require('node-fetch');
 const Logger = require('../loaders/logger');
 
@@ -120,7 +119,6 @@ class CartService {
 		await fetch(`http://localhost:4000/api/courses/${idProduct}`)
 			.then((response) => response.json())
 			.then(async function (data) {
-				// eslint-disable-next-line prefer-destructuring
 				product = data.data[0];
 			})
 			.catch((err) => {

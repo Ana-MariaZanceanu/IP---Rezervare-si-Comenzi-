@@ -22,7 +22,7 @@ Get the all user's favorite foods from the db.
 **Return codes**:
 
 -   200 - OK
--   400 - There was a problem fetching data
+-   400 - BAD REQUEST
 
 **Usage example**:  
  `localhost:3000/api/v1/favorites`
@@ -65,7 +65,7 @@ Get a specific list of favorite foods by an userId
 **Return codes**:
 
 -   200 - OK
--   400 - There was a problem fetching data
+-   400 - BAD REQUEST
 
 **Usage example**:  
  `localhost:3000/api/v1/favorites/5eb16fdf4afbf654966cb68d`
@@ -90,6 +90,7 @@ Get a specific list of favorite foods by an userId
     }
 }
 ```
+
 ## /api/v1/favorites/add-product/:idProduct
 
 ### POST
@@ -99,6 +100,7 @@ Post a favorite food in a list for an user to Favorites Database
 **Body example**
 
 `userId` is required
+
 ```JSON
 {
  "userId":"5eb175539dff1b3844a84ab8"
@@ -108,7 +110,7 @@ Post a favorite food in a list for an user to Favorites Database
 **Return codes**:
 
 -   201 - CREATED
--   400 - Bad Request
+-   400 - BAD REQUEST
 
 **Usage example**:  
  `localhost:3000/api/v1/favorites/add-product/5eb173d3d6fb9132c43218a3`
@@ -141,6 +143,7 @@ Delete a favorite product from an user's list from Favorite database
 **Body example**
 
 `userId` is required
+
 ```JSON
 {
  "userId":"5eb175539dff1b3844a84ab8"
@@ -149,8 +152,8 @@ Delete a favorite product from an user's list from Favorite database
 
 **Return codes**:
 
--   200 - OK
--   400 - Bad request
+-   204 - NO CONTENT
+-   400 - BAD REQUEST
 
 **Usage example**:  
  `localhost:3000/api/v1/favorites/delete-product/5eb173d3d6fb9132c43218a3`
@@ -172,6 +175,7 @@ Delete a favorite product from an user's list from Favorite database
     }
 }
 ```
+
 ## /api/v1/favorites/all
 
 ### DELETE
@@ -179,8 +183,9 @@ Delete a favorite product from an user's list from Favorite database
 Delete all favorite products lists from Favorite database
 
 **Return codes**:
--   200 - OK
--   400 - Bad request
+
+-   204 - NO CONTENT
+-   400 - BAD REQUEST
 
 **Usage example**:  
  `localhost:3000/api/v1/favorites/all/
