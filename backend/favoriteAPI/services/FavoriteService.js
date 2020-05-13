@@ -1,7 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-loop-func */
-/* eslint-disable no-await-in-loop */
-// const nodemailer = require('nodemailer');
 const fetch = require('node-fetch');
 const Logger = require('../loaders/logger');
 
@@ -16,7 +12,6 @@ class FavoriteService {
 		await fetch(`http://localhost:4000/api/courses/${idProduct}`)
 			.then((response) => response.json())
 			.then(async function (data) {
-				// eslint-disable-next-line prefer-destructuring
 				product = data.data[0];
 			})
 			.catch((err) => {
@@ -38,7 +33,6 @@ class FavoriteService {
 			});
 			if (storedItem) {
 				userExists.items.splice(
-					// eslint-disable-next-line no-underscore-dangle
 					userExists.items.indexOf(storedItem._id),
 					1,
 				);
@@ -49,13 +43,11 @@ class FavoriteService {
 				success: false,
 				mesaj: 'Produsul nu exista in lista de favorite',
 			};
-			// eslint-disable-next-line no-else-return
-		} else {
-			return {
-				success: false,
-				mesaj: 'Utilizatorul nu exista',
-			};
 		}
+		return {
+			success: false,
+			mesaj: 'Utilizatorul nu exista',
+		};
 	}
 
 	async addInFavoriteList(payload, idProduct) {
@@ -78,40 +70,34 @@ class FavoriteService {
 					storedItem = userExists.items.find(function (
 						elem,
 					) {
-						// eslint-disable-next-line no-underscore-dangle
 						return elem == storedProduct._id;
 					});
 					if (!storedItem) {
-						// eslint-disable-next-line no-underscore-dangle
 						userExists.items.push(storedProduct._id);
 						userExists.save();
 						return {
 							success: true,
 							data: { userExists },
 						};
-						// eslint-disable-next-line no-else-return
-					} else {
-						return {
-							success: false,
-							data: {
-								mesaj:
-									'Produsul exista deja in lista de favorite.',
-								userExists,
-							},
-						};
 					}
-				} else {
-					list.items.push(storedProduct._id);
-					const listObject = new this.db.Favorite(list);
-					listObject.save();
-					return { success: true, data: { listObject } };
+					return {
+						success: false,
+						data: {
+							mesaj:
+								'Produsul exista deja in lista de favorite.',
+							userExists,
+						},
+					};
 				}
-			} else {
-				return {
-					success: false,
-					mesaj: 'Produsul nu exista in baza de date',
-				};
+				list.items.push(storedProduct._id);
+				const listObject = new this.db.Favorite(list);
+				listObject.save();
+				return { success: true, data: { listObject } };
 			}
+			return {
+				success: false,
+				mesaj: 'Produsul nu exista in baza de date',
+			};
 		} catch (error) {
 			return {
 				success: false,
