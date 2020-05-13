@@ -71,7 +71,7 @@ export class NavBarComp extends Component {
                       );
                     }}
                   >
-                    <Link to="/" className="iconCart">
+                    <Link to={"/cart"} className="iconCart">
                       <FaShoppingCart />
                     </Link>
                   </Nav.Link>
@@ -89,7 +89,7 @@ export class NavBarComp extends Component {
           </Navbar>
 
           <Switch>
-            <Route path="/">
+            <Route path={"/cart"}>
               <ShoppingCartModal
                 show={this.state.modalShow}
                 onHide={() => {
