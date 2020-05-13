@@ -1,5 +1,3 @@
-/* eslint-disable no-unreachable */
-/* eslint-disable no-process-exit */
 const express = require('express');
 
 const config = require('./config');

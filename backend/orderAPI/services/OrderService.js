@@ -124,7 +124,6 @@ class OrderService {
 				}
 				await order.save();
 				await this.sendOrderMail(orderData);
-				// eslint-disable-next-line no-undef
 				fetch(
 					'http://localhost:4000/api/clients/addCommand',
 					{
@@ -132,7 +131,6 @@ class OrderService {
 						body: {
 							clientId: order.userId,
 							providerId: order.restaurantId,
-							// eslint-disable-next-line no-underscore-dangle
 							commandId: order._id,
 						},
 					},
@@ -214,39 +212,6 @@ class OrderService {
 	}
 
 	async cardPayment(cart, tokenId) {
-		// stripe.tokens.create(
-		// 	{
-		// 		card: {
-		// 			number: '4242424242424242',
-		// 			exp_month: 4,
-		// 			exp_year: 2021,
-		// 			cvc: '314',
-		// 		},
-		// 	},
-		// 	function (err, token) {
-		// 		if (err) {
-		// 			Logger.error(err);
-		// 		} else {
-		// 			stripe.charges.create(
-		// 				{
-		// 					amount: cart.totalPrice * 100,
-		// 					currency: 'usd',
-		// 					source: token.id,
-		// 					description: 'Test Charge',
-		// 				},
-		// 				function (error) {
-		// 					if (error) {
-		// 						Logger.error(error);
-		// 					} else {
-		// 						Logger.info(
-		// 							'Payment successfully made.',
-		// 						);
-		// 					}
-		// 				},
-		// 			);
-		// 		}
-		// 	},
-		// );
 		stripe.charges.create(
 			{
 				amount: cart.totalPrice * 100,
