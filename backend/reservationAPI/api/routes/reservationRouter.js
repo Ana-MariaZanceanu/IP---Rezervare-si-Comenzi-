@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { celebrate } = require('celebrate');
 const { reservationService } = require('../../services/index');
-const { status } = require('../routes/index');
+const { status } = require('../config/index');
 
 const { reservationValidationSchema } = require('../../models/index');
 
