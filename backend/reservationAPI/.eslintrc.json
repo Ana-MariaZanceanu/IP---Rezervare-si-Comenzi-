@@ -5,6 +5,14 @@
 		"prettier/prettier": "error",
 		"no-console": "off",
 		"func-names": "off",
-		"class-methods-use-this": "off"
+		"class-methods-use-this": "off",
+		"no-restricted-syntax": "off",
+		"no-loop-func": "off",
+		"no-await-in-loop": "off",
+		"no-underscore-dangle": "off",
+		"no-unreachable": "off",
+		"no-process-exit": "off",
+		"consistent-return": "off",
+		"no-unused-vars": "off"
 	}
 }

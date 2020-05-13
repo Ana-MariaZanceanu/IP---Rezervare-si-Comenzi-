@@ -1,13 +1,12 @@
 const { Router } = require('express');
 const { celebrate } = require('celebrate');
 const { reservationService } = require('../../services/index');
-const { status } = require('../config/index');
+const { status } = require('../../config/index');
 
 const { reservationValidationSchema } = require('../../models/index');
 
 const router = Router();
 
-// Here we have all the controllers
 router.get('/', async (req, res) => {
 	const result = await reservationService.getAllReservations();
 	const statusCode = result.success
