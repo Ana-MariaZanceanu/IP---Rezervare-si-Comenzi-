@@ -7,6 +7,9 @@ import Card from "react-bootstrap/Card";
 import Success from "./Success";
 import Fail from "./Fail";
 import axios from "axios";
+
+const urlOrders = "http://localhost:3000/api/v1/orders";
+
 class Order extends Component {
   constructor(props) {
     super(props);
@@ -165,7 +168,7 @@ class Order extends Component {
     e.preventDefault();
     axios({
       method: "post",
-      url: "http://localhost:3000/api/v1/orders",
+      url: urlOrders,
       data,
     })
       .then((res) => {

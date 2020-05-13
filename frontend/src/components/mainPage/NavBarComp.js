@@ -9,6 +9,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ShoppingCartModal from "../shoppingCart/ShoppingCartModal";
 import axios from "axios";
 
+const urlGetCart = "http://localhost:3000/api/v1/cart/session";
+
 export class NavBarComp extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +24,7 @@ export class NavBarComp extends Component {
     let products = [];
     await axios({
       method: "get",
-      url: "http://localhost:3000/api/v1/cart/session",
+      url: urlGetCart,
       withCredentials: true,
     })
       .then((response) => {

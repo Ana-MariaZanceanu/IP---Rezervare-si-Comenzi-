@@ -11,6 +11,8 @@ import ListGroup from "react-bootstrap/ListGroup";
 import "./style.css";
 import axios from "axios";
 
+const urlCart = "http://localhost:3000/api/v1/cart/";
+
 class ModalProduct extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +22,7 @@ class ModalProduct extends Component {
   postProductToCart = async (idProduct) => {
     await axios({
       method: "get",
-      url: "http://localhost:3000/api/v1/cart/add-product/" + idProduct,
+      url: urlCart + "add-product/" + idProduct,
       withCredentials: true,
     })
       .then((response) => {

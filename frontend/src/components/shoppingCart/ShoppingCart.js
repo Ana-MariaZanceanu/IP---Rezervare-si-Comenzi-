@@ -9,6 +9,8 @@ import Order from "../orderCheckout/Order";
 const TAX_RATE = 0.06;
 const TAX_TEXT = "6% sales tax";
 
+const urlCart = "http://localhost:3000/api/v1/cart/";
+
 class ShoppingCart extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,7 @@ class ShoppingCart extends Component {
     return async (e) => {
       await axios({
         method: "get",
-        url: "http://localhost:3000/api/v1/cart/delete-product/" + product.id,
+        url: urlCart + "delete-product/" + product.id,
         withCredentials: true,
       })
         .then((result) => {
@@ -35,7 +37,7 @@ class ShoppingCart extends Component {
   emptyCart = async (products) => {
     await axios({
       method: "get",
-      url: "http://localhost:3000/api/v1/cart/clear",
+      url: urlCart + "clear",
       withCredentials: true,
     })
       .then((result) => {
@@ -54,7 +56,7 @@ class ShoppingCart extends Component {
       if (product.item.quantity < e) {
         await axios({
           method: "get",
-          url: "http://localhost:3000/api/v1/cart/add-quantity/" + product.id,
+          url: urlCart + "add-quantity/" + product.id,
           withCredentials: true,
         })
           .then((result) => {
@@ -67,9 +69,7 @@ class ShoppingCart extends Component {
       } else {
         await axios({
           method: "get",
-          url:
-            "http://localhost:3000/api/v1/cart/substract-quantity/" +
-            product.id,
+          url: urlCart + "substract-quantity/" + product.id,
           withCredentials: true,
         })
           .then((result) => {

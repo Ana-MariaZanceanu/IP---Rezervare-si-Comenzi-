@@ -4,6 +4,8 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 
+const urlReservations = "http://localhost:3000/api/v1/reservations";
+
 class FormConfirm extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +31,7 @@ class FormConfirm extends Component {
     this.props.addFormDetails(e, data);
     axios({
       method: "post",
-      url: "http://localhost:3000/api/v1/reservations",
+      url: urlReservations,
       data,
     })
       .then((response) => {
@@ -94,7 +96,7 @@ class FormConfirm extends Component {
           }}
           variant="primary"
           type="submit"
-          style={styles.button}
+          style={styles.buttonGreen}
         >
           Confirm
         </Button>
@@ -102,7 +104,7 @@ class FormConfirm extends Component {
           onClick={this.back}
           variant="primary"
           type="button"
-          style={styles.button}
+          style={styles.buttonRed}
         >
           Back
         </Button>
@@ -112,7 +114,16 @@ class FormConfirm extends Component {
 }
 
 const styles = {
-  button: {
+  buttonGreen: {
+    backgroundColor: "#386150",
+    color: "#F7E7D9",
+    border: "none",
+    marginRight: "1vw",
+    marginTop: "2vh",
+    width: "auto",
+    height: "auto",
+  },
+  buttonRed: {
     backgroundColor: "#A71D31",
     color: "#F7E7D9",
     border: "none",

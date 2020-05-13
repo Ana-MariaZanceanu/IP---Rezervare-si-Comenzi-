@@ -3,11 +3,13 @@ import Button from "react-bootstrap/Button";
 import ModalProduct from "./ModalProduct";
 import axios from "axios";
 
+const urlApiCourses = "http://localhost:4000/api/courses/";
+
 const getProduct = async (id) => {
   let product = {};
   await axios({
     method: "get",
-    url: "http://localhost:4000/api/courses/" + id,
+    url: urlApiCourses + id,
   })
     .then((response) => {
       product = response.data.data[0];
