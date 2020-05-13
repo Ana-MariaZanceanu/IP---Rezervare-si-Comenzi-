@@ -2,25 +2,27 @@ const { Router } = require('express');
 const { celebrate } = require('celebrate');
 const { orderService } = require('../../services/index');
 const { cartService } = require('../../services/index');
+const { statusCodes } = require('../../config/index');
 
 const { orderValidationSchema } = require('../../models/index');
 
 const router = Router();
 
-const BAD_REQUEST = 400;
-const OK = 200;
-const CREATED = 201;
 // Here we have all the controllers
 router.get('/', async (req, res) => {
 	const result = await orderService.getAllOrders();
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? statusCodes.OK
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
 
 router.get('/:idOrder', async (req, res) => {
 	const result = await orderService.getOrder(req.params.idOrder);
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? statusCodes.OK
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
@@ -39,7 +41,9 @@ router.post(
 			result = await orderService.submit(req);
 		}
 
-		const statusCode = result.success ? CREATED : BAD_REQUEST;
+		const statusCode = result.success
+			? statusCodes.CREATED
+			: statusCodes.BAD_REQUEST;
 
 		res.status(statusCode).json(result);
 	},
@@ -47,14 +51,18 @@ router.post(
 
 router.delete('/all', async (req, res) => {
 	const result = await orderService.deleteAll();
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? statusCodes.NO_CONTENT
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
 
 router.delete('/:idOrder', async (req, res) => {
 	const result = await orderService.deleteOrder(req.params.idOrder);
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? statusCodes.NO_CONTENT
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });

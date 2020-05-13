@@ -1,14 +1,12 @@
 const { Router } = require('express');
 const { celebrate } = require('celebrate');
 const { cartService } = require('../../services/index');
+const { statusCodes } = require('../../config/index');
 
 const { cartValidationSchema } = require('../../models/index');
 
 const router = Router();
 
-const BAD_REQUEST = 400;
-const OK = 200;
-const CREATED = 201;
 // Here we have all the controllers
 router.get('/session', async (req, res) => {
 	const result = {
@@ -16,12 +14,14 @@ router.get('/session', async (req, res) => {
 		data: req.session.cart ? req.session.cart : 'empty cart',
 	};
 
-	res.status(OK).json(result);
+	res.status(statusCodes.OK).json(result);
 });
 
 router.get('/', async (req, res) => {
 	const result = await cartService.getAllCarts();
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? statusCodes.OK
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
@@ -29,12 +29,17 @@ router.get('/', async (req, res) => {
 router.get('/clear', async (req, res) => {
 	delete req.session.cart;
 
-	res.status(OK).json({ success: true, data: 'Cart cleared' });
+	res.status(statusCodes.OK).json({
+		success: true,
+		data: 'Cart cleared',
+	});
 });
 
 router.get('/:idUser', async (req, res) => {
 	const result = await cartService.getCart(req.params.idUser);
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? statusCodes.OK
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
@@ -46,7 +51,9 @@ router.post(
 	}),
 	async function (req, res) {
 		const result = await cartService.add(req);
-		const statusCode = result.success ? CREATED : BAD_REQUEST;
+		const statusCode = result.success
+			? statusCodes.CREATED
+			: statusCodes.BAD_REQUEST;
 
 		res.status(statusCode).json(result);
 	},
@@ -54,21 +61,27 @@ router.post(
 
 router.patch('/:idUser', async function (req, res) {
 	const result = await cartService.update(req);
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? statusCodes.ACCEPTED
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
 
 router.delete('/all', async (req, res) => {
 	const result = await cartService.deleteAll();
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? statusCodes.NO_CONTENT
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
 
 router.delete('/:idUser', async (req, res) => {
 	const result = await cartService.deleteCart(req.params.idUser);
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? statusCodes.NO_CONTENT
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
@@ -79,7 +92,9 @@ router.get('/add-product/:idProduct', async (req, res) => {
 		req.session.cart ? req.session.cart : {},
 	);
 	req.session.cart = result.data.cart;
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? statusCodes.OK
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
@@ -90,7 +105,9 @@ router.get('/add-quantity/:idProduct', async (req, res) => {
 		req.session.cart ? req.session.cart : {},
 	);
 	req.session.cart = result.data.cart;
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? statusCodes.OK
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
@@ -101,7 +118,9 @@ router.get('/substract-quantity/:idProduct', async (req, res) => {
 		req.session.cart ? req.session.cart : {},
 	);
 	req.session.cart = result.data.cart;
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? statusCodes.OK
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
@@ -112,7 +131,9 @@ router.get('/delete-product/:idProduct', async (req, res) => {
 		req.session.cart ? req.session.cart : {},
 	);
 	req.session.cart = result.data.cart;
-	const statusCode = result.success ? OK : BAD_REQUEST;
+	const statusCode = result.success
+		? statusCodes.OK
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
