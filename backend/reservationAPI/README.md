@@ -22,7 +22,7 @@ Get the all the reservations from the db.
 **Return codes**:
 
 -   200 - OK
--   400 - There was a problem fetching data
+-   400 - BAD_REQUEST (There was a problem fetching data)
 
 **Usage example**:  
  `localhost:3000/api/v1/reservations`
@@ -84,7 +84,7 @@ Get a specific reservation by its id.
 **Return codes**:
 
 -   200 - OK
--   400 - There was a problem fetching data
+-   400 - BAD_REQUEST (There was a problem fetching data)
 
 **Usage example**:  
  `localhost:3000/api/v1/reservations/5ead38cf340c241a2014b4b7`
@@ -118,6 +118,11 @@ Get a specific reservation by its id.
 
 Post a reservation to Reservation Database
 
+**Return codes**:
+
+-   201 - CREATED
+-   400 - BAD_REQUEST
+
 **Body example**
 
 `userId` este optional.
@@ -134,11 +139,6 @@ Post a reservation to Reservation Database
     "reservationDate": "2020-05-24T15:52:00"
 }
 ```
-
-**Return codes**:
-
--   201 - CREATED
--   400 - Bad Request
 
 **Usage example**:  
  `localhost:3000/api/v1/reservations`
@@ -172,6 +172,11 @@ Post a reservation to Reservation Database
 
 Modifies a reservation in database.
 
+**Return codes**:
+
+-   202 - ACCEPTED
+-   400 - BAD_REQUEST
+
 **Body example**
 
 
@@ -181,11 +186,6 @@ Modifies a reservation in database.
     "reservationDate": "2020-05-24T12:52:00"
 }
 ```
-
-**Return codes**:
-
--   200 - OK
--   400 - Bad Request
 
 **Usage example**:  
  `localhost:3000/api/v1/reservations/5eb2868deefb31331c672029`
@@ -227,7 +227,7 @@ Delete a reservation from database
 **Return codes**:
 
 -   200 - OK
--   400 - Bad request
+-   204 - NO_CONTENT
 
 **Usage example**:  
  `localhost:3000/api/v1/reservation/5eb152c9e6addf016c28e3ca`
