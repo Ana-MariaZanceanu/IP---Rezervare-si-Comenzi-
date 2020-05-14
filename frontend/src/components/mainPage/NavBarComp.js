@@ -46,7 +46,7 @@ export class NavBarComp extends Component {
       url: getUrlWishlist + "5eb16fdf4afbf654966cb68d",
     })
       .then((response) => {
-        console.log(response);
+        
         products = response.data.data.favorites[0].items;
         console.log(products);
       })
