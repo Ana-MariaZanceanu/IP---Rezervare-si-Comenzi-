@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Wishlist from './Wishlist';
+import React, { Component } from "react";
+import Modal from "react-bootstrap/Modal";
+import Wishlist from "./Wishlist";
 
 class WishlistModal extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class WishlistModal extends Component {
         dialogClassName="modalSizes"
         aria-labelledby="example-custom-modal-styling-title"
       >
-        <Modal.Header closeButton className={'modalHeader'} />
+        <Modal.Header closeButton className={"modalHeader"} />
         <Modal.Body>
           <Wishlist products={products} />
         </Modal.Body>
