@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Order from "../orderCheckout/Order";
+import Card from "react-bootstrap/Card";
 
 const TAX_RATE = 0.06;
 const TAX_TEXT = "6% sales tax";
@@ -14,6 +15,7 @@ const urlCart = "http://localhost:3000/api/v1/cart/";
 class ShoppingCart extends Component {
   constructor(props) {
     super(props);
+    this.message = "";
     this.emptyCart = this.emptyCart.bind(this);
   }
   zeroProduct(product) {
@@ -183,7 +185,7 @@ class ShoppingCart extends Component {
                   <td>
                     <Button className="cart-pay">
                       <Link to="/checkout" className="payButton">
-                        pay now
+                        checkout
                       </Link>
                     </Button>
                   </td>
@@ -194,7 +196,9 @@ class ShoppingCart extends Component {
 
             <Switch>
               <Route path="/checkout">
-                <Order />
+                <Order func={() => { setTimeout(() => {
+                  this.emptyCart(products);
+                },5000)}}/>
               </Route>
             </Switch>
           </div>
