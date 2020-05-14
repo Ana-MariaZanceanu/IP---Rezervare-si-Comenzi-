@@ -29,7 +29,7 @@ class FavoriteService {
 
 		if (userExists) {
 			storedItem = userExists.items.find(function (elem) {
-				return elem == idProduct;
+				return elem.id == idProduct;
 			});
 			if (storedItem) {
 				userExists.items.splice(
@@ -37,6 +37,7 @@ class FavoriteService {
 					1,
 				);
 				userExists.save();
+				console.log(userExists);
 				return { success: true, data: { userExists } };
 			}
 			return {
@@ -70,10 +71,18 @@ class FavoriteService {
 					storedItem = userExists.items.find(function (
 						elem,
 					) {
-						return elem == storedProduct._id;
+						return elem.id == storedProduct._id;
 					});
 					if (!storedItem) {
-						userExists.items.push(storedProduct._id);
+						storedItem = {
+							id: storedProduct._id,
+							item: {
+								name: storedProduct.name,
+								image: storedProduct.image,
+								price: storedProduct.price,
+							},
+						};
+						userExists.items.push(storedItem);
 						userExists.save();
 						return {
 							success: true,
@@ -89,7 +98,15 @@ class FavoriteService {
 						},
 					};
 				}
-				list.items.push(storedProduct._id);
+				storedItem = {
+					id: storedProduct._id,
+					item: {
+						name: storedProduct.name,
+						image: storedProduct.image,
+						price: storedProduct.price,
+					},
+				};
+				list.items.push(storedItem);
 				const listObject = new this.db.Favorite(list);
 				listObject.save();
 				return { success: true, data: { listObject } };

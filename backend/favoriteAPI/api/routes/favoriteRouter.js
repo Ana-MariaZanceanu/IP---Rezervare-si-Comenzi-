@@ -51,8 +51,8 @@ router.delete(
 			req.params.idProduct,
 		);
 		const statusCode = result.success
-			? statusCodes.NO_CONTENT
-			: statusCodes.BAD_REQUEST;
+			? statusCodes.OK
+			: statusCodes.NO_CONTENT;
 
 		res.status(statusCode).json(result);
 	},
@@ -61,8 +61,8 @@ router.delete(
 router.delete('/all', async (req, res) => {
 	const result = await favoriteService.deleteAll();
 	const statusCode = result.success
-		? statusCodes.NO_CONTENT
-		: statusCodes.BAD_REQUEST;
+		? statusCodes.OK
+		: statusCodes.NO_CONTENT;
 
 	res.status(statusCode).json(result);
 });

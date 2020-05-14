@@ -7,8 +7,15 @@ const favoriteSchema = mongoose.Schema({
 	},
 	items: [
 		{
-			type: mongoose.Types.ObjectId,
-			required: false,
+			id: {
+				type: mongoose.Types.ObjectId,
+				required: true,
+			},
+			item: {
+				name: { type: String, required: true },
+				image: { type: String, required: true },
+				price: { type: Number, required: true },
+			},
 		},
 	],
 });
