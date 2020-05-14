@@ -4,12 +4,14 @@ import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ShoppingCartModal from "../shoppingCart/ShoppingCartModal";
+import WishlistModal from "../wishlist/WishlistModal";
 import axios from "axios";
 
 const urlGetCart = "http://localhost:3000/api/v1/cart/session";
+const getUrlWishlist = "http://localhost:3000/api/v1/favorites/";
 
 export class NavBarComp extends Component {
   constructor(props) {
@@ -17,6 +19,7 @@ export class NavBarComp extends Component {
     this.state = {
       modalShow: false,
       products: [],
+      wishedProducts: [],
     };
   }
 
@@ -29,6 +32,23 @@ export class NavBarComp extends Component {
     })
       .then((response) => {
         products = response.data.data.items;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    return products;
+  };
+
+  getWishlist = async () => {
+    let products = [];
+    await axios({
+      method: "get",
+      url: getUrlWishlist + "5eb16fdf4afbf654966cb68d",
+    })
+      .then((response) => {
+        console.log(response);
+        products = response.data.data.favorites[0].items;
+        console.log(products);
       })
       .catch((error) => {
         console.log(error);
@@ -71,8 +91,21 @@ export class NavBarComp extends Component {
                       );
                     }}
                   >
-                    <Link to="/" className="iconCart">
+                    <Link to={"/cart"} className="iconCart">
                       <FaShoppingCart />
+                    </Link>
+                  </Nav.Link>
+                  <Nav.Link
+                    style={styles.nav}
+                    onClick={() => {
+                      this.setState({ modalShow: true });
+                      this.getWishlist().then((result) =>
+                        this.setState({ wishedProducts: result })
+                      );
+                    }}
+                  >
+                    <Link to="/" className="iconHeart">
+                      <FaHeart />
                     </Link>
                   </Nav.Link>
                 </Nav>
@@ -89,13 +122,23 @@ export class NavBarComp extends Component {
           </Navbar>
 
           <Switch>
-            <Route path="/">
+            <Route path={"/cart"}>
               <ShoppingCartModal
                 show={this.state.modalShow}
                 onHide={() => {
                   this.setState({ modalShow: false });
                 }}
                 products={this.state.products}
+              />
+            </Route>
+
+            <Route path={"/"}>
+              <WishlistModal
+                show={this.state.modalShow}
+                onHide={() => {
+                  this.setState({ modalShow: false });
+                }}
+                products={this.state.wishedProducts}
               />
             </Route>
           </Switch>

@@ -12,6 +12,7 @@ import "./style.css";
 import axios from "axios";
 
 const urlCart = "http://localhost:3000/api/v1/cart/";
+const urlWishlist = "http://localhost:3000/api/v1/favorites/";
 
 class ModalProduct extends Component {
   constructor(props) {
@@ -28,6 +29,32 @@ class ModalProduct extends Component {
       .then((response) => {
         console.log(response);
         this.message = "Product added to cart!";
+        this.forceUpdate(async () => {
+          await setTimeout(() => {
+            this.message = "";
+            console.log(this.message);
+            this.forceUpdate();
+          }, 4000);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  postProductToWishlist = async (idProduct) => {
+    console.log(urlWishlist + "add-product/" + idProduct);
+    await axios({
+      method: "post",
+      url: urlWishlist + "add-product/" + idProduct,
+      //  withCredentials: true,
+      data: {
+        userId: "5eb16fdf4afbf654966cb68d",
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        this.message = "Product added to wishlist!";
         this.forceUpdate(async () => {
           await setTimeout(() => {
             this.message = "";
@@ -111,7 +138,12 @@ class ModalProduct extends Component {
                     </Button>
                   </Col>
                   <Col xs={6} md={6}>
-                    <Button variant="outline-danger">
+                    <Button
+                      variant="outline-danger"
+                      onClick={() => {
+                        this.postProductToWishlist(product._id);
+                      }}
+                    >
                       <FaHeart /> Add to wishlist
                     </Button>
                   </Col>

@@ -164,9 +164,9 @@ class Order extends Component {
     }
   };
 
-  postData = (e, data) => {
+  postData = async (e, data) => {
     e.preventDefault();
-    axios({
+    await axios({
       method: "post",
       url: urlOrders,
       data,
@@ -371,8 +371,9 @@ class Order extends Component {
                 {this.state.paymentMessage}
               </Card.Text>
               <Button
-                onClick={(event) => {
-                  this.handleSubmit(event, formValues);
+                onClick={async (event) => {
+                  await this.handleSubmit(event, formValues);
+                  this.props.func();
                 }}
                 style={buttonStyle}
               >
