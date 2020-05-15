@@ -51,6 +51,22 @@ class FavoriteService {
 		};
 	}
 
+	async deleteAllFromFavoriteList(idUser) {
+		try {
+			const cart = await this.db.Favorite.deleteOne({
+				userId: idUser,
+			});
+
+			return { success: true, data: { cart } };
+		} catch (error) {
+			Logger.error(error);
+			return {
+				success: false,
+				error: { message: error.message },
+			};
+		}
+	}
+
 	async addInFavoriteList(payload, idProduct) {
 		let storedItem;
 		const { userId } = payload;

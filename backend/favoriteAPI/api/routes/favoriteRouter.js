@@ -51,8 +51,23 @@ router.delete(
 			req.params.idProduct,
 		);
 		const statusCode = result.success
-			? statusCodes.OK
-			: statusCodes.NO_CONTENT;
+			? statusCodes.NO_CONTENT
+			: statusCodes.BAD_REQUEST;
+
+		res.status(statusCode).json(result);
+	},
+);
+
+router.delete(
+	'/:idUser',
+	celebrate({ body: favoriteValidationSchema }),
+	async function (req, res) {
+		const result = await favoriteService.deleteAllFromFavoriteList(
+			req.params.idUser,
+		);
+		const statusCode = result.success
+			? statusCodes.NO_CONTENT
+			: statusCodes.BAD_REQUEST;
 
 		res.status(statusCode).json(result);
 	},
@@ -61,8 +76,8 @@ router.delete(
 router.delete('/all', async (req, res) => {
 	const result = await favoriteService.deleteAll();
 	const statusCode = result.success
-		? statusCodes.OK
-		: statusCodes.NO_CONTENT;
+		? statusCodes.NO_CONTENT
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
