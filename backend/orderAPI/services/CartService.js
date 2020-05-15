@@ -122,15 +122,16 @@ class CartService {
 				product = data.data[0];
 			})
 			.catch((err) => {
-				Logger.error(err);
+				throw new Error("product doesn't exsit.");
 			});
 		return product;
 	}
 
 	async addProduct(idProduct, cart) {
 		let storedItem;
-		const storedProduct = await this.getProduct(idProduct);
+
 		try {
+			const storedProduct = await this.getProduct(idProduct);
 			if (Object.keys(cart).length === 0) {
 				cart.items = [];
 				cart.totalPrice = 0;

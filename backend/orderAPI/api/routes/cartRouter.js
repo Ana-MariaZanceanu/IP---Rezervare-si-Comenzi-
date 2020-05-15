@@ -91,10 +91,13 @@ router.get('/add-product/:idProduct', async (req, res) => {
 		req.params.idProduct,
 		req.session.cart ? req.session.cart : {},
 	);
-	req.session.cart = result.data.cart;
+
 	const statusCode = result.success
 		? statusCodes.OK
 		: statusCodes.BAD_REQUEST;
+	if (statusCode === statusCodes.OK) {
+		req.session.cart = result.data.cart;
+	}
 
 	res.status(statusCode).json(result);
 });
