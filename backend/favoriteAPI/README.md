@@ -205,40 +205,29 @@ Delete a favorite product from an user's list from Favorite database
  "userId":"5eb175539dff1b3844a84ab8"
 }
 ```
-
 **Return codes**:
 
--   200 - OK
 -   204 - NO CONTENT
+-   400 - BAD REQUEST
 
 **Usage example**:  
  `localhost:3000/api/v1/favorites/delete-product/5eb173d3d6fb9132c43218a2`
 
-**Returned data example**:
 
-```JSON
-{
-    "success": true,
-    "data": {
-        "userExists": {
-            "_id": "5ebd745bc495253ba8c1834c",
-            "userId": "5eb175539dff1b3844a84ab8",
-            "items": [
-                {
-                    "item": {
-                        "name": "Bifteki de legume",
-                        "image": "https://www.google.com/url?sa=i&url=http%3A%2F%2Fpetrisorcatering.ro%2Fprodus%2Fbiftec-cu-legume-la-gratar%2F&psig=AOvVaw2TY0GzNrt922WnIceR-5om&ust=1588773245671000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMCzytnvnOkCFQAAAAAdAAAAABAD",
-                        "price": 25
-                    },
-                    "_id": "5ebd745bc495253ba8c1834d",
-                    "id": "5eb173d3d6fb9132c43218a3"
-                }
-            ],
-            "__v": 1
-        }
-    }
-}
-```
+## /api/v1/favorites/:idUser
+
+### DELETE
+
+Delete an user's list of favorite products
+
+**Return codes**:
+
+-   204 - NO CONTENT
+-   400 - BAD REQUEST
+
+**Usage example**:  
+ `localhost:3000/api/v1/favorites/5eb16fdf4afbf654966cb68d`
+
 
 ## /api/v1/favorites/all
 
@@ -248,8 +237,8 @@ Delete all favorite products lists from Favorite database
 
 **Return codes**:
 
--   200 - OK
 -   204 - NO CONTENT
+-   400 - BAD REQUEST
 
 **Usage example**:  
- `localhost:3000/api/v1/favorites/all/
+ `localhost:3000/api/v1/favorites/all/`
