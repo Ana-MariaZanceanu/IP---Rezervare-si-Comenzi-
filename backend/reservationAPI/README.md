@@ -25,7 +25,7 @@ Get the all the reservations from the db.
 -   400 - BAD_REQUEST (There was a problem fetching data)
 
 **Usage example**:  
- `localhost:3000/api/v1/reservations`
+ `localhost:3100/api/v1/reservations`
 
 **Returned data example**:
 
@@ -87,7 +87,7 @@ Get a specific reservation by its id.
 -   400 - BAD_REQUEST (There was a problem fetching data)
 
 **Usage example**:  
- `localhost:3000/api/v1/reservations/5ead38cf340c241a2014b4b7`
+ `localhost:3100/api/v1/reservations/5ead38cf340c241a2014b4b7`
 
 **Returned data example**:
 
@@ -112,6 +112,7 @@ Get a specific reservation by its id.
     }
 }
 ```
+
 ## /api/v1/reservations
 
 ### POST
@@ -141,7 +142,7 @@ Post a reservation to Reservation Database
 ```
 
 **Usage example**:  
- `localhost:3000/api/v1/reservations`
+ `localhost:3100/api/v1/reservations`
 
 **Returned data example**:
 
@@ -179,7 +180,6 @@ Modifies a reservation in database.
 
 **Body example**
 
-
 ```JSON
 {
     "numberOfSeats": 5,
@@ -188,7 +188,7 @@ Modifies a reservation in database.
 ```
 
 **Usage example**:  
- `localhost:3000/api/v1/reservations/5eb2868deefb31331c672029`
+ `localhost:3100/api/v1/reservations/5eb2868deefb31331c672029`
 
 **Returned data example**:
 
@@ -230,7 +230,7 @@ Delete a reservation from database
 -   204 - NO_CONTENT
 
 **Usage example**:  
- `localhost:3000/api/v1/reservation/5eb152c9e6addf016c28e3ca`
+ `localhost:3100/api/v1/reservation/5eb152c9e6addf016c28e3ca`
 
 **Returned data example**:
 
