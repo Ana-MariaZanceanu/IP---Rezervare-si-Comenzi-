@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { celebrate } = require('celebrate');
 const { reservationService } = require('../../services/index');
-const { status } = require('../../config/index');
+const { statusCodes } = require('../../config/index');
 
 const { reservationValidationSchema } = require('../../models/index');
 
@@ -10,8 +10,8 @@ const router = Router();
 router.get('/', async (req, res) => {
 	const result = await reservationService.getAllReservations();
 	const statusCode = result.success
-		? status.OK
-		: status.BAD_REQUEST;
+		? statusCodes.OK
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
@@ -21,8 +21,8 @@ router.get('/:idReservation', async (req, res) => {
 		req.params.idReservation,
 	);
 	const statusCode = result.success
-		? status.OK
-		: status.BAD_REQUEST;
+		? statusCodes.OK
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
@@ -35,8 +35,8 @@ router.post(
 	async function (req, res) {
 		const result = await reservationService.submit(req.body);
 		const statusCode = result.success
-			? status.CREATED
-			: status.BAD_REQUEST;
+			? statusCodes.CREATED
+			: statusCodes.BAD_REQUEST;
 
 		res.status(statusCode).json(result);
 	},
@@ -48,15 +48,17 @@ router.patch('/:idReservation', async function (req, res) {
 		req.body,
 	);
 	const statusCode = result.success
-		? status.ACCEPTED
-		: status.BAD_REQUEST;
+		? statusCodes.ACCEPTED
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
 
 router.delete('/all', async (req, res) => {
 	const result = await reservationService.deleteAll();
-	const statusCode = result.success ? status.OK : status.NO_CONTENT;
+	const statusCode = result.success
+		? status.NO_CONTENT
+		: status.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
@@ -65,7 +67,9 @@ router.delete('/:idReservation', async (req, res) => {
 	const result = await reservationService.deleteReservation(
 		req.params.idReservation,
 	);
-	const statusCode = result.success ? status.OK : status.NO_CONTENT;
+	const statusCode = result.success
+		? statusCodes.NO_CONTENT
+		: statusCodes.BAD_REQUEST;
 
 	res.status(statusCode).json(result);
 });
