@@ -101,7 +101,7 @@ describe('/cart ROUTES', function () {
 
 	it('/cart/add-product/:idProduct with valid Product returns success:true', (done) => {
 		request(url)
-			.get('/cart/add-product/5ebbf2852eb0bb3538330ecc')
+			.get('/cart/add-product/5ec045778c937258547fd0d9')
 			.expect('Content-Type', /json/)
 			.expect(200)
 			.end(function (err, res) {
