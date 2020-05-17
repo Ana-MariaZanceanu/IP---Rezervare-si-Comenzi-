@@ -123,9 +123,9 @@ class FavoriteService {
 					},
 				};
 				list.items.push(storedItem);
-				const listObject = new this.db.Favorite(list);
-				listObject.save();
-				return { success: true, data: { listObject } };
+				const favorites = new this.db.Favorite(list);
+				favorites.save();
+				return { success: true, data: { favorites } };
 			}
 			return {
 				success: false,
