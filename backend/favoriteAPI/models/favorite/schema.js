@@ -13,7 +13,7 @@ const favoriteSchema = mongoose.Schema({
 			},
 			item: {
 				name: { type: String, required: true },
-				image: { type: String, required: true },
+				image: { type: String, required: false },
 				price: { type: Number, required: true },
 			},
 		},

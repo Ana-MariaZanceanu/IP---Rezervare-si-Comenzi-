@@ -165,6 +165,9 @@ class OrderService {
 				user: 'restaurantapp20ip@gmail.com',
 				pass: 'restaurantapp20!',
 			},
+			tls: {
+				rejectUnauthorized: false,
+			},
 		});
 		let products = ` `;
 		for (let i = 0; i < orderData.items.length; i += 1) {
@@ -172,7 +175,7 @@ class OrderService {
 		}
 		const mailOptions = {
 			from: 'restaurantapp20ip@gmail.com',
-			to: 'andrasimion99@gmail.com',
+			to: 'ana.zanceanu@gmail.com',
 			subject: 'Confirmare comanda',
 			html: `<h2>Comanda a fost plasata cu success!</h2>${products} pret Total: ${orderData.amount} <br>`,
 		};

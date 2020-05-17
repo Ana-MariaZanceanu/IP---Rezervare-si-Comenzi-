@@ -168,12 +168,12 @@ class ReservationService {
 		if (reservationDay === 0) {
 			available = await this.verifySchedule(
 				restaurantSchedule[reservationDay + 6],
-				reservationData.reservationDate.getHours() - 3,
+				reservationData.reservationDate.getHours(),
 			);
 		} else {
 			available = await this.verifySchedule(
 				restaurantSchedule[reservationDay - 1],
-				reservationData.reservationDate.getHours() - 3,
+				reservationData.reservationDate.getHours(),
 			);
 		}
 		if (available) {
@@ -250,6 +250,9 @@ class ReservationService {
 			auth: {
 				user: 'restaurantapp20ip@gmail.com',
 				pass: 'restaurantapp20!',
+			},
+			tls: {
+				rejectUnauthorized: false,
 			},
 		});
 
