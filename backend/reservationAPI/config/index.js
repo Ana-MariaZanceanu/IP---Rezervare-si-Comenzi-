@@ -19,7 +19,7 @@ module.exports = {
 	api: {
 		prefix: '/api/v1',
 	},
-	status: {
+	statusCodes: {
 		BAD_REQUEST: 400,
 		OK: 200,
 		CREATED: 201,
