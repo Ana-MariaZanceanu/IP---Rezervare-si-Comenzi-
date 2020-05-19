@@ -1,7 +1,5 @@
 const request = require('supertest');
 const { describe, it } = require('mocha');
-const express = require('express');
-const assert = require('assert');
 const chai = require('chai');
 
 const expect = chai.expect;
@@ -101,7 +99,7 @@ describe('/cart ROUTES', function () {
 
 	it('/cart/add-product/:idProduct with valid Product returns success:true', (done) => {
 		request(url)
-			.get('/cart/add-product/5ec045778c937258547fd0d9')
+			.get('/cart/add-product/5ec1b0bed5556202b8425bb5')
 			.expect('Content-Type', /json/)
 			.expect(200)
 			.end(function (err, res) {

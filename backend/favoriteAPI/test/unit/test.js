@@ -42,7 +42,7 @@ describe('/favorites ROUTES', function () {
 			});
 	});
 
-	it('POST /favorites/add-product/idProducts route works and posts a product in a favorite list for an user sent in the body', (done) => {
+	it('POST /favorites/add-product/idProducts route works for invalid idProduct', (done) => {
 		request(url)
 			.post('/favorites/add-product/1')
 			.send({

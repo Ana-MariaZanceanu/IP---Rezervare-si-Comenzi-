@@ -1,10 +1,8 @@
 const request = require('supertest');
 const { describe, it } = require('mocha');
-const express = require('express');
-const assert = require('assert');
 const chai = require('chai');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 const url = 'http://localhost:3100/api/v1';
 
@@ -45,7 +43,7 @@ describe('/reservations ROUTES', function () {
 				phoneNumber: '2341341227',
 				restaurantId: '5eb16d673a637d28884dc226',
 				numberOfSeats: 2,
-				reservationDate: '2020-05-25T15:52:00',
+				reservationDate: '2020-08-25T15:52:00',
 			})
 			.expect('Content-Type', /json/)
 			.expect(201)

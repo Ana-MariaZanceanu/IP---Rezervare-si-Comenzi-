@@ -46,5 +46,8 @@
 		"mocha": "^7.1.2",
 		"supertest": "^4.0.2"
 	},
-	"autoAttachChildProcesses": true
+	"autoAttachChildProcesses": true,
+	"engines": {
+		"node": "10.16.3"
+	  }
 }
